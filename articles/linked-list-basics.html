@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../index.html#dsa">DSA</a>
+    <a href="../index.html#cv">Computer Vision</a>
+    <a href="../index.html#ai-usecases">AI Use-Cases</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="arrays-introduction.html">Arrays</a></li>
+      <li><a href="binary-search.html">Binary Search</a></li>
+      <li><a href="linked-list-basics.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Data Structures &amp; Algorithms / Linked Lists</div>
+    <article>
+      <h1>Linked Lists</h1>
+      <p>A linked list stores a sequence of elements the way arrays do, but without requiring contiguous memory. Each element ("node") holds its value plus a pointer to the next node. The list itself only needs to remember where the first node ("head") lives.</p>
+
+      <h2>Node structure</h2>
+      <pre><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None</code></pre>
+      <p>A list is just a chain of these: <code>head → [10] → [4] → [17] → None</code>. The last node's <code>next</code> points to nothing, marking the end.</p>
+
+      <h2>Arrays vs. linked lists</h2>
+      <ul>
+        <li><strong>Access by index:</strong> arrays O(1), linked lists O(n) — you must walk from the head.</li>
+        <li><strong>Insert/delete at a known position:</strong> arrays O(n) (shifting), linked lists O(1) (just repoint pointers), <em>once you already have a reference to that node</em>.</li>
+        <li><strong>Memory layout:</strong> arrays are contiguous, so they're cache-friendly. Linked list nodes can be scattered anywhere in memory.</li>
+        <li><strong>Extra memory:</strong> each linked list node stores a pointer in addition to its value, which arrays don't need.</li>
+      </ul>
+
+      <div class="note">The common mistake is thinking linked lists are "faster at insertion" in general. They're only cheap to insert into <em>if you already have a pointer to the insertion point</em> — otherwise you pay O(n) just to walk there first.</div>
+
+      <h2>Building and traversing a list</h2>
+      <pre><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, value):
+        new_node = Node(value)
+        if not self.head:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+
+    def to_list(self):
+        result, current = [], self.head
+        while current:
+            result.append(current.value)
+            current = current.next
+        return result
+
+ll = LinkedList()
+for n in [10, 4, 17]:
+    ll.append(n)
+print(ll.to_list())   # -> [10, 4, 17]</code></pre>
+
+      <h2>When to use one</h2>
+      <p>Linked lists are a good fit when you need frequent insertions/deletions at the front or middle of a sequence and don't need random access by index — for example, implementing a queue, an undo history, or a stack. If you mostly need to read elements by position, an <a href="arrays-introduction.html">array</a> is almost always faster in practice.</p>
+
+      <div class="article-nav">
+        <a href="binary-search.html">← Previous: Binary Search</a>
+        <a href="computer-vision-intro.html">Next: Intro to Computer Vision →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../js/script.js"></script>
+</body>
+</html>

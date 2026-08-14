@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Computer Vision — AfricanizeAI</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../index.html#dsa">DSA</a>
+    <a href="../index.html#cv">Computer Vision</a>
+    <a href="../index.html#ai-usecases">AI Use-Cases</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="arrays-introduction.html">Arrays</a></li>
+      <li><a href="binary-search.html">Binary Search</a></li>
+      <li><a href="linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="computer-vision-intro.html" class="active">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Computer Vision / Introduction</div>
+    <article>
+      <h1>Introduction to Computer Vision</h1>
+      <p>Computer vision is the field of teaching computers to extract meaning from images and video — going from raw pixel grids to information like "there is a car here" or "this is a picture of a maize field under drought stress."</p>
+
+      <h2>An image, to a computer</h2>
+      <p>A digital image is just a grid of numbers. A grayscale image is a 2D array of pixel intensities (0–255); a color image adds three such arrays, one each for red, green, and blue. A computer vision model never "sees" a picture the way a person does — it operates purely on this array of numbers.</p>
+      <pre><code># A tiny 3x3 grayscale image, as a computer would represent it
+image = [
+    [0,   128, 255],
+    [64,  200, 90],
+    [255, 30,  10],
+]</code></pre>
+
+      <h2>Core tasks in computer vision</h2>
+      <ul>
+        <li><strong>Image classification</strong> — assign a label to an entire image ("cat" vs. "dog").</li>
+        <li><strong>Object detection</strong> — find <em>where</em> objects are, drawing bounding boxes and labeling each one.</li>
+        <li><strong>Semantic segmentation</strong> — classify every individual pixel, useful when you need exact object boundaries (e.g. separating crop from soil in a farm photo).</li>
+        <li><strong>Object tracking</strong> — follow an identified object across video frames over time.</li>
+      </ul>
+
+      <h2>Why convolutional layers matter</h2>
+      <p>Most modern vision systems are built on Convolutional Neural Networks (CNNs). Instead of connecting every pixel to every neuron (which would be enormous and ignore spatial structure), a convolution slides a small filter across the image, learning to detect local patterns — edges, textures, corners — which get combined into more complex shapes in deeper layers.</p>
+      <pre><code>import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(2),
+    nn.Conv2d(16, 32, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(2),
+    nn.Flatten(),
+    nn.Linear(32 * 8 * 8, 10)   # e.g. 10 output classes
+)</code></pre>
+
+      <div class="note">You rarely train a CNN from scratch today. Pretrained backbones (ResNet, EfficientNet, ViT) already know general visual features from millions of images — you fine-tune them on your specific dataset instead, which needs far less data and compute.</div>
+
+      <h2>Where it shows up in practice</h2>
+      <p>Computer vision powers crop health monitoring from drone or satellite imagery, quality inspection on manufacturing lines, medical image analysis (X-rays, retinal scans), license plate recognition, and mobile document scanning apps — among many other applications covered in the <a href="ai-business-use-cases.html">AI for Business</a> tutorial.</p>
+
+      <div class="article-nav">
+        <a href="linked-list-basics.html">← Previous: Linked Lists</a>
+        <a href="ai-business-use-cases.html">Next: AI for Business →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../js/script.js"></script>
+</body>
+</html>
