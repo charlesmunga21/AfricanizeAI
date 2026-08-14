@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Network Playground — AfricanizeAI Demos</title>
+<meta name="description" content="Train a small neural net on 2D toy data in your browser and watch the decision boundary form, epoch by epoch. Pure JavaScript, no dependencies, runs entirely client-side.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/playground.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neural Network Playground — AfricanizeAI Demos">
+<meta property="og:description" content="Train a small neural net on 2D toy data in your browser and watch the decision boundary form, epoch by epoch.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/playground.html">
+<meta property="og:image" content="https://charlesmunga21.github.io/AfricanizeAI/demos/assets/og-playground.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Neural Network Playground",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://charlesmunga21.github.io/AfricanizeAI/demos/playground.html",
+  "description": "Train a small neural net on 2D toy data in your browser and watch the decision boundary form.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+  .pg-layout { display: grid; grid-template-columns: 300px 1fr; gap: var(--space-6); align-items: start; }
+  .pg-controls .field { margin-bottom: var(--space-4); }
+  .pg-controls label { font-size: 0.8rem; color: var(--ink-2); }
+  .pg-transport { display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap; }
+  .pg-layer-row { display: grid; grid-template-columns: 1.5rem 1fr 1.5rem 1.5rem; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+  .pg-layer-row input[type="range"] { width: 100%; }
+  .pg-layer-remove { padding: 0.1rem 0.5rem; font-size: 0.9rem; line-height: 1; }
+  .pg-readouts { display: flex; gap: var(--space-6); margin-bottom: var(--space-4); font-size: 0.85rem; color: var(--ink-2); flex-wrap: wrap; }
+  .pg-readouts .num { color: var(--ink); font-size: 1rem; }
+  #pg-canvas { width: 100%; max-width: 480px; aspect-ratio: 1/1; border: 1px solid var(--rule); border-radius: var(--frame-radius); background: var(--surface); }
+  #pg-sparkline { width: 100%; max-width: 480px; height: 60px; margin-top: var(--space-3); display: block; }
+  .pg-thumbs { margin-top: var(--space-4); }
+  .pg-thumb-layer { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+  .pg-thumb-label { color: var(--ink-3); font-size: 0.7rem; width: 1.5rem; }
+  .pg-thumb-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .pg-thumb { width: 28px; height: 28px; border: 1px solid var(--rule); image-rendering: pixelated; }
+  #pg-note { margin-top: var(--space-4); }
+  @media (max-width: 860px) {
+    .pg-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main">
+  <div class="demo-hero">
+    <h1>Neural Network Playground</h1>
+    <p>A dense network, trained live in your browser, on data you choose. Watch the decision boundary form and see exactly where it overfits.</p>
+  </div>
+
+  <div class="pg-layout">
+    <aside class="frame pg-controls" data-frame data-module="CONTROLS" data-state="idle">
+      <div class="field">
+        <label for="pg-dataset">Dataset</label>
+        <select id="pg-dataset"></select>
+      </div>
+      <div class="field">
+        <label for="pg-noise">Noise <span id="pg-noise-val" class="num"></span></label>
+        <input type="range" id="pg-noise" min="0" max="50" step="1">
+      </div>
+      <div class="field">
+        <label for="pg-split">Train / test split <span id="pg-split-val" class="num"></span></label>
+        <input type="range" id="pg-split" min="10" max="90" step="5">
+      </div>
+      <div class="field">
+        <label>Hidden layers</label>
+        <div id="pg-layers"></div>
+        <button type="button" id="pg-add-layer" class="btn btn--ghost" style="font-size:.8rem; padding:.35rem .7rem;">+ Add layer</button>
+      </div>
+      <div class="field">
+        <label for="pg-activation">Activation</label>
+        <select id="pg-activation">
+          <option value="relu">relu</option>
+          <option value="tanh">tanh</option>
+          <option value="sigmoid">sigmoid</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="pg-lr">Learning rate <span id="pg-lr-val" class="num"></span></label>
+        <input type="range" id="pg-lr" min="0" max="100" step="1">
+      </div>
+      <div class="field">
+        <label for="pg-reg">Regularization</label>
+        <select id="pg-reg">
+          <option value="none">none</option>
+          <option value="l1">L1</option>
+          <option value="l2">L2</option>
+        </select>
+        <input type="number" id="pg-reg-rate" min="0" max="1" step="0.001" style="margin-top:.4rem; width:100%;">
+      </div>
+      <div class="field">
+        <label for="pg-batch">Batch size <span id="pg-batch-val" class="num"></span></label>
+        <input type="range" id="pg-batch" min="1" max="30" step="1">
+      </div>
+      <div class="pg-transport">
+        <button type="button" id="pg-train" class="btn">Train</button>
+        <button type="button" id="pg-step" class="btn btn--ghost">Step</button>
+        <button type="button" id="pg-reset" class="btn btn--ghost">New data</button>
+      </div>
+    </aside>
+
+    <section class="frame" data-frame data-module="PLAYGROUND" data-state="idle">
+      <div class="pg-readouts mono">
+        <div>EPOCH <span id="pg-epoch" class="num">0</span></div>
+        <div>TRAIN LOSS <span id="pg-train-loss" class="num">–</span></div>
+        <div>TEST LOSS <span id="pg-test-loss" class="num">–</span></div>
+      </div>
+      <canvas id="pg-canvas" width="480" height="480" aria-label="Decision boundary visualization"></canvas>
+      <canvas id="pg-sparkline" width="480" height="60" aria-label="Train and test loss over time"></canvas>
+      <div id="pg-note" class="note" hidden></div>
+      <div class="pg-thumbs" id="pg-thumbs" aria-label="Per-neuron activation thumbnails"></div>
+    </section>
+  </div>
+
+  <p class="mono" style="font-size:.85rem; margin-top: var(--space-6);">
+    <a href="js/playground/net.js">Read net.js — the whole network is 150 lines</a>
+  </p>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<script type="module" src="js/playground/ui.js"></script>
+</body>
+</html>

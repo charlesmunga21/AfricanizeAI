@@ -5,6 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AfricanizeAI — Programming, DSA & AI Tutorials</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="demos/assets/tokens.css">
+<style>
+  @font-face {
+    font-family: "Archivo Variable";
+    src: url("demos/assets/fonts/archivo-variable.woff2") format("woff2");
+    font-weight: 100 900; font-stretch: 62.5% 125%; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("demos/assets/fonts/jetbrains-mono-500.woff2") format("woff2");
+    font-weight: 500; font-style: normal; font-display: swap;
+  }
+  /* Scoped subset of demos/assets/base.css's detection-frame — the homepage keeps its
+     own green identity everywhere except this section, so these rules are prefixed
+     under .demos-section rather than loading base.css's page-wide element selectors. */
+  .demos-section .frame {
+    position: relative;
+    border: var(--frame-border);
+    border-radius: var(--frame-radius);
+    background: var(--surface-2);
+    padding: 1.25rem;
+    padding-top: 1.85rem;
+  }
+  .demos-section .frame__tick { position: absolute; width: 12px; height: 12px; pointer-events: none; }
+  .demos-section .frame__tick--tl { top: -1px; left: -1px; border-top: 2px solid var(--box); border-left: 2px solid var(--box); }
+  .demos-section .frame__tick--tr { top: -1px; right: -1px; border-top: 2px solid var(--box); border-right: 2px solid var(--box); }
+  .demos-section .frame__tick--bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--box); border-left: 2px solid var(--box); }
+  .demos-section .frame__tick--br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--box); border-right: 2px solid var(--box); }
+  .demos-section .frame__tab {
+    position: absolute; top: -0.55rem; left: 1rem; background: var(--surface-2);
+    padding: 0 0.5rem; font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.7rem; letter-spacing: 0.03em; color: var(--ink-2); text-transform: uppercase;
+  }
+  .demos-section .frame__tab[data-state="live"] { color: var(--conf); }
+  .demos-section .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; margin: 1.5rem 0 2.5rem; }
+  .demos-section .demo-card { display: flex; flex-direction: column; gap: 0.4rem; color: inherit; }
+  .demos-section .demo-card h3 { font-family: "Archivo Variable", sans-serif; font-stretch: 112%; margin: 0.4rem 0 0; font-size: 1.05rem; }
+  .demos-section .demo-card p { margin: 0; color: var(--ink-2); font-size: 0.9rem; }
+  .demos-section .demo-card--soon { opacity: 0.6; pointer-events: none; }
+  .demos-section .demo-card__difficulty { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); }
+</style>
 </head>
 <body>
 
@@ -16,6 +57,7 @@
     <a href="#dsa">DSA</a>
     <a href="#cv">Computer Vision</a>
     <a href="#ai-usecases">AI Use-Cases</a>
+    <a href="demos/index.html">Demos</a>
   </nav>
 </header>
 
@@ -42,6 +84,33 @@
     <section class="hero">
       <h1>Learn Programming, DSA &amp; AI — built for African builders</h1>
       <p>AfricanizeAI is a free tutorial hub covering core computer science fundamentals alongside practical AI: computer vision, and AI use-cases across research, business, and creative work.</p>
+    </section>
+
+    <section id="demos" class="demos-section">
+      <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em;">Demos</h2>
+      <p style="color:var(--ink-2, #5b5b5b); max-width:640px; margin:0 0 .5rem;">Learn by running things, not just reading about them. Four interactive experiences, entirely in your browser.</p>
+      <div class="demo-grid">
+        <a class="frame demo-card" data-frame data-module="PLAYGROUND" data-state="live" href="demos/playground.html">
+          <span class="demo-card__difficulty">Entry</span>
+          <h3>Neural Network Playground</h3>
+          <p>Train a small neural net on 2D toy data and watch the decision boundary form.</p>
+        </a>
+        <div class="frame demo-card demo-card--soon" data-frame data-module="ANNOTATE" data-state="soon">
+          <span class="demo-card__difficulty">Intermediate · Coming soon</span>
+          <h3>Annotation Studio</h3>
+          <p>Draw boxes and polygons, export a real training dataset. Runs offline.</p>
+        </div>
+        <div class="frame demo-card demo-card--soon" data-frame data-module="LIVE" data-state="soon">
+          <span class="demo-card__difficulty">Intermediate · Coming soon</span>
+          <h3>Real-Time Detection</h3>
+          <p>Point your phone camera at something and watch detection run live, on-device.</p>
+        </div>
+        <div class="frame demo-card demo-card--soon" data-frame data-module="DEPLOY" data-state="soon">
+          <span class="demo-card__difficulty">Applied · Coming soon</span>
+          <h3>Set Up Your Own AI Platform</h3>
+          <p>Answer a few questions, get a generated, working deployment config.</p>
+        </div>
+      </div>
     </section>
 
     <section id="dsa">
@@ -96,6 +165,10 @@
 
 <footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
 <script src="js/script.js"></script>
+<script type="module">
+  import { frame } from "./demos/js/frame.js";
+  frame.mountAll();
+</script>
 <script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

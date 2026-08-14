@@ -1,0 +1,257 @@
+@import url("tokens.css");
+
+/* ---------- Fonts ---------- */
+/* Archivo Variable: wght 100–900, wdth 62.5–125%. Headings use font-stretch: 112% —
+   the expansion is the point, it's what keeps headings from reading as default-grotesk. */
+@font-face {
+  font-family: "Archivo Variable";
+  src: url("fonts/archivo-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62.5% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("fonts/public-sans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("fonts/public-sans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Reset ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: var(--box); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4 {
+  font-family: "Archivo Variable", "Archivo", sans-serif;
+  font-stretch: 112%;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 var(--space-3);
+  color: var(--ink);
+}
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.25rem, 2.5vw, 1.6rem); }
+h3 { font-size: 1.1rem; }
+
+.mono, code, pre, .frame__tab, .readout, .kbd {
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-weight: 500;
+}
+
+/* Every piece of machine output on this site is monospaced — numbers, labels,
+   class names, FPS counters. That rule is absolute; it's what makes the
+   interface read as one system. */
+.num { font-family: "JetBrains Mono", monospace; font-weight: 500; }
+
+/* ---------- Focus ---------- */
+:focus-visible {
+  outline: 2px solid var(--box);
+  outline-offset: 2px;
+}
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Layout shell ---------- */
+.demo-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.demo-nav {
+  border-bottom: var(--frame-border);
+  background: var(--surface-2);
+}
+.demo-nav__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.demo-nav__brand {
+  font-family: "Archivo Variable", sans-serif;
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+.demo-nav__brand .accent { color: var(--box); }
+.demo-nav__links { display: flex; gap: var(--space-6); align-items: center; }
+.demo-nav__links a { color: var(--ink-2); font-size: 0.9rem; font-weight: 500; }
+.demo-nav__links a:hover, .demo-nav__links a[aria-current="page"] {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--box);
+}
+
+.demo-main { padding: var(--space-8) 0 var(--space-12); }
+
+.demo-hero { max-width: 640px; margin-bottom: var(--space-8); }
+.demo-hero p { color: var(--ink-2); }
+
+.demo-footer {
+  border-top: var(--frame-border);
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--ink-3);
+  font-size: 0.8rem;
+}
+
+/* ---------- Demo card grid (gallery + homepage section) ---------- */
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+}
+
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  color: inherit;
+}
+.demo-card h3 { margin: var(--space-2) 0 0; }
+.demo-card p { margin: 0; color: var(--ink-2); font-size: 0.92rem; flex: 1; }
+.demo-card__difficulty {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.demo-card--soon {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.demo-card--soon .frame__tab { color: var(--ink-3); }
+
+/* ---------- Detection frame ----------
+   The signature element. 1px hairline border, 6px corner ticks in --box,
+   a mono label tab top-left reading module + state. This is the one bold
+   move on the whole site; nothing else gets a second signature. */
+.frame {
+  position: relative;
+  border: var(--frame-border);
+  border-radius: var(--frame-radius);
+  background: var(--surface-2);
+  padding: var(--space-6);
+  padding-top: calc(var(--space-6) + 0.6rem);
+}
+
+.frame__tick {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+}
+.frame__tick--tl { top: -1px; left: -1px; border-top: 2px solid var(--box); border-left: 2px solid var(--box); }
+.frame__tick--tr { top: -1px; right: -1px; border-top: 2px solid var(--box); border-right: 2px solid var(--box); }
+.frame__tick--bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--box); border-left: 2px solid var(--box); }
+.frame__tick--br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--box); border-right: 2px solid var(--box); }
+
+.frame__tab {
+  position: absolute;
+  top: -0.55rem;
+  left: var(--space-4);
+  background: var(--surface-2);
+  padding: 0 var(--space-2);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.frame__tab-text { transition: opacity 120ms ease; }
+.frame__tab-text.is-swapping { opacity: 0; }
+
+.frame__tab[data-state="live"] { color: var(--conf); }
+.frame__tab[data-state="degraded"],
+.frame__tab[data-state="warn"] { color: var(--warn); }
+.frame__tab[data-state="error"] { color: var(--warn); }
+
+/* ---------- Buttons / controls ---------- */
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--frame-radius);
+  background: var(--ink);
+  color: var(--surface-2);
+  cursor: pointer;
+}
+.btn:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule);
+}
+.btn--ghost:hover { border-color: var(--ink-2); background: var(--surface); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+select, input[type="range"], input[type="number"], input[type="text"] {
+  font-family: "Public Sans", sans-serif;
+  font-size: 0.9rem;
+}
+
+.field { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-4); }
+.field label { font-size: 0.8rem; color: var(--ink-2); display: flex; justify-content: space-between; }
+
+.note {
+  border-left: 3px solid var(--box);
+  background: var(--surface);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  border-radius: var(--frame-radius);
+}
+.note--warn { border-left-color: var(--warn); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .demo-shell { padding: 0 var(--space-4); }
+  .demo-nav__row { padding: var(--space-3) var(--space-4); flex-wrap: wrap; gap: var(--space-2); }
+  .demo-nav__links { gap: var(--space-4); }
+}
+
+@media (max-width: 360px) {
+  .frame { padding: var(--space-4); padding-top: calc(var(--space-4) + 0.6rem); }
+}

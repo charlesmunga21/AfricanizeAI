@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demos — AfricanizeAI</title>
+<meta name="description" content="Interactive, runnable AI demos that work entirely in your browser: train a neural net, annotate a dataset, run real-time detection on your phone camera, and generate a deployment config.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Demos — AfricanizeAI">
+<meta property="og:description" content="Interactive, runnable AI demos that work entirely in your browser.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/index.html">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html" aria-current="page">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main">
+  <div class="demo-hero">
+    <h1>Demos</h1>
+    <p>Prose and a runnable example, side by side — not a tutorial with a link to a notebook somewhere else. Everything here runs in your browser. No installs, no signups, no server.</p>
+  </div>
+
+  <div class="demo-grid">
+    <a class="frame demo-card" data-frame data-module="PLAYGROUND" data-state="live" href="playground.html">
+      <span class="demo-card__difficulty">Entry</span>
+      <h3>Neural Network Playground</h3>
+      <p>Train a small neural net on 2D toy data and watch the decision boundary form, epoch by epoch.</p>
+    </a>
+
+    <div class="frame demo-card demo-card--soon" data-frame data-module="ANNOTATE" data-state="soon">
+      <span class="demo-card__difficulty">Intermediate · Coming soon</span>
+      <h3>Annotation Studio</h3>
+      <p>Upload images, draw boxes and polygons, export a real training dataset. Runs offline, nothing leaves your device.</p>
+    </div>
+
+    <div class="frame demo-card demo-card--soon" data-frame data-module="LIVE" data-state="soon">
+      <span class="demo-card__difficulty">Intermediate · Coming soon</span>
+      <h3>Real-Time Detection</h3>
+      <p>Point your phone camera at something and watch YOLO detection and SAM segmentation run live, on-device.</p>
+    </div>
+
+    <div class="frame demo-card demo-card--soon" data-frame data-module="DEPLOY" data-state="soon">
+      <span class="demo-card__difficulty">Applied · Coming soon</span>
+      <h3>Set Up Your Own AI Platform</h3>
+      <p>Answer a few questions about your project and get a generated, working deployment config.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<script type="module">
+  import { frame } from "./js/frame.js";
+  frame.mountAll();
+</script>
+</body>
+</html>
