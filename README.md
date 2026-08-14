@@ -33,3 +33,7 @@ Then visit `http://localhost:8000`.
 ## Status
 
 Early stage — more tutorials and use-case articles are being added over time.
+
+## License
+
+© AfricanizeAI 2026. All rights reserved. See [LICENSE](LICENSE).
