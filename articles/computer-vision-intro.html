@@ -62,6 +62,8 @@ image = [
         <li><strong>Object tracking</strong> — follow an identified object across video frames over time.</li>
       </ul>
 
+      <div class="note">Detection and segmentation are easier to understand once you've watched them run. <a href="../demos/live.html">Real-Time Detection</a> points your camera at the world and draws YOLO boxes and MobileSAM masks live, on-device — nothing here is a screenshot or a canned example.</div>
+
       <h2>Why convolutional layers matter</h2>
       <p>Most modern vision systems are built on Convolutional Neural Networks (CNNs). Instead of connecting every pixel to every neuron (which would be enormous and ignore spatial structure), a convolution slides a small filter across the image, learning to detect local patterns — edges, textures, corners — which get combined into more complex shapes in deeper layers.</p>
       <pre><code>import torch.nn as nn
@@ -79,7 +81,7 @@ model = nn.Sequential(
 
       <div class="note">You rarely train a CNN from scratch today. Pretrained backbones (ResNet, EfficientNet, ViT) already know general visual features from millions of images — you fine-tune them on your specific dataset instead, which needs far less data and compute.</div>
 
-      <div class="note">Want to see a network actually learn a decision boundary instead of just reading about it? Try the <a href="../demos/playground.html">Neural Network Playground</a> — train one in your browser, no setup. Real-time object detection and segmentation on your own camera is coming soon to the <a href="../demos/index.html">demos section</a>.</div>
+      <div class="note">Want to see a network actually learn a decision boundary instead of just reading about it? Try the <a href="../demos/playground.html">Neural Network Playground</a> — train one in your browser, no setup.</div>
 
       <h2>Where it shows up in practice</h2>
       <p>Computer vision powers crop health monitoring from drone or satellite imagery, quality inspection on manufacturing lines, medical image analysis (X-rays, retinal scans), license plate recognition, and mobile document scanning apps — among many other applications covered in the <a href="ai-business-use-cases.html">AI for Business</a> tutorial.</p>

@@ -8,10 +8,16 @@
 const TICK_POSITIONS = ["tl", "tr", "bl", "br"];
 const registry = new Map();
 
-function label({ module, state, detail }) {
+function label({ module, displayState, state, detail }) {
   const parts = [];
   if (module) parts.push(String(module).toUpperCase());
-  if (state) parts.push(String(state).toUpperCase());
+  // displayState overrides state in the label text only — state itself stays
+  // one of idle/live/degraded/warn/error so the tab's colour (driven by
+  // data-state in base.css) keeps meaning what it means. This lets a page
+  // like live.html show "LIVE · YOLO11N · WEBGPU · 41 FPS" while still
+  // coloring the tab via the real "live"/"degraded" state underneath.
+  const shown = displayState ?? state;
+  if (shown) parts.push(String(shown).toUpperCase());
   if (detail) parts.push(detail);
   return parts.join(" · ");
 }
@@ -70,7 +76,7 @@ function mountAll(root = document) {
   root.querySelectorAll("[data-frame]").forEach(mount);
 }
 
-function setState(moduleName, state, detail = "") {
+function setState(moduleName, state, detail = "", displayState = null) {
   const instance = registry.get(moduleName);
   if (!instance) {
     console.warn(`frame.setState: no mounted frame for module "${moduleName}"`);
@@ -78,6 +84,7 @@ function setState(moduleName, state, detail = "") {
   }
   instance.state = state;
   instance.detail = detail;
+  instance.displayState = displayState;
   render(instance);
 }
 

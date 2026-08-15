@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://charlesmunga21.github.io/AfricanizeAI/index.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-15</lastmod>
   </url>
   <url>
     <loc>https://charlesmunga21.github.io/AfricanizeAI/articles/arrays-introduction.html</loc>
@@ -25,10 +25,14 @@
   </url>
   <url>
     <loc>https://charlesmunga21.github.io/AfricanizeAI/demos/index.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-15</lastmod>
   </url>
   <url>
     <loc>https://charlesmunga21.github.io/AfricanizeAI/demos/playground.html</loc>
     <lastmod>2026-08-14</lastmod>
+  </url>
+  <url>
+    <loc>https://charlesmunga21.github.io/AfricanizeAI/demos/live.html</loc>
+    <lastmod>2026-08-15</lastmod>
   </url>
 </urlset>

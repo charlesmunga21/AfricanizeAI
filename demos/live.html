@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real-Time Detection — AfricanizeAI Demos</title>
+<meta name="description" content="Point your phone camera at something and watch YOLO object detection and MobileSAM segmentation run live, entirely on-device. No install, no signup, no video ever leaves your device.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/live.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Real-Time Detection — AfricanizeAI Demos">
+<meta property="og:description" content="Point your phone camera at something and watch YOLO detection and MobileSAM segmentation run live, on-device.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/live.html">
+<meta property="og:image" content="https://charlesmunga21.github.io/AfricanizeAI/demos/assets/og-live.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0E1116">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Real-Time Detection",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://charlesmunga21.github.io/AfricanizeAI/demos/live.html",
+  "description": "Real-time object detection (YOLO11n) and click-to-segment (MobileSAM), running entirely on-device in the browser.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+  .lv-layout { display: flex; flex-direction: column; gap: var(--space-6); }
+  .lv-status { margin-bottom: var(--space-4); }
+
+  .lv-qr {
+    display: none;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  @media (min-width: 860px) {
+    .lv-qr { display: flex; }
+  }
+  .lv-qr svg { width: 96px; height: 96px; background: #fff; border-radius: var(--frame-radius); }
+  .lv-qr p { margin: 0; font-size: 0.85rem; color: var(--ink-2); }
+
+  .lv-stage-wrap { position: relative; max-width: 720px; margin: 0 auto; }
+  .lv-stage {
+    position: relative;
+    width: 100%;
+    background: var(--ink);
+    border-radius: var(--frame-radius);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+  .lv-stage video, .lv-stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .lv-stage video { object-fit: contain; }
+  .lv-stage canvas { pointer-events: none; }
+  .lv-stage.lv-clickable canvas.lv-overlay { pointer-events: auto; cursor: crosshair; }
+
+  .lv-hud {
+    position: absolute;
+    bottom: var(--space-2);
+    left: var(--space-2);
+    background: rgba(14, 17, 22, 0.72);
+    color: var(--surface-2);
+    padding: 0.3rem 0.55rem;
+    border-radius: var(--frame-radius);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    white-space: pre;
+  }
+
+  .lv-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-6);
+    color: var(--ink-3);
+  }
+  .lv-placeholder p { max-width: 32ch; margin: 0; }
+
+  .lv-controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-4); }
+  .lv-controls .field { margin: 0; min-width: 160px; }
+  .lv-point-hint { font-size: 0.85rem; color: var(--ink-2); margin-top: var(--space-3); }
+  .lv-point-hint .kbd { background: var(--surface); border: 1px solid var(--rule); border-radius: 3px; padding: 0 0.3rem; }
+
+  .lv-classes { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); max-height: 108px; overflow-y: auto; }
+  .lv-chip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .lv-chip[aria-pressed="true"] { border-color: var(--box); color: var(--box); background: color-mix(in srgb, var(--box) 10%, var(--surface-2)); }
+
+  dialog.lv-modal {
+    border: var(--frame-border);
+    border-radius: var(--frame-radius);
+    padding: var(--space-6);
+    max-width: 420px;
+    color: var(--ink);
+    background: var(--surface-2);
+  }
+  dialog.lv-modal::backdrop { background: rgba(14, 17, 22, 0.5); }
+  .lv-modal h3 { margin-top: 0; }
+  .lv-modal .lv-modal-actions { display: flex; gap: var(--space-2); margin-top: var(--space-4); justify-content: flex-end; }
+  .lv-progress { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; margin-top: var(--space-3); }
+  .lv-progress-bar { height: 100%; background: var(--box); width: 0%; transition: width 100ms linear; }
+
+  @media (max-width: 480px) {
+    .lv-stage { aspect-ratio: 3 / 4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main lv-layout">
+  <div class="demo-hero">
+    <h1>Real-Time Detection</h1>
+    <p>YOLO11n draws boxes on whatever your camera sees, live. Freeze a frame and MobileSAM turns a couple of taps into a pixel-accurate mask — both models run on your device; no video ever leaves it.</p>
+  </div>
+
+  <div class="lv-qr" id="lv-qr">
+    <div id="lv-qr-code"></div>
+    <p>Open on your phone — the demo runs better with a rear camera.</p>
+  </div>
+
+  <div id="lv-status" class="note lv-status" hidden></div>
+
+  <section class="frame lv-stage-frame" data-frame data-module="LIVE" data-state="idle">
+    <div class="lv-stage-wrap">
+      <div class="lv-stage" id="lv-stage">
+        <video id="lv-video" muted playsinline autoplay hidden></video>
+        <canvas id="lv-overlay" class="lv-overlay"></canvas>
+        <div class="lv-hud mono" id="lv-hud" hidden></div>
+        <div class="lv-placeholder" id="lv-placeholder">
+          <p>Camera preview appears here. Nothing runs, and no frame is captured, until you start it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lv-controls">
+      <button type="button" id="lv-start" class="btn">Start camera</button>
+      <button type="button" id="lv-switch" class="btn btn--ghost" hidden>Switch camera</button>
+      <button type="button" id="lv-freeze" class="btn btn--ghost" hidden>Freeze frame</button>
+      <button type="button" id="lv-resume" class="btn btn--ghost" hidden>Resume live</button>
+      <button type="button" id="lv-clear-points" class="btn btn--ghost" hidden>Clear points</button>
+      <div class="field" id="lv-conf-field" hidden>
+        <label for="lv-conf">Confidence <span id="lv-conf-val" class="num"></span></label>
+        <input type="range" id="lv-conf" min="10" max="90" step="5">
+      </div>
+    </div>
+
+    <p class="lv-point-hint" id="lv-point-hint" hidden>
+      Tap the frame for a foreground point · <span class="kbd">Shift</span>+tap for background
+    </p>
+
+    <div class="lv-classes" id="lv-classes" hidden></div>
+  </section>
+
+  <div class="note" style="margin-top: var(--space-6);">
+    <strong>Why a website instead of an app.</strong> This page is already HTTPS, so the camera works with zero install. Every box and every mask is computed on your device — no video is ever uploaded, there's no server bill, and it keeps working the moment your connection drops, which is the deployment reality this whole site is teaching. Add it to your home screen (your browser's share/menu button) for an app-like icon with no app store in between.
+  </div>
+
+  <p class="mono" style="font-size:.85rem; margin-top: var(--space-4);">
+    <a href="js/live/worker.js">Read worker.js — every inference call, in one file</a>
+  </p>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<dialog class="lv-modal" id="lv-consent">
+  <h3 id="lv-consent-title">Download model</h3>
+  <p id="lv-consent-body">This connection looks metered or slow. Downloading the model will use data.</p>
+  <div class="lv-progress" id="lv-consent-progress" hidden><div class="lv-progress-bar" id="lv-consent-bar"></div></div>
+  <div class="lv-modal-actions">
+    <button type="button" class="btn btn--ghost" id="lv-consent-cancel">Not now</button>
+    <button type="button" class="btn" id="lv-consent-ok">Download</button>
+  </div>
+</dialog>
+
+<script type="module" src="js/live/main.js"></script>
+</body>
+</html>
