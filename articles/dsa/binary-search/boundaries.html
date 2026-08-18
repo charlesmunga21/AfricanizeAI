@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finding Boundaries — Binary Search — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="index.html" class="active">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Binary Search</a> / Finding Boundaries</div>
+    <article>
+      <h1>Finding Boundaries</h1>
+      <p>The standard algorithm assumes the target appears at most once. Real data often has duplicates — and then "found it" isn't a complete answer. If you're looking up the start of a date range, or counting how many times a value occurs, you need the <strong>first</strong> or <strong>last</strong> occurrence specifically, not just any match.</p>
+
+      <h2>The trick: don't stop at the first match</h2>
+      <p>When <code>arr[mid] == target</code>, the standard algorithm returns immediately. To find the <strong>first</strong> occurrence instead, record that index as a candidate, then keep searching the <strong>left</strong> half in case there's an earlier match — <code>high = mid - 1</code>, not a return. To find the <strong>last</strong> occurrence, keep searching the <strong>right</strong> half instead — <code>low = mid + 1</code>. Either way, the loop only ends when <code>low &gt; high</code>, and the last recorded candidate is the answer.</p>
+
+      <pre><code>def find_first(arr, target):
+    low, high, result = 0, len(arr) - 1, -1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            result = mid
+            high = mid - 1        # keep looking left for an earlier match
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return result</code></pre>
+
+      <div class="note">This same "record a candidate, keep narrowing" pattern is exactly how <code>bisect_left</code>/<code>bisect_right</code> (Python's <code>bisect</code> module) and <code>lower_bound</code>/<code>upper_bound</code> (C++'s <code>&lt;algorithm&gt;</code>) work — this isn't a one-off trick, it's the general shape of every binary-search variant.</div>
+
+      <h2>Visual model: watch the candidate change</h2>
+      <p>This array has a run of repeated <code>4</code>s and a run of repeated <code>9</code>s. Search for either value in "Find First" or "Find Last" mode — amber boxes are candidates found along the way, and the final green box is the actual answer.</p>
+      <div class="viz" id="bd-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="bd-quiz"></div>
+
+      <div class="article-nav">
+        <a href="iterative-vs-recursive.html">← Iterative vs. Recursive</a>
+        <a href="complexity-pitfalls.html">Next: Complexity &amp; Common Pitfalls →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/binary-search-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initBSBoundariesViz(document.getElementById("bd-viz"));
+  initQuiz(document.getElementById("bd-quiz"), [
+    {
+      q: "You need the FIRST occurrence of a target and just found a match at index mid. What should you do?",
+      options: [
+        "Return mid immediately",
+        "Record mid as a candidate, then set high = mid - 1 and keep searching left",
+        "Record mid as a candidate, then set low = mid + 1 and keep searching right",
+        "Restart the search from index 0",
+      ],
+      correct: 1,
+      explain: "An earlier occurrence, if it exists, can only be to the left — narrowing right (high = mid - 1) keeps checking for one without losing the candidate you already found.",
+    },
+    {
+      q: "In an array with 5 occurrences of the value 7, how many times does the standard (non-boundary) binary search return when searching for 7?",
+      options: [
+        "It returns the first occurrence, always",
+        "It returns the last occurrence, always",
+        "It returns whichever occurrence the mid pointer happens to land on first",
+        "It returns all 5 indices",
+      ],
+      correct: 2,
+      explain: "The standard algorithm returns as soon as arr[mid] == target — which specific occurrence that is depends on where mid happens to fall, not on position.",
+    },
+    {
+      q: "What do Python's bisect_left/bisect_right and C++'s lower_bound/upper_bound have in common with this submodule?",
+      options: [
+        "Nothing, they're unrelated sorting functions",
+        "They're the same 'record a candidate and keep narrowing' pattern, generalized into standard library functions",
+        "They only work on linked lists",
+        "They replace binary search with a hash lookup",
+      ],
+      correct: 1,
+      explain: "Those standard library functions are exactly this boundary-finding pattern, built in so you don't have to hand-write it.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

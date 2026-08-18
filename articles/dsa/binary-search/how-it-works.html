@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — Binary Search — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="index.html" class="active">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Binary Search</a> / How It Works</div>
+    <article>
+      <h1>How It Works</h1>
+      <p>Binary search finds a target value in a <strong>sorted</strong> array in O(log n) time by repeatedly cutting the search space in half, instead of checking every element one by one.</p>
+
+      <h2>The idea</h2>
+      <p>Look at the middle element of the array. If it's the target, you're done. If the target is smaller, it must be in the left half — discard the right half entirely. If it's larger, discard the left half. Repeat on the remaining half until the target is found or the search space is empty.</p>
+      <p>Each step throws away half of what's left, so for an array of size n, you need at most log₂(n) steps — roughly 20 steps for a million elements.</p>
+
+      <h2>Implementation</h2>
+      <pre><code>def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1</code></pre>
+
+      <div class="note">Binary search only works if the array is already sorted. Running it on unsorted data gives incorrect results without any error — a common source of subtle bugs. See <a href="complexity-pitfalls.html">Complexity &amp; Common Pitfalls</a> for more of these.</div>
+
+      <h2>Visual model: step through it</h2>
+      <p>Pick a target and run it, or step through one comparison at a time. The pointer row above the array shows exactly where <code>low</code>, <code>mid</code>, and <code>high</code> are at each step, and dimmed boxes are outside the current search range.</p>
+      <div class="viz" id="how-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="how-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Binary Search overview</a>
+        <a href="iterative-vs-recursive.html">Next: Iterative vs. Recursive →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/binary-search-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initBSHowItWorksViz(document.getElementById("how-viz"));
+  initQuiz(document.getElementById("how-quiz"), [
+    {
+      q: "Binary search compares the target to the middle element and it's larger. What happens next?",
+      options: [
+        "Search the left half",
+        "Search the right half",
+        "Start over from the beginning",
+        "Check every remaining element one by one",
+      ],
+      correct: 1,
+      explain: "If the target is larger than the middle element, it can only be in the right half (since the array is sorted) — the left half is discarded entirely.",
+    },
+    {
+      q: "What's the precondition binary search requires that linear search doesn't?",
+      options: ["The array must be sorted", "The array must have unique values", "The array must have an even length", "The target must exist in the array"],
+      correct: 0,
+      explain: "The left/right elimination logic only makes sense if the array is sorted — that's the whole precondition.",
+    },
+    {
+      q: "For a sorted array of 1,000 elements, roughly how many comparisons does binary search need in the worst case?",
+      options: ["~10", "~100", "~500", "~1,000"],
+      correct: 0,
+      explain: "log₂(1000) ≈ 10 — each comparison halves the remaining range.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

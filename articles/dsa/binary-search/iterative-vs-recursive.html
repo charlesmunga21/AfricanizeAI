@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iterative vs. Recursive — Binary Search — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="index.html" class="active">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Binary Search</a> / Iterative vs. Recursive</div>
+    <article>
+      <h1>Iterative vs. Recursive</h1>
+      <p>Binary search can be written two ways: a loop that mutates <code>low</code> and <code>high</code> in place, or a function that calls itself on a smaller range. Both do the same comparisons in the same order — the difference is entirely about what happens in memory while the search runs.</p>
+
+      <h2>Iterative</h2>
+      <pre><code>def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1</code></pre>
+      <p>One set of variables, reused every iteration. Space complexity: <strong>O(1)</strong>.</p>
+
+      <h2>Recursive</h2>
+      <pre><code>def binary_search(arr, target, low=0, high=None):
+    if high is None:
+        high = len(arr) - 1
+    if low > high:
+        return -1
+    mid = (low + high) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search(arr, target, mid + 1, high)
+    else:
+        return binary_search(arr, target, low, mid - 1)</code></pre>
+      <p>Every call that hasn't returned yet stays on the call stack, waiting for the one below it to finish. Space complexity: <strong>O(log n)</strong> — proportional to how deep the recursion goes, which is exactly the number of times you can halve <code>n</code>.</p>
+
+      <div class="note">This is a general pattern, not specific to binary search: any recursive algorithm's space cost includes its maximum call stack depth, on top of whatever it explicitly allocates. An iterative version with an explicit loop variable instead of recursive calls avoids that cost entirely.</div>
+
+      <h2>Visual model: watch the call stack</h2>
+      <p>Run the recursive version and step through it — a frame is pushed onto the stack for every call, and popped when that call returns. Then try the iterative version on the same target: notice it never uses more than one frame.</p>
+      <div class="viz" id="rec-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="rec-quiz"></div>
+
+      <div class="article-nav">
+        <a href="how-it-works.html">← How It Works</a>
+        <a href="boundaries.html">Next: Finding Boundaries →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/binary-search-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initBSRecursionViz(document.getElementById("rec-viz"));
+  initQuiz(document.getElementById("rec-quiz"), [
+    {
+      q: "Why does recursive binary search use O(log n) space instead of O(1)?",
+      options: [
+        "Because it uses more variables per call",
+        "Because each unfinished call stays on the call stack until it returns, and the stack can get log n deep",
+        "Because recursion always doubles memory usage",
+        "It doesn't — recursive and iterative use the same space",
+      ],
+      correct: 1,
+      explain: "Every recursive call that hasn't returned occupies a stack frame. Binary search's recursion depth equals the number of halvings, which is log n.",
+    },
+    {
+      q: "The iterative version never uses more than one 'frame' worth of state. Why?",
+      options: [
+        "It processes fewer elements",
+        "It reuses the same low/mid/high variables each loop iteration instead of stacking new ones",
+        "It's not actually doing the same algorithm",
+        "It only works on small arrays",
+      ],
+      correct: 1,
+      explain: "A loop overwrites its variables in place each pass — there's nothing waiting on a call stack, so space stays O(1) regardless of how many iterations run.",
+    },
+    {
+      q: "Do the iterative and recursive versions make the same comparisons, in the same order?",
+      options: [
+        "No, recursion checks extra elements",
+        "Yes — only the memory usage differs, not the sequence of comparisons",
+        "No, iteration is a completely different algorithm",
+        "Only if the array is small",
+      ],
+      correct: 1,
+      explain: "Both compute the same low/mid/high sequence and make the same comparisons — recursion just uses the call stack to hold state that the loop keeps in variables instead.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

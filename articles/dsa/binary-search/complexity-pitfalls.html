@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complexity &amp; Common Pitfalls — Binary Search — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="index.html" class="active">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Binary Search</a> / Complexity &amp; Common Pitfalls</div>
+    <article>
+      <h1>Complexity &amp; Common Pitfalls</h1>
+      <p>Binary search's O(log n) time is what makes it worth the sorted-data requirement. Here's how big that gap actually gets, and the handful of classic bugs that quietly turn a correct-looking implementation into a wrong one.</p>
+
+      <h2>Just how big is the gap?</h2>
+      <p>Every additional element roughly doubles what linear search has to check in the worst case, while binary search only needs <em>one more comparison</em>. For a million elements, that's the difference between checking up to a million values and checking about twenty.</p>
+
+      <h2>Visual model: the comparisons race</h2>
+      <p>Set an array size and compare the worst-case comparison counts side by side.</p>
+      <div class="viz" id="race-viz"></div>
+
+      <h2>Common pitfalls</h2>
+
+      <h3>1. Running it on unsorted data</h3>
+      <p>Binary search doesn't check whether the array is sorted — it just trusts the precondition. On unsorted data it silently returns wrong answers (or misses a value that's actually present) instead of erroring. This is the single most common real bug.</p>
+
+      <h3>2. Off-by-one in the loop condition</h3>
+      <pre><code># Wrong — misses checking the case low == high
+while low < high:
+    ...
+
+# Right — low == high is a valid single-element range to check
+while low <= high:
+    ...</code></pre>
+
+      <h3>3. Forgetting to move a boundary</h3>
+      <pre><code># Wrong — infinite loop: when arr[mid] < target, low never changes
+while low <= high:
+    mid = (low + high) // 2
+    if arr[mid] < target:
+        pass          # bug: forgot "low = mid + 1"
+    else:
+        high = mid - 1</code></pre>
+      <p>If a boundary doesn't move on some branch, <code>low</code> and <code>high</code> can stop converging entirely — the loop never terminates.</p>
+
+      <h3>4. Integer overflow in <code>mid</code> (C, Java, and other fixed-width-integer languages)</h3>
+      <pre><code>// Can overflow if low and high are both close to INT_MAX
+int mid = (low + high) / 2;
+
+// Safer — never adds two large numbers together
+int mid = low + (high - low) / 2;</code></pre>
+      <p>Python and JavaScript don't have this specific problem (their numbers don't silently wrap on overflow the way fixed-width integers do), but it's a real, historically significant bug — it shipped in Java's standard library <code>binarySearch</code> for years before being fixed.</p>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="pitfalls-quiz"></div>
+
+      <div class="article-nav">
+        <a href="boundaries.html">← Finding Boundaries</a>
+        <a href="index.html">Back to Binary Search overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/binary-search-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initBSComplexityRaceViz(document.getElementById("race-viz"));
+  initQuiz(document.getElementById("pitfalls-quiz"), [
+    {
+      q: "You run binary search on an array that turns out not to be sorted. What happens?",
+      options: [
+        "It throws a clear error",
+        "It automatically sorts the array first",
+        "It may silently return a wrong index or miss a value that's actually present, with no error",
+        "It falls back to linear search",
+      ],
+      correct: 2,
+      explain: "Binary search assumes sorted input and never checks. On unsorted data, the left/right elimination logic can be wrong without any indication — this is the most common real-world bug.",
+    },
+    {
+      q: "A binary search loop uses `while low < high` instead of `while low <= high`. What's the consequence?",
+      options: [
+        "No difference — they behave identically",
+        "The array must have an even number of elements",
+        "The case where low == high (a single remaining candidate) is never checked",
+        "It runs faster",
+      ],
+      correct: 2,
+      explain: "When low == high there's still one element left to check. `low < high` exits the loop before checking it — a classic off-by-one.",
+    },
+    {
+      q: "Why does `mid = low + (high - low) / 2` avoid overflow that `mid = (low + high) / 2` doesn't, in a fixed-width-integer language?",
+      options: [
+        "It doesn't — they're mathematically identical with no difference",
+        "It never adds two large numbers together, so the intermediate sum can't exceed the integer's max value",
+        "It uses floating point instead of integers",
+        "It only works for arrays smaller than 1000 elements",
+      ],
+      correct: 1,
+      explain: "low + high can overflow a fixed-width integer if both are large. low + (high - low) computes the same midpoint without ever summing two large values.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

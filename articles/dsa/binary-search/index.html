@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Search — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="index.html" class="active">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / Binary Search</div>
+
+    <section class="module-hero">
+      <h1>Binary Search</h1>
+      <p>Binary search finds a value in a <strong>sorted</strong> array in O(log n) time by repeatedly cutting the search space in half, instead of checking every element one by one. It's the algorithm every efficient lookup — dictionaries, database indexes, version-control bisection — is a variation of.</p>
+      <p>This module covers the standard algorithm, the iterative-vs-recursive tradeoff, the most common real-world variant (finding a boundary in data with duplicates), and the complexity payoff that makes all of it worth doing.</p>
+      <ul class="learn-list">
+        <li>The core idea: eliminate half the remaining search space with every comparison</li>
+        <li>Why the recursive version costs O(log n) extra space and the iterative one doesn't</li>
+        <li>How to find the first or last occurrence of a value when duplicates exist</li>
+        <li>Just how large the O(n) vs O(log n) gap gets as data grows</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="how-it-works.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>How It Works</h3>
+        <p>The core algorithm, step by step — low, mid, high, and why the array has to be sorted first.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="iterative-vs-recursive.html">
+        <span class="submodule-card__step">2 · Implementation</span>
+        <h3>Iterative vs. Recursive</h3>
+        <p>Watch the call stack actually grow and shrink — the real reason recursion costs more space.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="boundaries.html">
+        <span class="submodule-card__step">3 · Real-World Variant</span>
+        <h3>Finding Boundaries</h3>
+        <p>With duplicate values, "found it" isn't enough — find the first or last occurrence instead.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="complexity-pitfalls.html">
+        <span class="submodule-card__step">4 · Complexity</span>
+        <h3>Complexity &amp; Common Pitfalls</h3>
+        <p>Just how much binary search saves at scale, and the classic bugs that quietly break it.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Version</th><th>Time</th><th>Space</th><th>Requires</th></tr></thead>
+      <tbody>
+        <tr><td>Iterative</td><td><code>O(log n)</code></td><td><code>O(1)</code></td><td>Sorted input</td></tr>
+        <tr><td>Recursive</td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td>Sorted input, call stack depth</td></tr>
+        <tr><td>Linear search (for contrast)</td><td><code>O(n)</code></td><td><code>O(1)</code></td><td>None</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="how-it-works.html">Start: How It Works →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

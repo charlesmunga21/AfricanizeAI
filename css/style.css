@@ -279,6 +279,25 @@ button.viz-box { cursor: pointer; }
 .grid-2d__idx { font-size: 0.6rem; color: var(--text-muted); }
 .grid-2d__cell.is-active { border-color: var(--green); background: #eaf3ec; box-shadow: 0 0 0 2px rgba(47,141,70,0.25); }
 
+/* Binary search: low/mid/high pointer row above an array, and "candidate" match marker */
+.viz-ptr-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.35rem; }
+.viz-ptr-cell { min-width: 3.4rem; text-align: center; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.03em; color: var(--green-dark); height: 1rem; font-family: "SFMono-Regular", Consolas, Menlo, monospace; }
+.viz-box.is-candidate { border-color: #c9971f; background: #fbf1d9; }
+
+/* Recursion call-stack widget */
+.callstack { display: flex; flex-direction: column; gap: 0.4rem; max-width: 24rem; margin-bottom: 0.75rem; min-height: 2.4rem; }
+.callstack-frame { display: flex; justify-content: space-between; gap: 0.75rem; border: 1.5px solid var(--border); border-radius: 6px; padding: 0.5rem 0.75rem; background: #fff; font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.8rem; }
+.callstack-frame.is-found { border-color: var(--green); background: #d7f0dc; }
+.callstack-empty { color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
+
+/* Comparisons-race bars (linear vs binary worst case) */
+.race-row { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 0.25rem; }
+.race-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+.race-bar { height: 1.1rem; background: #e2e2e2; border-radius: 6px; overflow: hidden; }
+.race-bar__fill { height: 100%; width: 0%; background: var(--green); }
+.race-bar__fill--binary { background: var(--green-dark); }
+.race-count { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted); }
+
 /* Quiz */
 .quiz { border: 1px solid var(--border); border-radius: 8px; background: var(--bg-alt); padding: 1.25rem 1.4rem; margin: 1.25rem 0 1.75rem; }
 .quiz-score { font-size: 0.8rem; font-weight: 600; color: var(--green-dark); margin-bottom: 0.75rem; }
