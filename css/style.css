@@ -295,6 +295,20 @@ button.viz-box { cursor: pointer; }
 .ll-arrow { color: var(--text-muted); font-size: 1.1rem; padding: 0 0.15rem; }
 .ll-null { display: flex; align-items: center; justify-content: center; min-width: 3.6rem; min-height: 3.2rem; border: 1.5px dashed var(--border); border-radius: 6px; color: var(--text-muted); font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.72rem; }
 
+/* Computer vision: pixel-grid editor */
+.px-cell { aspect-ratio: 1; border: 1px solid rgba(0,0,0,0.08); border-radius: 3px; font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.1s ease; }
+
+/* Computer vision: classification/detection/segmentation scene */
+.cv-scene { position: relative; width: 100%; max-width: 360px; height: 220px; background: #eef1ee; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.cv-chip { position: absolute; top: 0.5rem; left: 0.5rem; background: #1e1e1e; color: #fff; font-size: 0.7rem; font-family: "SFMono-Regular", Consolas, Menlo, monospace; padding: 0.25rem 0.5rem; border-radius: 4px; z-index: 2; }
+.cv-shape { position: absolute; }
+.cv-shape--circle { border-radius: 50%; }
+.cv-shape--rect { border-radius: 6px; }
+.cv-tag { position: absolute; top: -1.3rem; left: 0; color: #fff; font-size: 0.65rem; font-family: "SFMono-Regular", Consolas, Menlo, monospace; padding: 0.1rem 0.4rem; border-radius: 3px; white-space: nowrap; }
+
+/* Computer vision: convolution simulator layout */
+.conv-layout { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: flex-start; }
+
 /* Comparisons-race bars (linear vs binary worst case) */
 .race-row { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 0.25rem; }
 .race-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }

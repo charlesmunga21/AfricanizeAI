@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Vision Tasks — Computer Vision — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="index.html" class="active">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Vision / <a href="index.html">Fundamentals</a> / Core Vision Tasks</div>
+    <article>
+      <h1>Core Vision Tasks</h1>
+      <p>"Computer vision" isn't one task — it's a family of related tasks that ask different questions about the same image, and get very different kinds of answers back.</p>
+
+      <ul>
+        <li><strong>Image classification</strong> — assign a label to an entire image ("cat" vs. "dog").</li>
+        <li><strong>Object detection</strong> — find <em>where</em> objects are, drawing bounding boxes and labeling each one.</li>
+        <li><strong>Semantic segmentation</strong> — classify every individual pixel, useful when you need exact object boundaries (e.g. separating crop from soil in a farm photo).</li>
+        <li><strong>Object tracking</strong> — follow an identified object across video frames over time.</li>
+      </ul>
+
+      <div class="note">Detection and segmentation are easier to understand once you've watched them run. <a href="../../../demos/live.html">Real-Time Detection</a> points your camera at the world and draws YOLO boxes and MobileSAM masks live, on-device — nothing there is a screenshot or a canned example.</div>
+
+      <h2>Visual model: same scene, three different answers</h2>
+      <p>This is one synthetic scene with two objects. Switch between the three localized tasks and watch the exact same objects get annotated completely differently — that's the real distinction, not just terminology.</p>
+      <div class="viz" id="tasks-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="tasks-quiz"></div>
+
+      <div class="article-nav">
+        <a href="images-as-data.html">← Images as Data</a>
+        <a href="convolution.html">Next: How Convolution Works →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/cv-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initTaskModesViz(document.getElementById("tasks-viz"));
+  initQuiz(document.getElementById("tasks-quiz"), [
+    {
+      q: "A model outputs just the label \"cat\" for an entire photo, with no location information. Which task is this?",
+      options: ["Object detection", "Image classification", "Semantic segmentation", "Object tracking"],
+      correct: 1,
+      explain: "Classification answers only 'what is this a picture of', for the whole image — no boxes, no pixel-level detail.",
+    },
+    {
+      q: "You need to know the EXACT pixel boundary of a crop region to separate it from soil in a farm photo. Which task fits?",
+      options: ["Image classification", "Object detection", "Semantic segmentation", "None of these can do this"],
+      correct: 2,
+      explain: "Segmentation classifies every pixel individually, which is exactly what's needed to trace an exact, irregular boundary — a bounding box (detection) would include soil pixels inside the box.",
+    },
+    {
+      q: "What does object detection give you that classification doesn't?",
+      options: [
+        "A higher-resolution image",
+        "Location — a bounding box per object, not just a whole-image label",
+        "Pixel-exact boundaries",
+        "The ability to work on video instead of still images",
+      ],
+      correct: 1,
+      explain: "Detection adds 'where' to classification's 'what' — a box and label per object, though not the exact pixel-level shape (that's segmentation).",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

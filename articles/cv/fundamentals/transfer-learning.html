@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transfer Learning &amp; Applications — Computer Vision — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="index.html" class="active">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Vision / <a href="index.html">Fundamentals</a> / Transfer Learning &amp; Applications</div>
+    <article>
+      <h1>Transfer Learning &amp; Applications</h1>
+      <p>You rarely train a CNN from scratch today. Pretrained backbones (ResNet, EfficientNet, ViT) already know general visual features — edges, textures, shapes — from millions of images. You fine-tune them on your specific dataset instead, which needs far less data and compute than starting from random weights.</p>
+
+      <h2>Why fine-tuning works</h2>
+      <p>Early convolution layers in a trained network tend to learn very generic features (edges, corners, color gradients) that are useful for almost any visual task, not just the one the network was originally trained on. Fine-tuning keeps those early layers mostly intact and retrains only the later, more task-specific layers on your data — so the network isn't learning "what an edge is" from zero, it's already starting from a network that understands images in general.</p>
+
+      <h2>Visual model: how much data does each approach need?</h2>
+      <p>These are illustrative, rounded figures to show the shape of the gap — not a benchmark from a specific paper. Adjust how similar your task is to typical photos (what most pretrained backbones were trained on) and compare.</p>
+      <div class="viz" id="transfer-viz"></div>
+
+      <h2>Where it shows up in practice</h2>
+      <p>Computer vision powers crop health monitoring from drone or satellite imagery, quality inspection on manufacturing lines, medical image analysis (X-rays, retinal scans), license plate recognition, and mobile document scanning apps — among many other applications covered in the <a href="../../ai-business-use-cases.html">AI for Business</a> module.</p>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="transfer-quiz"></div>
+
+      <div class="article-nav">
+        <a href="convolution.html">← How Convolution Works</a>
+        <a href="index.html">Back to Computer Vision overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/cv-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initTransferViz(document.getElementById("transfer-viz"));
+  initQuiz(document.getElementById("transfer-quiz"), [
+    {
+      q: "Why does fine-tuning a pretrained model typically need far less labeled data than training from scratch?",
+      options: [
+        "Pretrained models don't actually need any data",
+        "The early layers already know general visual features from a much larger prior dataset — only the later, task-specific layers need much retraining",
+        "Fine-tuning uses a different, faster type of neural network entirely",
+        "It doesn't — both need the same amount of data",
+      ],
+      correct: 1,
+      explain: "Generic features like edges and textures transfer well across tasks. Fine-tuning reuses that knowledge instead of relearning it from zero, so it needs comparatively little task-specific data.",
+    },
+    {
+      q: "Which layers of a pretrained CNN tend to learn the most generic, broadly reusable features?",
+      options: ["The final output layer", "The early layers, closest to the raw input", "None — all layers are equally task-specific", "Only the pooling layers"],
+      correct: 1,
+      explain: "Early layers tend to learn low-level features (edges, gradients, textures) that are useful across almost any visual task. Later layers become more specific to the original training task.",
+    },
+    {
+      q: "A farm-monitoring project needs to classify drone photos of maize leaves for a specific disease. What's the more practical approach today?",
+      options: [
+        "Train a CNN from scratch on millions of images",
+        "Fine-tune a pretrained backbone on a smaller set of labeled maize-leaf photos",
+        "Computer vision can't be used for agricultural applications",
+        "Manually write rules to detect disease patterns without a model",
+      ],
+      correct: 1,
+      explain: "This is exactly the transfer learning use case: a pretrained backbone already understands general visual structure, so it can be adapted to this specific domain with a comparatively small labeled dataset.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

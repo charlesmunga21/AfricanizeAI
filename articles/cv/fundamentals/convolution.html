@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Convolution Works — Computer Vision — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="index.html" class="active">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Vision / <a href="index.html">Fundamentals</a> / How Convolution Works</div>
+    <article>
+      <h1>How Convolution Works</h1>
+      <p>Most modern vision systems are built on Convolutional Neural Networks (CNNs). Instead of connecting every pixel to every neuron (which would be enormous and ignore spatial structure), a convolution slides a small filter ("kernel") across the image, learning to detect local patterns — edges, textures, corners — which get combined into more complex shapes in deeper layers.</p>
+
+      <pre><code>import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(2),
+    nn.Conv2d(16, 32, kernel_size=3, padding=1),
+    nn.ReLU(),
+    nn.MaxPool2d(2),
+    nn.Flatten(),
+    nn.Linear(32 * 8 * 8, 10)   # e.g. 10 output classes
+)</code></pre>
+
+      <h2>What a convolution actually computes</h2>
+      <p>At each position, the kernel overlaps a patch of the input the same size as itself. Every overlapping pair of numbers gets multiplied, and all those products are summed into a single output number. Then the kernel slides one step over and repeats — producing an entire grid of outputs, the "feature map."</p>
+
+      <h2>Visual model: slide the kernel yourself</h2>
+      <p>This 3×3 kernel is a simple vertical-edge detector. Step through it and watch it slide across the 5×5 input, computing one output value per position — and notice the output lights up exactly where the input actually has a vertical edge (the boundary between the 0s and the 1s).</p>
+      <div class="viz" id="conv-viz"></div>
+
+      <div class="note">Want to see a network actually learn a decision boundary instead of just reading about it? Try the <a href="../../../demos/playground.html">Neural Network Playground</a> — train one in your browser, no setup.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="conv-quiz"></div>
+
+      <div class="article-nav">
+        <a href="core-tasks.html">← Core Vision Tasks</a>
+        <a href="transfer-learning.html">Next: Transfer Learning &amp; Applications →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/cv-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initConvolutionViz(document.getElementById("conv-viz"));
+  initQuiz(document.getElementById("conv-quiz"), [
+    {
+      q: "What does a convolution kernel compute at each position it slides over?",
+      options: [
+        "The average of every pixel in the whole image",
+        "An elementwise multiply of the kernel and the overlapping input patch, then summed into one number",
+        "A copy of the input patch, unchanged",
+        "The maximum pixel value in the image",
+      ],
+      correct: 1,
+      explain: "Each overlapping (kernel value, input value) pair is multiplied, and all the products are added together to produce one output value for that position.",
+    },
+    {
+      q: "Why use a small sliding kernel instead of connecting every pixel to every neuron directly?",
+      options: [
+        "It's a historical convention with no real benefit",
+        "A full connection ignores spatial structure and would need an enormous number of parameters",
+        "Kernels can only be used on grayscale images",
+        "It makes training slower on purpose",
+      ],
+      correct: 1,
+      explain: "A sliding kernel reuses the same small set of weights at every position, which is both far more parameter-efficient and naturally captures local spatial patterns like edges.",
+    },
+    {
+      q: "In the visual model, why does the output feature map have larger values exactly where the input has a vertical edge?",
+      options: [
+        "Coincidence — the values are random",
+        "The kernel's weights were specifically chosen to produce a large response when there's a sharp left-to-right change in value",
+        "The kernel always outputs the input unchanged",
+        "Edges are marked before convolution runs, not computed by it",
+      ],
+      correct: 1,
+      explain: "This kernel (-1, 0, 1 in each row) computes a difference between the right and left side of its window — that difference is large exactly at a sharp value change, i.e. an edge.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

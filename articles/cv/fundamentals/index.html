@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Vision Fundamentals — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="index.html" class="active">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Vision / Fundamentals</div>
+
+    <section class="module-hero">
+      <h1>Computer Vision Fundamentals</h1>
+      <p>Computer vision is the field of teaching computers to extract meaning from images and video — going from raw pixel grids to information like "there is a car here" or "this is a picture of a maize field under drought stress." A model never "sees" a picture the way a person does; it operates purely on arrays of numbers.</p>
+      <p>This module goes from that raw representation up to how a real vision system gets built in practice: what an image actually is to a computer, the different tasks vision models perform, the convolution operation that makes CNNs work, and why almost nobody trains one from scratch anymore.</p>
+      <ul class="learn-list">
+        <li>Why an image is just a grid (or three) of numbers, nothing more</li>
+        <li>The difference between classification, detection, and segmentation</li>
+        <li>How a convolution kernel actually computes a feature map, step by step</li>
+        <li>Why fine-tuning a pretrained model needs far less data than training from scratch</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="images-as-data.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>Images as Data</h3>
+        <p>A digital image is a grid of numbers — edit one yourself and watch the picture change.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="core-tasks.html">
+        <span class="submodule-card__step">2 · Vocabulary</span>
+        <h3>Core Vision Tasks</h3>
+        <p>Classification, detection, and segmentation, applied to the same scene — see the difference directly.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="convolution.html">
+        <span class="submodule-card__step">3 · Mechanics</span>
+        <h3>How Convolution Works</h3>
+        <p>Slide a real 3×3 kernel across a grid and watch each output value get computed.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="transfer-learning.html">
+        <span class="submodule-card__step">4 · Practice</span>
+        <h3>Transfer Learning &amp; Applications</h3>
+        <p>Why almost no one trains a vision model from scratch, and where these models actually get used.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference: core tasks</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Task</th><th>Output</th><th>Answers</th></tr></thead>
+      <tbody>
+        <tr><td>Classification</td><td>One label for the whole image</td><td>"What is this a picture of?"</td></tr>
+        <tr><td>Object detection</td><td>Bounding box + label per object</td><td>"What's in this image, and roughly where?"</td></tr>
+        <tr><td>Semantic segmentation</td><td>A class label for every pixel</td><td>"What's the exact shape/boundary of each object?"</td></tr>
+        <tr><td>Object tracking</td><td>An identity kept consistent across frames</td><td>"Is this the same object as three frames ago?"</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="images-as-data.html">Start: Images as Data →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
