@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Array Operations — Arrays — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="index.html" class="active">Arrays</a></li>
+      <li><a href="../../binary-search.html">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Arrays</a> / Array Operations</div>
+    <article>
+      <h1>Array Operations</h1>
+      <p>Arrays support a small set of core operations. Their costs aren't uniform — some are O(1), some are O(n) — and the difference comes entirely from whether the operation has to preserve contiguity.</p>
+
+      <h2>Access</h2>
+      <p>Reading or writing <code>arr[i]</code> is O(1): direct address arithmetic, covered in the <a href="introduction.html">previous submodule</a>.</p>
+
+      <h2>Traversal</h2>
+      <p>Visiting every element once — printing them, summing them, mapping a function over them — is O(n), since there are n elements and each is visited exactly once.</p>
+
+      <h2>Insertion</h2>
+      <p>Inserting at the <strong>end</strong> is O(1) if there's spare capacity: drop the value in, no other element moves. Inserting at the <strong>start or middle</strong> is O(n): every element from that index onward has to shift right one slot first, to make room while staying contiguous.</p>
+
+      <h2>Deletion</h2>
+      <p>Symmetric to insertion. Deleting from the <strong>end</strong> is O(1). Deleting from the <strong>start or middle</strong> is O(n), because everything after the removed slot has to shift left to close the gap.</p>
+
+      <div class="note">Insertion and deletion in the middle are expensive precisely because of the property that makes access fast: contiguity. Move one element out of place, and everything after it has to move too. If your workload is insert/delete-heavy away from the end, a linked list is often the better fit — see <a href="../../linked-list-basics.html">linked lists</a>.</div>
+
+      <h2>Visual model: try each operation</h2>
+      <p>Pick an index and value, then run an operation. Watch which boxes move, and how the reported complexity changes based on <em>where</em> the operation happens.</p>
+      <div class="viz" id="operations-viz"></div>
+
+      <h2>Code</h2>
+      <pre><code>arr = [10, 20, 30, 40, 50]
+
+arr[1]              # access — O(1) -> 20
+arr.append(60)       # insert at end — O(1)
+arr.insert(0, 5)      # insert at start — O(n), shifts everything right
+arr.pop()             # delete at end — O(1)
+del arr[0]            # delete at start — O(n), shifts everything left</code></pre>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ops-quiz"></div>
+
+      <div class="article-nav">
+        <a href="introduction.html">← Introduction &amp; Memory Layout</a>
+        <a href="searching.html">Next: Searching →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/array-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initOperationsViz(document.getElementById("operations-viz"));
+  initQuiz(document.getElementById("ops-quiz"), [
+    {
+      q: "You insert one element at the very end of an array with spare capacity. What's the complexity?",
+      options: ["O(1)", "O(n)", "O(log n)", "O(n²)"],
+      correct: 0,
+      explain: "No existing element needs to move, so it's a direct write — O(1).",
+    },
+    {
+      q: "You delete the first element of a 1000-element array. Roughly how many elements move?",
+      options: ["0", "1", "~500", "~999"],
+      correct: 3,
+      explain: "Every element after index 0 has to shift left by one to close the gap and stay contiguous — that's ~999 moves, O(n).",
+    },
+    {
+      q: "Which operation is always O(n), regardless of position?",
+      options: ["Access by index", "Traversal", "Insert at the end", "Delete at the end"],
+      correct: 1,
+      explain: "Traversal visits every one of the n elements by definition — position doesn't change that.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

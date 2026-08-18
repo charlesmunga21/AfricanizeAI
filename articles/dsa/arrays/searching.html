@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Searching: Linear &amp; Binary — Arrays — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="index.html" class="active">Arrays</a></li>
+      <li><a href="../../binary-search.html">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Arrays</a> / Searching</div>
+    <article>
+      <h1>Searching: Linear &amp; Binary</h1>
+      <p>Finding whether a value exists in an array — and at what index — has two standard approaches, and which one you can use depends entirely on whether the data is sorted.</p>
+
+      <h2>Linear search</h2>
+      <p>Check every element in order until you find the target or run out of elements. It works on <strong>any</strong> array, sorted or not, but in the worst case (target absent, or at the very end) it checks all n elements: O(n).</p>
+      <pre><code>def linear_search(arr, target):
+    for i, value in enumerate(arr):
+        if value == target:
+            return i
+    return -1</code></pre>
+
+      <h2>Binary search</h2>
+      <p>If the array is <strong>sorted</strong>, you don't need to check every element. Compare the target to the middle element: if it matches, done. If the target is smaller, it can only be in the left half; if larger, only the right half. Either way, you just eliminated half the remaining elements in one comparison. Repeating this gives O(log n) — for a million elements, about 20 comparisons instead of up to a million.</p>
+      <pre><code>def binary_search(arr, target):
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1</code></pre>
+
+      <div class="note">Binary search's requirement — sorted data — isn't free. If the array changes often, keeping it sorted (or sorting it once, O(n log n)) has to be worth the repeated O(log n) searches it buys you. For a one-off search on unsorted data, linear search is simpler and just as fast in practice.</div>
+
+      <h2>Visual model: step through both</h2>
+      <p>Pick a target, choose an algorithm, then step through it (or auto-play) and watch exactly which comparisons happen. For binary search, dimmed boxes are outside the current search range — notice how fast that range shrinks.</p>
+      <div class="viz" id="search-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="search-quiz"></div>
+
+      <div class="article-nav">
+        <a href="operations.html">← Array Operations</a>
+        <a href="multidimensional.html">Next: Multi-Dimensional Arrays →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/array-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initSearchViz(document.getElementById("search-viz"));
+  initQuiz(document.getElementById("search-quiz"), [
+    {
+      q: "An array has 1,000,000 sorted elements. Roughly how many comparisons does binary search need in the worst case?",
+      options: ["~20", "~1,000", "~500,000", "~1,000,000"],
+      correct: 0,
+      explain: "log₂(1,000,000) ≈ 20 — each comparison halves the remaining range.",
+    },
+    {
+      q: "Can you run binary search on an unsorted array?",
+      options: [
+        "Yes, it works the same either way",
+        "No — the left/right elimination logic assumes sorted order and will give wrong results",
+        "Yes, but only if the array has fewer than 100 elements",
+        "No, binary search only works on linked lists",
+      ],
+      correct: 1,
+      explain: "Binary search decides which half to discard by comparing to the middle — that logic is only valid if the array is sorted.",
+    },
+    {
+      q: "You need to search an unsorted array exactly once, then discard it. What's the better choice?",
+      options: [
+        "Sort it, then binary search",
+        "Linear search directly",
+        "Binary search on the unsorted array",
+        "It doesn't matter, both take the same time",
+      ],
+      correct: 1,
+      explain: "Sorting first costs O(n log n) — more expensive than a single O(n) linear search when you're only searching once.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

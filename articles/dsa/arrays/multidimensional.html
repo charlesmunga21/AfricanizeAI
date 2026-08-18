@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Dimensional Arrays — Arrays — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="index.html" class="active">Arrays</a></li>
+      <li><a href="../../binary-search.html">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Arrays</a> / Multi-Dimensional Arrays</div>
+    <article>
+      <h1>Multi-Dimensional Arrays</h1>
+      <p>A 2D array — a grid, a matrix, an image's pixels — looks like a table when you draw it, but computer memory is one long, flat, linear sequence of addresses. There's no such thing as a "row" in memory; a 2D array is really a 1D array with an indexing scheme layered on top.</p>
+
+      <h2>Row-major vs. column-major order</h2>
+      <p>To flatten a grid with <code>rows</code> rows and <code>cols</code> columns into 1D, you have to pick an order to walk it in:</p>
+      <ul>
+        <li><strong>Row-major</strong> (C, Python, JavaScript, most languages): lay out row 0 completely, then row 1, then row 2. The flat index of <code>grid[r][c]</code> is <code>r * cols + c</code>.</li>
+        <li><strong>Column-major</strong> (Fortran, MATLAB, R): lay out column 0 completely, then column 1. The flat index of <code>grid[r][c]</code> is <code>c * rows + r</code>.</li>
+      </ul>
+      <p>Combined with the address formula from the <a href="introduction.html">introduction</a>, the full formula for row-major is:</p>
+      <pre><code>address(r, c) = base + (r * cols + c) * size</code></pre>
+
+      <div class="note">This is why looping over a 2D array in the "wrong" order (column-outer, row-inner, on a row-major array) can be noticeably slower on real hardware: it jumps around memory instead of reading it sequentially, which defeats the CPU's cache. Looping row-outer, column-inner keeps memory access sequential.</div>
+
+      <h2>Visual model: click a cell</h2>
+      <p>Click any cell to see its row/column position converted into a flat memory address. Switch the order to see the same grid produce different addresses depending on how it's walked.</p>
+      <div class="viz" id="grid-viz"></div>
+
+      <h2>Code</h2>
+      <pre><code># Python: a 3x4 grid as a list of lists (row-major by construction)
+grid = [
+    [0, 1, 2, 3],
+    [4, 5, 6, 7],
+    [8, 9, 10, 11],
+]
+print(grid[1][2])   # row 1, col 2 -> 6
+
+# The same data, flattened row-major:
+flat = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+r, c, cols = 1, 2, 4
+print(flat[r * cols + c])   # -> 6, same value</code></pre>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="grid-quiz"></div>
+
+      <div class="article-nav">
+        <a href="searching.html">← Searching</a>
+        <a href="index.html">Back to Arrays overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/array-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initGridViz(document.getElementById("grid-viz"));
+  initQuiz(document.getElementById("grid-quiz"), [
+    {
+      q: "A row-major grid has 5 columns. What's the flat index of grid[2][3]?",
+      options: ["8", "13", "10", "23"],
+      correct: 1,
+      explain: "flat index = r × cols + c = 2 × 5 + 3 = 13.",
+    },
+    {
+      q: "Why does memory have no real concept of 'rows' and 'columns'?",
+      options: [
+        "Because memory is 1-dimensional — a 2D array is a 1D array with an indexing formula on top",
+        "Because rows and columns are only a Python feature",
+        "Because 2D arrays are stored as linked lists internally",
+        "Because CPUs store even and odd indices separately",
+      ],
+      correct: 0,
+      explain: "Physical memory is a flat sequence of addresses. \"2D\" is a convenience the language gives you by translating [r][c] into a single flat index.",
+    },
+    {
+      q: "Looping over a large row-major 2D array column-outer, row-inner tends to be slower in practice. Why?",
+      options: [
+        "It uses more total memory",
+        "It computes more comparisons",
+        "It jumps around memory non-sequentially, defeating CPU caching",
+        "Column-major loops are illegal in most languages",
+      ],
+      correct: 2,
+      explain: "Row-major storage means consecutive row elements are adjacent in memory. Walking column-outer jumps `cols` elements at a time — sequential access (and its cache benefits) is lost.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

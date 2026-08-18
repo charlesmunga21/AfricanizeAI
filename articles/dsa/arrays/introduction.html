@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction &amp; Memory Layout — Arrays — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="index.html" class="active">Arrays</a></li>
+      <li><a href="../../binary-search.html">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Arrays</a> / Introduction &amp; Memory Layout</div>
+    <article>
+      <h1>Introduction &amp; Memory Layout</h1>
+      <p>An array is a collection of elements stored in <strong>contiguous</strong> memory locations, all of the same type, and accessed using an index. It's the simplest possible way to group a fixed number of values together, and almost every other data structure — lists, stacks, queues, hash tables — is built on top of one.</p>
+
+      <h2>Why contiguous memory matters</h2>
+      <p>Because array elements sit next to each other in memory, the location of any element can be calculated directly from its index, instead of being searched for. If an array starts at memory address <code>base</code> and each element takes up <code>size</code> bytes, the address of element <code>i</code> is:</p>
+      <pre><code>address(i) = base + (i * size)</code></pre>
+      <p>This is why reading or writing <code>arr[i]</code> takes constant time, O(1), regardless of how large the array is — there's no traversal, just arithmetic.</p>
+
+      <div class="note">Contrast this with a linked list, where elements can live anywhere in memory and are connected by pointers. That flexibility is what makes insertion cheap in a linked list and expensive in an array — see <a href="../../linked-list-basics.html">linked lists</a> for the full tradeoff.</div>
+
+      <h2>Visual model: address arithmetic</h2>
+      <p>Change the base address or element size below, or click a box, and watch the formula update. This is exactly what the CPU does every time your code reads <code>arr[i]</code>.</p>
+      <div class="viz" id="address-viz"></div>
+
+      <h2>Static vs. dynamic arrays</h2>
+      <p>A <strong>static array</strong> has a fixed size decided at creation — the memory block is allocated once. A <strong>dynamic array</strong> (Python's <code>list</code>, JavaScript's <code>Array</code>, C++'s <code>std::vector</code>) looks like it can grow freely, but under the hood it's still a contiguous block: when it runs out of room, the runtime allocates a new, larger block (usually double the size) and copies everything over. That occasional copy is why dynamic array growth is <em>amortized</em> O(1) per append, even though any single append can occasionally cost O(n).</p>
+
+      <h2>Example</h2>
+      <pre><code>scores = [72, 88, 95, 61, 79]
+print(scores[2])   # O(1) — direct address calculation -> 95</code></pre>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="intro-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Arrays overview</a>
+        <a href="operations.html">Next: Array Operations →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/array-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initAddressViz(document.getElementById("address-viz"));
+  initQuiz(document.getElementById("intro-quiz"), [
+    {
+      q: "An array's base address is 200 and each element takes 4 bytes. What is the address of arr[5]?",
+      options: ["204", "220", "225", "1000"],
+      correct: 1,
+      explain: "address(i) = base + (i × size) = 200 + (5 × 4) = 220.",
+    },
+    {
+      q: "Why is arr[i] O(1) instead of O(n)?",
+      options: [
+        "Arrays are always small",
+        "The address is computed directly from the index, no traversal needed",
+        "Computers cache the last accessed index",
+        "Arrays are sorted by default",
+      ],
+      correct: 1,
+      explain: "Contiguous storage means any element's address is arithmetic (base + i × size), not something you have to search for.",
+    },
+    {
+      q: "A dynamic array (like a Python list) is full and you append one more element. What actually happens?",
+      options: [
+        "Nothing — dynamic arrays have unlimited space",
+        "The next memory address is claimed, whether free or not",
+        "A new, larger block is allocated and existing elements are copied over",
+        "The array becomes a linked list automatically",
+      ],
+      correct: 2,
+      explain: "Dynamic arrays are still contiguous blocks under the hood. Growing means allocating a new (usually larger) block and copying — occasional O(n), amortized O(1) per append.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

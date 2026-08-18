@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="index.html" class="active">Arrays</a></li>
+      <li><a href="../../binary-search.html">Binary Search</a></li>
+      <li><a href="../../linked-list-basics.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / Arrays</div>
+
+    <section class="module-hero">
+      <h1>Arrays</h1>
+      <p>An array is a collection of elements stored in contiguous memory locations, all of the same type, and accessed using an index. It's the simplest possible way to group values together, and almost every other data structure — lists, stacks, queues, hash tables — is built on top of one.</p>
+      <p>This module breaks arrays down the way a full course would: how they're addressed in memory, what each operation actually costs, how to search them efficiently, and how the same idea extends to more than one dimension. Every submodule has a small interactive model to poke at, and a short quiz to check what stuck.</p>
+      <ul class="learn-list">
+        <li>Why <code>arr[i]</code> is O(1) — the address arithmetic behind index access</li>
+        <li>The real cost of insert, delete, and traversal, and why it depends on position</li>
+        <li>Linear vs. binary search, and why binary search needs sorted data</li>
+        <li>How 2D arrays are actually laid out as flat 1D memory</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="introduction.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>Introduction &amp; Memory Layout</h3>
+        <p>What an array is, why contiguous memory makes access O(1), and the address formula behind it.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="operations.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>Array Operations</h3>
+        <p>Access, traversal, insertion, and deletion — with the real time complexity of each, live.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="searching.html">
+        <span class="submodule-card__step">3 · Algorithms</span>
+        <h3>Searching: Linear &amp; Binary</h3>
+        <p>Step through both algorithms comparison by comparison and see why sorted data changes everything.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="multidimensional.html">
+        <span class="submodule-card__step">4 · Extension</span>
+        <h3>Multi-Dimensional Arrays</h3>
+        <p>2D arrays aren't a grid in memory — they're a flat array with row-major or column-major math.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Operation</th><th>Complexity</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Access by index</td><td><code>O(1)</code></td><td>Address is computed directly, no traversal</td></tr>
+        <tr><td>Search, unsorted</td><td><code>O(n)</code></td><td>Every element may need checking</td></tr>
+        <tr><td>Search, sorted (binary)</td><td><code>O(log n)</code></td><td>Each comparison halves the remaining range</td></tr>
+        <tr><td>Insert/delete at end</td><td><code>O(1)</code></td><td>No elements need to shift</td></tr>
+        <tr><td>Insert/delete at start or middle</td><td><code>O(n)</code></td><td>Every following element shifts to stay contiguous</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="introduction.html">Start: Introduction &amp; Memory Layout →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

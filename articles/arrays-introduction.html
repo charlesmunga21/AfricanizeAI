@@ -3,88 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="0; url=dsa/arrays/index.html">
+<link rel="canonical" href="dsa/arrays/index.html">
 <title>Arrays — AfricanizeAI</title>
-<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
-<header class="topbar">
-  <div class="brand">Africanize<span class="accent">AI</span></div>
-  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
-  <nav>
-    <a href="../index.html">Home</a>
-    <a href="../index.html#dsa">DSA</a>
-    <a href="../index.html#cv">Computer Vision</a>
-    <a href="../index.html#ai-usecases">AI Use-Cases</a>
-    <a href="../demos/index.html">Demos</a>
-  </nav>
-</header>
-
-<div class="layout">
-  <aside class="sidebar">
-    <h3>Data Structures &amp; Algorithms</h3>
-    <ul>
-      <li><a href="arrays-introduction.html" class="active">Arrays</a></li>
-      <li><a href="binary-search.html">Binary Search</a></li>
-      <li><a href="linked-list-basics.html">Linked Lists</a></li>
-    </ul>
-    <h3>Computer Vision</h3>
-    <ul>
-      <li><a href="computer-vision-intro.html">Intro to Computer Vision</a></li>
-    </ul>
-    <h3>AI Use-Cases</h3>
-    <ul>
-      <li><a href="ai-business-use-cases.html">AI for Business</a></li>
-      <li><a href="ai-creativity.html">AI for Creativity</a></li>
-    </ul>
-  </aside>
-
-  <main>
-    <div class="breadcrumb"><a href="../index.html">Home</a> / Data Structures &amp; Algorithms / Arrays</div>
-    <article>
-      <h1>Arrays</h1>
-      <p>An array is a collection of elements stored in contiguous memory locations, all of the same type, and accessed using an index. It's the simplest possible way to group a fixed number of values together, and almost every other data structure — lists, stacks, queues, hash tables — is built on top of one.</p>
-
-      <h2>Why contiguous memory matters</h2>
-      <p>Because array elements sit next to each other in memory, the location of any element can be calculated directly from its index, instead of being searched for. If an array starts at memory address <code>base</code> and each element takes up <code>size</code> bytes, the address of element <code>i</code> is:</p>
-      <pre><code>address(i) = base + (i * size)</code></pre>
-      <p>This is why reading or writing <code>arr[i]</code> takes constant time, O(1), regardless of how large the array is.</p>
-
-      <h2>Core operations and their cost</h2>
-      <ul>
-        <li><strong>Access by index</strong> — O(1). Direct address calculation, no traversal needed.</li>
-        <li><strong>Search (unsorted)</strong> — O(n). You may have to check every element.</li>
-        <li><strong>Search (sorted)</strong> — O(log n) using binary search.</li>
-        <li><strong>Insert/delete at the end</strong> — O(1) if there's spare capacity.</li>
-        <li><strong>Insert/delete at the start or middle</strong> — O(n), since every following element has to shift to keep the array contiguous.</li>
-      </ul>
-
-      <div class="note">Insertion and deletion are expensive precisely because of the property that makes access fast: contiguity. Shift one element out of place, and everything after it has to move.</div>
-
-      <h2>Example: linear search vs. direct access</h2>
-      <pre><code>def find_index(arr, target):
-    for i, value in enumerate(arr):
-        if value == target:
-            return i
-    return -1
-
-scores = [72, 88, 95, 61, 79]
-print(scores[2])          # O(1) -> 95
-print(find_index(scores, 61))  # O(n) -> 3</code></pre>
-
-      <h2>When to reach for an array</h2>
-      <p>Use an array when the number of elements is known or bounded, when you need fast random access by index, and when insertions/deletions mostly happen at the end. If you need frequent insertions in the middle of the collection, a linked list or a different structure is usually a better fit — see the <a href="linked-list-basics.html">linked lists</a> tutorial for the tradeoff.</p>
-
-      <div class="article-nav">
-        <span></span>
-        <a href="binary-search.html">Next: Binary Search →</a>
-      </div>
-    </article>
-  </main>
-</div>
-
-<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
-<script src="../js/script.js"></script>
-<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<p>This page moved to the expanded <a href="dsa/arrays/index.html">Arrays module</a>.</p>
 </body>
 </html>
