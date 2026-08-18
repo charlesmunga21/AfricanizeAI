@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Art &amp; Diffusion Models — AI for Creativity — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../business/index.html">AI for Business</a></li>
+      <li><a href="index.html" class="active">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Creativity</a> / Visual Art &amp; Diffusion Models</div>
+    <article>
+      <h1>Visual Art &amp; Diffusion Models</h1>
+      <p>Diffusion models (like those behind popular image generators) turn a text description into an image by starting from random noise and gradually refining it to match the prompt. Designers use these for rapid concept exploration — mood boards, style variations, and rough visual drafts — before committing time to a final polished version by hand or in traditional tools.</p>
+
+      <h2>The core idea: denoise, step by step</h2>
+      <p>A diffusion model is trained to do one narrow thing extremely well: given a noisy image and a text prompt, predict a slightly <em>less</em> noisy version of it. Run that step repeatedly — each time feeding the output back in as the new input — and a coherent image gradually emerges from what started as pure static. No single step "draws" the picture; the picture is the accumulated result of many small denoising steps.</p>
+
+      <div class="note">This is a genuinely different mechanism from the classification/detection covered in <a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a> — those models take an image in and produce a label out; a diffusion model takes noise (and a prompt) in and produces an image out.</div>
+
+      <h2>Visual model: denoise it yourself</h2>
+      <p>This grid starts as random black-and-white noise. Click "Denoise Step" repeatedly (8 steps total) and watch cells resolve toward a hidden target shape, one step at a time — exactly the "slightly less noisy each step" mechanism described above, simplified down to a grid you can run yourself.</p>
+      <div class="viz" id="diffusion-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="visual-quiz"></div>
+
+      <div class="article-nav">
+        <a href="writing.html">← Writing &amp; Prompt Iteration</a>
+        <a href="music.html">Next: Music Generation →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-creativity-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initDiffusionViz(document.getElementById("diffusion-viz"));
+  initQuiz(document.getElementById("visual-quiz"), [
+    {
+      q: "What does a single denoising step in a diffusion model actually do?",
+      options: [
+        "Draws the final image in one shot",
+        "Predicts a slightly less noisy version of the current image, guided by the prompt",
+        "Randomly picks a new image from a database",
+        "Deletes part of the image",
+      ],
+      correct: 1,
+      explain: "Each step is a small, narrow prediction — 'given this noisy image and this prompt, what does a bit less noise look like' — repeated many times to reach a coherent result.",
+    },
+    {
+      q: "Why does the image only become coherent after MANY steps, not one?",
+      options: [
+        "It's a technical limitation that will be fixed eventually",
+        "Each step only removes a small amount of noise; the model is trained on that narrow step, not on jumping straight from noise to final image",
+        "More steps make the model run faster",
+        "It doesn't — one step is always enough",
+      ],
+      correct: 1,
+      explain: "The model's whole training objective is small incremental denoising, not one-shot generation — the coherent result is the accumulation of many small, individually modest steps.",
+    },
+    {
+      q: "How does a diffusion model's input/output differ from the image classification covered in Computer Vision Fundamentals?",
+      options: [
+        "They're identical mechanisms",
+        "Classification takes an image in and outputs a label; diffusion takes noise (+ a prompt) in and outputs an image",
+        "Diffusion models can only output labels, never images",
+        "Classification requires more computing power than diffusion",
+      ],
+      correct: 1,
+      explain: "They're inverse-shaped problems: classification goes image → label, while diffusion goes noise (+ text) → image.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

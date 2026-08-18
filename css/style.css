@@ -298,6 +298,9 @@ button.viz-box { cursor: pointer; }
 .ll-arrow { color: var(--text-muted); font-size: 1.1rem; padding: 0 0.15rem; }
 .ll-null { display: flex; align-items: center; justify-content: center; min-width: 3.6rem; min-height: 3.2rem; border: 1.5px dashed var(--border); border-radius: 6px; color: var(--text-muted); font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.72rem; }
 
+/* Reuses .quiz-option styling for a plain pick-one exercise outside a quiz */
+.viz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+
 /* Computer vision: pixel-grid editor */
 .px-cell { aspect-ratio: 1; border: 1px solid rgba(0,0,0,0.08); border-radius: 3px; font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.1s ease; }
 

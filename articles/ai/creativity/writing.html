@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing &amp; Prompt Iteration — AI for Creativity — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../business/index.html">AI for Business</a></li>
+      <li><a href="index.html" class="active">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Creativity</a> / Writing &amp; Prompt Iteration</div>
+    <article>
+      <h1>Writing &amp; Prompt Iteration</h1>
+      <p>Large language models draft, rewrite, and restructure text: blog posts, ad copy, scripts, and story outlines. The most effective creative use isn't "generate my final piece" but iteration — producing multiple angles or openings quickly, then a human selects and refines the strongest one.</p>
+
+      <h2>Most of the craft is in the prompt</h2>
+      <pre><code># Round 1 — too generic
+prompt = "Write a tagline for a coffee shop"
+
+# Round 2 — adds specificity that shapes the output
+prompt = (
+    "Write 5 taglines for a coffee shop in Nairobi that roasts "
+    "its own single-origin Kenyan beans, aimed at young professionals. "
+    "Keep each under 8 words."
+)</code></pre>
+      <p>The output quality of generative tools depends heavily on how specific and constrained the prompt is — vague prompts produce generic output, and the craft is in the constraints you provide, not just the request.</p>
+
+      <h2>Visual model: watch specificity change the output</h2>
+      <p>Every checkbox below is one real constraint from the "Round 2" prompt above. Add them one at a time and watch the generated taglines get sharper — this is illustrative (not a live model call), but it mirrors the real relationship: more genuine constraint, more usable output.</p>
+      <div class="viz" id="prompt-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="writing-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← AI for Creativity overview</a>
+        <a href="visual-art.html">Next: Visual Art &amp; Diffusion Models →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-creativity-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initPromptIterationViz(document.getElementById("prompt-viz"));
+  initQuiz(document.getElementById("writing-quiz"), [
+    {
+      q: "\"Write a tagline for a coffee shop\" vs. a version specifying audience, product detail, tone, and a length limit. Why does the second version work better?",
+      options: [
+        "It doesn't — both produce identical output",
+        "More genuine constraints narrow the model's search space toward something specific and usable, instead of generic",
+        "Longer prompts are always better regardless of content",
+        "The model ignores prompts under a certain length",
+      ],
+      correct: 1,
+      explain: "A vague prompt has no reason to produce anything specific. Real constraints (audience, detail, tone, length) narrow what a good answer looks like, which narrows the output.",
+    },
+    {
+      q: "What is the recommended creative workflow with generative writing tools?",
+      options: [
+        "Accept the first output as final",
+        "Generate several options quickly, then a human selects and refines the strongest one",
+        "Never use generated text as a starting point",
+        "Only use these tools for final, publish-ready copy",
+      ],
+      correct: 1,
+      explain: "The article's core claim: the value is in fast iteration and multiple angles, with human selection and refinement at the end — not treating the first draft as final.",
+    },
+    {
+      q: "In the visual model, what actually changes between specificity levels?",
+      options: [
+        "The number of taglines shown",
+        "A live model is being called with a different prompt each time",
+        "A fixed, pre-written set of example outputs is swapped in based on how many constraints are checked, to illustrate the pattern",
+        "Nothing — it's decorative",
+      ],
+      correct: 2,
+      explain: "This is an illustrative simulation with hand-written example sets, not a live model call — but it demonstrates the real pattern: more real constraint tends to produce more usable output.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

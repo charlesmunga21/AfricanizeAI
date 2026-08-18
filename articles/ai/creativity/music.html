@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Generation — AI for Creativity — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../business/index.html">AI for Business</a></li>
+      <li><a href="index.html" class="active">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Creativity</a> / Music Generation</div>
+    <article>
+      <h1>Music Generation</h1>
+      <p>AI music tools can generate backing tracks, suggest chord progressions, or produce full compositions from a text prompt or hummed melody, useful for scoring quick drafts, generating royalty-free background music, or breaking creative block by producing a starting point to react to.</p>
+
+      <h2>"A starting point to react to"</h2>
+      <p>This is the recurring theme across every creative medium in this module: the useful output usually isn't a finished piece, it's raw material a human then edits, rejects, or builds on. A generated chord progression that's "almost right" is often more useful than a blank page — it gives you something concrete to push against.</p>
+
+      <h2>Visual model: generate a progression</h2>
+      <p>Pick a mood, and get a 4-chord progression built for that mood. Regenerate for a different starting point within the same mood — a real tool works the same way: same intent, multiple candidate outputs, you pick or iterate.</p>
+      <div class="viz" id="chord-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="music-quiz"></div>
+
+      <div class="article-nav">
+        <a href="visual-art.html">← Visual Art &amp; Diffusion Models</a>
+        <a href="human-judgment.html">Next: Where Human Judgment Matters →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-creativity-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initChordViz(document.getElementById("chord-viz"));
+  initQuiz(document.getElementById("music-quiz"), [
+    {
+      q: "What does 'a starting point to react to' mean in the context of AI music tools?",
+      options: [
+        "The generated output is always the final, unedited product",
+        "The generated output is raw material a human then edits, rejects, or builds on — not a finished piece",
+        "AI-generated music can never be used in any real project",
+        "It means the tool requires a human to hum the melody first",
+      ],
+      correct: 1,
+      explain: "This is the recurring pattern in every medium covered in this module — the value is in producing something concrete to react to, with the human making the final creative call.",
+    },
+    {
+      q: "In the visual model, what changes when you switch from 'Happy' to 'Sad' mood and regenerate?",
+      options: [
+        "Nothing — mood is purely cosmetic",
+        "A different set of preset chord progressions associated with that mood becomes available to cycle through",
+        "The tool starts composing an entirely new song from scratch using AI",
+        "The number of chords in the progression changes",
+      ],
+      correct: 1,
+      explain: "Each mood maps to its own small pool of preset progressions in this illustrative demo — switching moods switches which pool you're drawing from, and Regenerate cycles within it.",
+    },
+    {
+      q: "Why might a composer use a generated progression that's 'almost right' rather than starting from a totally blank page?",
+      options: [
+        "Because AI output is always objectively better",
+        "Because reacting to something concrete — even an imperfect starting point — is often easier than generating an idea from nothing",
+        "Because blank pages are technically impossible to compose from",
+        "There's no real benefit either way",
+      ],
+      correct: 1,
+      explain: "This is the practical value generative tools add to creative work: they lower the cost of getting from 'nothing' to 'something to edit', not that the raw output is finished work.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

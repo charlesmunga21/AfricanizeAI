@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Human Judgment Matters — AI for Creativity — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../business/index.html">AI for Business</a></li>
+      <li><a href="index.html" class="active">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Creativity</a> / Where Human Judgment Matters</div>
+    <article>
+      <h1>Where Human Judgment Matters</h1>
+      <p>Every submodule so far has shown a generative mechanism producing options quickly. None of them decide which option is good. That gap is exactly where human judgment lives, and it doesn't shrink as the models get better at generating — it just moves the bottleneck from "produce a draft" to "evaluate the drafts."</p>
+
+      <ul>
+        <li><strong>Taste</strong> — choosing which of many generated options is actually good.</li>
+        <li><strong>Original concept</strong> — the model can't decide what story is worth telling or what problem a design should solve.</li>
+        <li><strong>Cultural and contextual nuance</strong> — models trained mostly on global/Western data often miss local context, references, and language nuance that a human creator supplies.</li>
+      </ul>
+
+      <h2>Visual model: make the call yourself</h2>
+      <p>These four taglines all came from the same well-specified prompt in the <a href="writing.html">Writing &amp; Prompt Iteration</a> submodule. There's no hidden "correct" answer here — pick the one you'd actually ship.</p>
+      <div class="viz" id="taste-viz"></div>
+
+      <div class="note">If you compared notes with someone else who did this exercise, you might well have picked differently — and neither of you would be wrong. That's the point: taste doesn't converge to one right answer the way a math problem does, which is exactly why it isn't something a model can compute for you.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="judgment-quiz"></div>
+
+      <div class="article-nav">
+        <a href="music.html">← Music Generation</a>
+        <a href="index.html">Back to AI for Creativity overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-creativity-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initTasteViz(document.getElementById("taste-viz"));
+  initQuiz(document.getElementById("judgment-quiz"), [
+    {
+      q: "Why can't a generative model reliably pick 'the best' output from a set it just generated?",
+      options: [
+        "It technically could, but chooses not to",
+        "'Best' for taste-driven creative work isn't a single objective answer the way a math problem has one — different people reasonably prefer different options",
+        "Models are only capable of generating one output at a time",
+        "This is a temporary limitation that better models will fix",
+      ],
+      correct: 1,
+      explain: "Taste judgments don't converge to one correct answer — two reasonable people can prefer different options from the same set, which is exactly why it isn't a problem a model can 'solve.'",
+    },
+    {
+      q: "A generative tool produces a technically polished piece that misses an important local cultural reference. What does this illustrate?",
+      options: [
+        "The tool is broken and needs to be replaced",
+        "Models trained mostly on global/Western data can miss context and nuance a human creator with that context would supply",
+        "This never actually happens in practice",
+        "Cultural context doesn't matter for creative work",
+      ],
+      correct: 1,
+      explain: "This is a real, structural limitation tied to what data a model was trained on — not a bug that goes away with more iterations of the same prompt.",
+    },
+    {
+      q: "As generative models get better at producing polished drafts, what happens to the role of human judgment?",
+      options: [
+        "It becomes unnecessary and disappears",
+        "It shifts from producing the draft to evaluating and selecting among drafts — the bottleneck moves, it doesn't shrink",
+        "It becomes exactly twice as important",
+        "It only applies to visual art, not writing or music",
+      ],
+      correct: 1,
+      explain: "Better generation doesn't eliminate the need for taste and judgment — it just moves where that judgment gets applied, from 'write the whole thing' to 'pick and refine the best one.'",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
