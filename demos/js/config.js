@@ -9,6 +9,11 @@ export const ORT_VERSION = "1.27.0";
 export const ORT_CDN_BASE = `https://cdn.jsdelivr.net/npm/onnxruntime-web@${ORT_VERSION}/dist/`;
 export const ORT_MODULE_URL = `${ORT_CDN_BASE}ort.webgpu.min.mjs`;
 
+// zip packing for Annotation Studio exports — jsdelivr's `+esm` endpoint
+// generates a browser ESM wrapper for any npm package, which is what lets us
+// import a CDN dependency without a build step (§1.6).
+export const FFLATE_URL = "https://cdn.jsdelivr.net/npm/fflate@0.8.2/+esm";
+
 // Bump when the underlying weights change — model-cache.js keys the Cache
 // Storage entry on this, so a version bump forces a re-download instead of
 // silently serving stale weights from a repeat visit.

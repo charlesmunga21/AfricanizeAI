@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annotation Studio — AfricanizeAI Demos</title>
+<meta name="description" content="Draw boxes and polygons on your own images and export a real YOLO, COCO, or Pascal VOC dataset — entirely offline, in your browser. No accounts, no uploads.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/annotate.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Annotation Studio — AfricanizeAI Demos">
+<meta property="og:description" content="Draw boxes and polygons on your own images and export a real training dataset — entirely offline, in your browser.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/annotate.html">
+<meta property="og:image" content="https://charlesmunga21.github.io/AfricanizeAI/demos/assets/og-annotate.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Annotation Studio",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://charlesmunga21.github.io/AfricanizeAI/demos/annotate.html",
+  "description": "Offline, browser-based image annotation: box and polygon tools, class management, and export to YOLO, COCO, and Pascal VOC.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+  .an-projectbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .an-projectbar select { padding: 0.4rem 0.6rem; border: 1px solid var(--rule); border-radius: var(--frame-radius); background: var(--surface-2); color: var(--ink); }
+  .an-projectbar .btn { font-size: 0.8rem; padding: 0.4rem 0.7rem; }
+  .an-privacy { font-size: 0.82rem; color: var(--ink-2); margin: 0 0 var(--space-6); }
+
+  .an-tabs { display: none; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .an-tabs button { flex: 1; }
+
+  .an-layout { display: grid; grid-template-columns: 220px 1fr 250px; gap: var(--space-4); align-items: start; }
+
+  /* ---------- Left rail: filmstrip ---------- */
+  .an-rail { max-height: 640px; overflow-y: auto; }
+  .an-filmstrip-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); gap: var(--space-2); }
+  .an-filmstrip-head select { font-size: 0.75rem; padding: 0.2rem 0.3rem; }
+  .an-filmstrip { display: flex; flex-direction: column; gap: var(--space-2); }
+  .an-thumb { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); border: 1px solid transparent; border-radius: var(--frame-radius); cursor: pointer; text-align: left; background: none; width: 100%; }
+  .an-thumb:hover { background: var(--surface); }
+  .an-thumb[aria-current="true"] { border-color: var(--box); background: color-mix(in srgb, var(--box) 8%, var(--surface-2)); }
+  .an-thumb img { width: 44px; height: 44px; object-fit: cover; border-radius: 2px; background: var(--rule); flex-shrink: 0; }
+  .an-thumb-name { font-size: 0.78rem; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .an-thumb-badge { font-size: 0.68rem; font-family: "JetBrains Mono", monospace; color: var(--ink-3); padding: 0.1rem 0.4rem; border: 1px solid var(--rule); border-radius: 999px; flex-shrink: 0; }
+  .an-thumb-badge[data-done="true"] { color: var(--conf); border-color: var(--conf); }
+  .an-add-images { width: 100%; margin-top: var(--space-3); font-size: 0.8rem; padding: 0.5rem; }
+  .an-empty { color: var(--ink-3); font-size: 0.85rem; padding: var(--space-4) 0; }
+
+  /* ---------- Center: canvas ---------- */
+  .an-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-bottom: var(--space-3); }
+  .an-toolbar .btn--ghost[aria-pressed="true"] { border-color: var(--box); color: var(--box); background: color-mix(in srgb, var(--box) 10%, var(--surface-2)); }
+  .an-toolbar-sep { width: 1px; height: 22px; background: var(--rule); margin: 0 var(--space-1); }
+  .an-toolbar .btn { font-size: 0.78rem; padding: 0.4rem 0.65rem; }
+  .an-readout { margin-left: auto; font-size: 0.75rem; color: var(--ink-3); }
+
+  .an-stage-wrap { position: relative; height: min(58vh, 560px); background: #1a1e24; border-radius: var(--frame-radius); overflow: hidden; }
+  .an-stage-wrap canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+  .an-stage-wrap.an-tool-select canvas { cursor: default; }
+  .an-empty-canvas { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--space-6); color: #8b96a3; }
+  .an-empty-canvas[hidden] { display: none; }
+  .an-empty-canvas p { max-width: 34ch; margin: 0; font-size: 0.9rem; }
+
+  .an-nav-strip { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-3); }
+  .an-nav-strip .btn { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+  .an-nav-pos { font-size: 0.78rem; color: var(--ink-3); }
+
+  /* ---------- Right rail: classes ---------- */
+  .an-class-add { display: flex; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .an-class-add input { flex: 1; padding: 0.4rem 0.5rem; border: 1px solid var(--rule); border-radius: var(--frame-radius); font-size: 0.85rem; }
+  .an-class-list { display: flex; flex-direction: column; gap: var(--space-1); max-height: 320px; overflow-y: auto; }
+  .an-class-row { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); border-radius: var(--frame-radius); }
+  .an-class-row[aria-current="true"] { background: var(--surface); }
+  .an-class-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; cursor: pointer; border: none; padding: 0; }
+  .an-class-key { font-size: 0.68rem; color: var(--ink-3); width: 1.1rem; flex-shrink: 0; }
+  .an-class-name { flex: 1; border: none; background: none; font-size: 0.85rem; color: var(--ink); padding: 0.1rem; min-width: 0; }
+  .an-class-name:focus { outline: 1px solid var(--rule); border-radius: 2px; }
+  .an-class-count { font-size: 0.7rem; color: var(--ink-3); font-family: "JetBrains Mono", monospace; }
+  .an-class-del { background: none; border: none; color: var(--ink-3); cursor: pointer; font-size: 0.9rem; padding: 0 0.2rem; }
+  .an-class-del:hover { color: var(--warn); }
+
+  .an-rail-actions { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-6); }
+
+  /* ---------- Modals ---------- */
+  dialog.an-modal { border: var(--frame-border); border-radius: var(--frame-radius); padding: var(--space-6); max-width: 460px; width: 92vw; color: var(--ink); background: var(--surface-2); }
+  dialog.an-modal::backdrop { background: rgba(14, 17, 22, 0.5); }
+  .an-modal h3 { margin-top: 0; }
+  .an-modal-actions { display: flex; gap: var(--space-2); margin-top: var(--space-5); justify-content: flex-end; }
+  .an-format-list { display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-4) 0; }
+  .an-format-list label { display: flex; align-items: center; gap: var(--space-2); font-size: 0.88rem; }
+  .an-split-row { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+  .an-split-row label { display: flex; align-items: center; gap: var(--space-2); font-size: 0.88rem; }
+  .an-split-ratios { display: flex; gap: var(--space-2); margin-top: var(--space-2); }
+  .an-split-ratios .field { margin: 0; flex: 1; }
+  .an-split-ratios input { width: 100%; padding: 0.3rem; border: 1px solid var(--rule); border-radius: var(--frame-radius); }
+  .an-shortcut-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem var(--space-4); font-size: 0.85rem; margin-top: var(--space-4); }
+  .an-shortcut-grid .kbd { font-family: "JetBrains Mono", monospace; background: var(--surface); border: 1px solid var(--rule); border-radius: 3px; padding: 0.05rem 0.4rem; justify-self: start; }
+
+  @media (max-width: 860px) {
+    .an-layout { grid-template-columns: 1fr; }
+    .an-tabs { display: flex; }
+    .an-rail, .an-canvas-pane, .an-class-pane { display: none; }
+    .an-layout[data-active-pane="images"] .an-rail { display: block; }
+    .an-layout[data-active-pane="canvas"] .an-canvas-pane { display: block; }
+    .an-layout[data-active-pane="classes"] .an-class-pane { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main">
+  <div class="demo-hero">
+    <h1>Annotation Studio</h1>
+    <p>Draw boxes and polygons, manage classes, export a real dataset in the format your trainer expects.</p>
+  </div>
+
+  <p class="note an-privacy">Your images never leave your device. Everything here runs offline in your browser — nothing is uploaded, nothing needs an account.</p>
+
+  <div class="an-projectbar">
+    <select id="an-project-select" aria-label="Project"></select>
+    <button type="button" id="an-project-new" class="btn btn--ghost">New project</button>
+    <button type="button" id="an-project-rename" class="btn btn--ghost">Rename</button>
+    <button type="button" id="an-project-delete" class="btn btn--ghost">Delete</button>
+    <button type="button" id="an-import" class="btn btn--ghost">Import zip</button>
+    <input type="file" id="an-import-input" accept=".zip" hidden>
+  </div>
+
+  <div id="an-status" class="note" hidden></div>
+
+  <div class="an-tabs">
+    <button type="button" class="btn btn--ghost" data-pane="images" aria-pressed="true">Images</button>
+    <button type="button" class="btn btn--ghost" data-pane="canvas">Canvas</button>
+    <button type="button" class="btn btn--ghost" data-pane="classes">Classes</button>
+  </div>
+
+  <div class="an-layout" id="an-layout" data-active-pane="canvas">
+    <aside class="frame an-rail" data-frame data-module="IMAGES" data-state="idle">
+      <div class="an-filmstrip-head">
+        <span class="mono" style="font-size:.75rem; color: var(--ink-3);">FILTER</span>
+        <select id="an-filter" aria-label="Filter images">
+          <option value="all">All</option>
+          <option value="todo">To do</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+      <div class="an-filmstrip" id="an-filmstrip"></div>
+      <p class="an-empty" id="an-empty-images">Add images to get started.</p>
+      <button type="button" id="an-add-images" class="btn an-add-images">+ Add images</button>
+      <input type="file" id="an-add-images-input" accept="image/*" multiple hidden>
+    </aside>
+
+    <section class="an-canvas-pane">
+      <div class="frame" data-frame data-module="ANNOTATE" data-state="idle" id="an-canvas-frame">
+        <div class="an-toolbar">
+          <button type="button" class="btn btn--ghost" data-tool="select" aria-pressed="true" title="Select (V)">V Select</button>
+          <button type="button" class="btn btn--ghost" data-tool="box" title="Box (B)">B Box</button>
+          <button type="button" class="btn btn--ghost" data-tool="polygon" title="Polygon (P)">P Polygon</button>
+          <div class="an-toolbar-sep"></div>
+          <button type="button" class="btn btn--ghost" id="an-undo" title="Undo (Cmd/Ctrl+Z)">Undo</button>
+          <button type="button" class="btn btn--ghost" id="an-redo" title="Redo (Cmd/Ctrl+Shift+Z)">Redo</button>
+          <button type="button" class="btn btn--ghost" id="an-delete" title="Delete selection (Del)">Delete</button>
+          <div class="an-toolbar-sep"></div>
+          <button type="button" class="btn btn--ghost" id="an-fit" title="Fit to screen (F)">Fit</button>
+          <button type="button" class="btn btn--ghost" id="an-shortcuts" title="Keyboard shortcuts (?)">?</button>
+          <span class="an-readout mono" id="an-coord">–, –</span>
+        </div>
+
+        <div class="an-stage-wrap" id="an-stage-wrap">
+          <canvas id="an-canvas"></canvas>
+          <div class="an-empty-canvas" id="an-empty-canvas">
+            <p>Select or add an image on the left to start annotating.</p>
+          </div>
+        </div>
+
+        <div class="an-nav-strip">
+          <button type="button" class="btn btn--ghost" id="an-prev" title="Previous image (A / ←)">← Previous</button>
+          <span class="an-nav-pos mono" id="an-nav-pos"></span>
+          <button type="button" class="btn btn--ghost" id="an-next" title="Next image (D / →)">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="frame an-class-pane" data-frame data-module="CLASSES" data-state="idle">
+      <div class="an-class-add">
+        <input type="text" id="an-class-name" placeholder="New class name">
+        <button type="button" id="an-class-add-btn" class="btn" style="font-size:.8rem; padding:.4rem .7rem;">Add</button>
+      </div>
+      <div class="an-class-list" id="an-class-list"></div>
+      <p class="an-empty" id="an-empty-classes">Add a class before drawing — number keys 1–9 select it.</p>
+
+      <div class="an-rail-actions">
+        <button type="button" id="an-export" class="btn">Export dataset</button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<dialog class="an-modal" id="an-export-modal">
+  <h3>Export dataset</h3>
+  <div class="an-format-list">
+    <label><input type="checkbox" name="fmt" value="yolo" checked> YOLO (detection) — boxes, <span class="mono">data.yaml</span></label>
+    <label><input type="checkbox" name="fmt" value="yolo-seg"> YOLO-seg — normalized polygons</label>
+    <label><input type="checkbox" name="fmt" value="coco"> COCO JSON</label>
+    <label><input type="checkbox" name="fmt" value="voc"> Pascal VOC (XML)</label>
+  </div>
+  <div class="an-split-row">
+    <label><input type="checkbox" id="an-split-enable" checked> Split into train / val / test</label>
+  </div>
+  <div class="an-split-ratios" id="an-split-ratios">
+    <div class="field"><label>Train %</label><input type="number" id="an-split-train" value="70" min="0" max="100"></div>
+    <div class="field"><label>Val %</label><input type="number" id="an-split-val" value="20" min="0" max="100"></div>
+    <div class="field"><label>Test %</label><input type="number" id="an-split-test" value="10" min="0" max="100"></div>
+  </div>
+  <p class="note note--warn" id="an-export-warning" hidden>Polygons don't fit this format's label shape, so they'll export as their bounding box.</p>
+  <div class="an-modal-actions">
+    <button type="button" class="btn btn--ghost" id="an-export-cancel">Cancel</button>
+    <button type="button" class="btn" id="an-export-go">Download zip</button>
+  </div>
+</dialog>
+
+<dialog class="an-modal" id="an-shortcuts-modal">
+  <h3>Keyboard shortcuts</h3>
+  <div class="an-shortcut-grid mono">
+    <span class="kbd">B</span><span>Box tool</span>
+    <span class="kbd">P</span><span>Polygon tool</span>
+    <span class="kbd">V</span><span>Select tool</span>
+    <span class="kbd">Delete</span><span>Delete selection</span>
+    <span class="kbd">Escape</span><span>Cancel current shape</span>
+    <span class="kbd">F</span><span>Fit image to screen</span>
+    <span class="kbd">D / →</span><span>Next image</span>
+    <span class="kbd">A / ←</span><span>Previous image</span>
+    <span class="kbd">1–9</span><span>Set active class</span>
+    <span class="kbd">Cmd/Ctrl+Z</span><span>Undo</span>
+    <span class="kbd">Cmd/Ctrl+Shift+Z</span><span>Redo</span>
+    <span class="kbd">Cmd/Ctrl+S</span><span>Save project snapshot</span>
+    <span class="kbd">?</span><span>This overlay</span>
+  </div>
+  <div class="an-modal-actions">
+    <button type="button" class="btn" id="an-shortcuts-close">Close</button>
+  </div>
+</dialog>
+
+<script type="module" src="js/annotate/ui.js"></script>
+</body>
+</html>
