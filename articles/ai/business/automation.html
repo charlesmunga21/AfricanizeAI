@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automating Repetitive Decisions — AI for Business — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="index.html" class="active">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Business</a> / Automating Repetitive Decisions</div>
+    <article>
+      <h1>Automating Repetitive Decisions</h1>
+      <p>Tasks that follow a pattern a human could describe but do too slowly at volume: fraud transaction flagging, loan pre-screening, invoice/document processing, customer support ticket routing. Automation here works best combined with a human-in-the-loop for edge cases and low-confidence predictions.</p>
+
+      <h2>The threshold is the real decision</h2>
+      <p>A fraud-detection model doesn't output "fraud" or "not fraud" — it outputs a risk <em>score</em>. Someone still has to pick the cutoff: flag everything above score X for review, auto-approve everything below. Set the threshold too low and you flood a human reviewer with false alarms; set it too high and real fraud slips through unflagged. There's no threshold that eliminates both kinds of mistakes — moving it only trades one kind for the other.</p>
+
+      <div class="note">This tradeoff has names: a lower threshold catches more true fraud (higher <em>recall</em>) at the cost of more false alarms (lower <em>precision</em>); a higher threshold does the reverse. Which side to favor is a business decision, not a modeling one — it depends on how expensive a false alarm is versus a missed case.</div>
+
+      <h2>Visual model: move the threshold yourself</h2>
+      <p>Each box is one transaction, labeled with its risk score. Drag the threshold and watch which transactions get auto-flagged (amber = the auto-decision was wrong for that transaction) versus auto-approved.</p>
+      <div class="viz" id="threshold-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="threshold-quiz"></div>
+
+      <div class="article-nav">
+        <a href="prediction-forecasting.html">← Prediction &amp; Forecasting</a>
+        <a href="unstructured-data.html">Next: Understanding Unstructured Data →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-business-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initThresholdViz(document.getElementById("threshold-viz"));
+  initQuiz(document.getElementById("threshold-quiz"), [
+    {
+      q: "You lower the fraud-flag threshold (flag more transactions). What's the direct tradeoff?",
+      options: [
+        "Nothing changes — the threshold doesn't affect accuracy",
+        "You catch more real fraud, but also generate more false alarms on legitimate transactions",
+        "You catch less fraud AND get more false alarms",
+        "False alarms disappear entirely",
+      ],
+      correct: 1,
+      explain: "A lower threshold flags more transactions overall — that includes more of the real fraud (fewer missed cases) but also more legitimate transactions caught in the net (more false alarms).",
+    },
+    {
+      q: "Why is picking the threshold described as a business decision, not just a modeling one?",
+      options: [
+        "Because the model can't compute a threshold automatically",
+        "Because it depends on how costly a false alarm is relative to a missed fraud case — a judgment call about the business, not the math",
+        "Because thresholds are set randomly",
+        "Because only executives are allowed to set thresholds",
+      ],
+      correct: 1,
+      explain: "The model gives you a score and a tradeoff curve; deciding where on that curve to operate depends on real costs (reviewer time, customer friction, fraud losses) that are business context, not something the model itself can decide.",
+    },
+    {
+      q: "What is 'human-in-the-loop' doing in an automated decision system?",
+      options: [
+        "Replacing the model entirely",
+        "Reviewing the low-confidence or borderline cases the automated threshold doesn't handle cleanly",
+        "Manually reviewing every single transaction, automated or not",
+        "Training the model once and never being involved again",
+      ],
+      correct: 1,
+      explain: "Human-in-the-loop specifically targets the cases automation is least confident about — the whole point is to combine automation's speed on clear-cut cases with human judgment on ambiguous ones.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

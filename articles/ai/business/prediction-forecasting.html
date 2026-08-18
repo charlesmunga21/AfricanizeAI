@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction &amp; Forecasting — AI for Business — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="index.html" class="active">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Business</a> / Prediction &amp; Forecasting</div>
+    <article>
+      <h1>Prediction &amp; Forecasting</h1>
+      <p>Models trained on historical data to predict a future number or event: demand forecasting for inventory, cash-flow forecasting, credit risk scoring, equipment failure prediction (predictive maintenance). These are usually the highest-ROI, lowest-risk AI projects because the output is a number that a human still reviews before acting.</p>
+
+      <h2>A simple forecasting example</h2>
+      <p>Even a basic regression model illustrates the pattern used in many forecasting tools:</p>
+      <pre><code>from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Past 6 months of units sold
+months = np.array([1, 2, 3, 4, 5, 6]).reshape(-1, 1)
+units_sold = np.array([120, 135, 150, 170, 190, 205])
+
+model = LinearRegression().fit(months, units_sold)
+next_month_prediction = model.predict([[7]])
+print(next_month_prediction)   # estimated demand for month 7</code></pre>
+
+      <div class="note">Regression finds the line that minimizes the total squared distance between itself and every data point — that's what "fitting" means. It's not magic, it's an equation for the line that best matches history, extended one step forward.</div>
+
+      <h2>Visual model: fit the line yourself</h2>
+      <p>This is the same 6-month dataset as the code above. Edit any month's value and re-fit — watch the line, and the month-7 prediction, respond to the data you gave it.</p>
+      <div class="viz" id="reg-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="reg-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← AI for Business overview</a>
+        <a href="automation.html">Next: Automating Repetitive Decisions →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-business-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initRegressionViz(document.getElementById("reg-viz"));
+  initQuiz(document.getElementById("reg-quiz"), [
+    {
+      q: "Why are forecasting projects often considered lower-risk than other AI applications?",
+      options: [
+        "They never make mistakes",
+        "The output is a number a human reviews before acting on it, rather than an autonomous decision",
+        "They don't require any historical data",
+        "Forecasting models are simpler to build than any other kind of model",
+      ],
+      correct: 1,
+      explain: "A forecast is a recommendation, not an action — a human is still in the loop deciding what to do with the prediction, which limits the damage from a bad prediction.",
+    },
+    {
+      q: "In simple linear regression, what does \"fitting\" the line actually mean?",
+      options: [
+        "Drawing a line that passes through every data point exactly",
+        "Finding the line that minimizes the total squared distance between the line and all the data points",
+        "Connecting the first and last data points",
+        "Picking the line with the steepest slope",
+      ],
+      correct: 1,
+      explain: "Least-squares regression specifically minimizes squared error — it's the line that best balances being close to every point, not one that must pass through any of them exactly.",
+    },
+    {
+      q: "If you added a 7th month of REAL sales data (not a prediction) that broke the previous upward trend, what would happen to the fitted line if you refit?",
+      options: [
+        "Nothing — the line ignores new data",
+        "The line would recompute and could change slope and intercept to account for the new point",
+        "The model would refuse to fit",
+        "Only the prediction changes, never the line itself",
+      ],
+      correct: 1,
+      explain: "Refitting recomputes the line from all data points currently available — a new point that breaks the trend pulls the fitted line's slope and intercept toward it.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

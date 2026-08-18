@@ -269,7 +269,10 @@ button.viz-box { cursor: pointer; }
 .viz-box.is-dim { opacity: 0.35; }
 
 .viz-meta { margin-bottom: 0.6rem; }
-.viz-badge { display: inline-block; font-size: 0.8rem; font-weight: 600; color: var(--green-dark); background: #e2f2e5; padding: 0.25rem 0.6rem; border-radius: 4px; }
+.viz-badge { display: inline-block; font-size: 0.8rem; font-weight: 600; color: var(--green-dark); background: #e2f2e5; padding: 0.25rem 0.6rem; border-radius: 4px; margin: 0 0.4rem 0.4rem 0; }
+.viz-badge--danger { color: #c0392b; background: #fbe4e1; }
+.viz-badge--neutral { color: var(--text-muted); background: #f0f0f0; }
+.viz-chart { width: 100%; max-width: 420px; background: #fff; border: 1px solid var(--border); border-radius: 8px; }
 .viz-formula { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.85rem; background: #1e1e1e; color: #e8e8e8; padding: 0.7rem 0.9rem; border-radius: 6px; overflow-x: auto; }
 .viz-log { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.8rem; color: var(--text-muted); max-height: 8.5rem; overflow-y: auto; border-top: 1px solid var(--border); padding-top: 0.6rem; }
 .viz-log div { padding: 0.1rem 0; }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalization at Scale — AI for Business — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="index.html" class="active">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Business</a> / Personalization at Scale</div>
+    <article>
+      <h1>Personalization at Scale</h1>
+      <p>Recommendation systems and dynamic pricing/content adjust the experience per user instead of showing everyone the same thing — the mechanism behind product recommendations, personalized pricing, and adaptive learning platforms.</p>
+
+      <h2>The mechanism: different input, different output</h2>
+      <p>"Personalization" sounds abstract until you see the actual computation: the same model, given a different profile or history as input, produces a different output. A real recommender is trained on millions of purchase histories to learn which items tend to co-occur; the visual model below uses a small hand-built co-occurrence table instead, to make that "same model, different input, different output" mechanism directly visible.</p>
+
+      <h2>Visual model: change the cart, change the recommendation</h2>
+      <p>Check different combinations of items and click Get Recommendations. Nothing about the underlying logic changes between clicks — only the input does, and that alone is enough to change the output.</p>
+      <div class="viz" id="rec-viz"></div>
+
+      <div class="note">Real recommenders use far richer signals than co-purchase pairs — browsing time, ratings, similarity between users with overlapping histories — but the core shape is the same one you just used: given this profile, which items have a track record of going together for people like this?</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="rec-quiz"></div>
+
+      <div class="article-nav">
+        <a href="unstructured-data.html">← Understanding Unstructured Data</a>
+        <a href="index.html">Back to AI for Business overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-business-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initRecommenderViz(document.getElementById("rec-viz"));
+  initQuiz(document.getElementById("rec-quiz"), [
+    {
+      q: "Two customers see completely different recommended products from the same store. What does this most directly demonstrate?",
+      options: [
+        "The store is running two different websites",
+        "The recommendation model takes each customer's own profile/history as input, so different inputs produce different outputs from the same model",
+        "One customer is being shown incorrect results",
+        "Recommendations are assigned randomly",
+      ],
+      correct: 1,
+      explain: "The model itself doesn't change between customers — what changes is the input (their history/profile), and that's what produces a different output.",
+    },
+    {
+      q: "What signal does a co-occurrence-based recommender rely on?",
+      options: [
+        "The customer's typed search queries only",
+        "Items that have historically been purchased together",
+        "The current time of day",
+        "Random selection to increase variety",
+      ],
+      correct: 1,
+      explain: "Co-occurrence recommenders learn which items tend to appear together in the same basket/history, then recommend the 'missing' co-occurring item given what's already there.",
+    },
+    {
+      q: "Why do real production recommenders typically use more than just co-purchase pairs (e.g. browsing time, ratings, similar users)?",
+      options: [
+        "Co-purchase data is illegal to collect",
+        "Richer signals generally produce better, more nuanced recommendations than one narrow signal alone",
+        "It's required by law in most countries",
+        "Co-purchase pairs can't be computed at all",
+      ],
+      correct: 1,
+      explain: "Any single signal is a limited view of preference. Combining multiple signals typically captures more of what actually predicts what a specific user wants next.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

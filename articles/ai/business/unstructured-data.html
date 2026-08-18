@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Understanding Unstructured Data — AI for Business — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="index.html" class="active">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / AI Use-Cases / <a href="index.html">AI for Business</a> / Understanding Unstructured Data</div>
+    <article>
+      <h1>Understanding Unstructured Data</h1>
+      <p>Most business data isn't in neat rows and columns — it's emails, contracts, call transcripts, product photos, satellite imagery. AI models (NLP for text, <a href="../../cv/fundamentals/index.html">computer vision</a> for images) extract structured information from this: summarizing contracts, classifying support emails by intent, detecting product defects from photos on a production line.</p>
+
+      <h2>The core mechanism: classification</h2>
+      <p>A huge share of "AI reads your documents" products reduce to the same underlying task as the <a href="../../cv/fundamentals/core-tasks.html">image classification</a> covered in the Computer Vision module — just applied to text instead of pixels: take an unstructured input, output one of a fixed set of labels. A real production system learns this mapping from thousands of labeled examples; the visual model below uses simple keyword rules instead, to make the underlying idea — text in, category out — visible without needing a trained model.</p>
+
+      <h2>Visual model: classify a ticket</h2>
+      <p>Type your own support-ticket text, or try an example, and see it get routed to a category based on the words it contains. A real system would use a trained model instead of a keyword list, but the shape of the task — and why some inputs are ambiguous — is the same.</p>
+      <div class="viz" id="ticket-viz"></div>
+
+      <div class="note">Notice what happens when nothing matches — a well-designed system doesn't guess with false confidence, it routes the ambiguous case to a human. The keyword rule here is a simplification of a much more capable trained classifier, but the same "route what you're unsure about" principle applies to the real thing.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ticket-quiz"></div>
+
+      <div class="article-nav">
+        <a href="automation.html">← Automating Repetitive Decisions</a>
+        <a href="personalization.html">Next: Personalization at Scale →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/ai-business-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initTicketClassifierViz(document.getElementById("ticket-viz"));
+  initQuiz(document.getElementById("ticket-quiz"), [
+    {
+      q: "What do 'classify this support email' and 'classify this image as cat vs. dog' have in common?",
+      options: [
+        "Nothing, they're unrelated problems",
+        "Both reduce to the same core task: unstructured input in, one label from a fixed set out",
+        "Text classification is always more accurate than image classification",
+        "They both require the exact same model architecture with no changes",
+      ],
+      correct: 1,
+      explain: "The input format differs (pixels vs. words) but the task shape is identical: map an unstructured input to one of a known set of categories.",
+    },
+    {
+      q: "In the visual model, what happens when a typed ticket contains none of the keyword list's words?",
+      options: [
+        "It crashes",
+        "It picks the most common category by default",
+        "It reports no match and suggests routing to a human, rather than guessing",
+        "It always defaults to 'technical'",
+      ],
+      correct: 2,
+      explain: "Rather than forcing a low-confidence guess, the system flags that it doesn't have a confident answer — the same principle real production classifiers use with a confidence threshold.",
+    },
+    {
+      q: "Why is a real production text classifier trained on thousands of labeled examples instead of a hand-written keyword list?",
+      options: [
+        "Keyword lists are always faster to run",
+        "A trained model can generalize to phrasings and words it has never seen, not just exact keyword matches",
+        "There's no real difference between the two approaches",
+        "Keyword lists require more computing power",
+      ],
+      correct: 1,
+      explain: "A keyword list only catches the specific words it was given. A trained model learns patterns from examples and can correctly classify text that doesn't contain any of those exact words.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
