@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traversal &amp; Search — Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="../binary-search/index.html">Binary Search</a></li>
+      <li><a href="index.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Linked Lists</a> / Traversal &amp; Search</div>
+    <article>
+      <h1>Traversal &amp; Search</h1>
+      <p>Searching a linked list means the same thing it means for an array: walk it, comparing each value to the target, until you find a match or run out of nodes. The difference is that a linked list gives you exactly one way to do that walk — there's no shortcut available.</p>
+
+      <pre><code>def search(head, target):
+    current = head
+    while current:
+        if current.value == target:
+            return current
+        current = current.next
+    return None</code></pre>
+
+      <p>This is <strong>O(n)</strong> in the worst case, same as linear search on an array. But unlike an array, a linked list has no faster option — even if every value in the list happens to be sorted.</p>
+
+      <h2>Why binary search doesn't work here</h2>
+      <p>Binary search's entire speedup comes from jumping straight to the middle element — <code>arr[(low+high)//2]</code> — which is only possible because array elements have addresses you can compute directly. A linked list node has no address formula; the only way to reach "the middle" is to walk there one <code>next</code> at a time from the head, which already costs O(n) before you've made a single useful comparison. Halving a search space you can't jump into buys you nothing.</p>
+
+      <div class="note">This is exactly why the <a href="../arrays/index.html">Arrays</a> module's <a href="../binary-search/index.html">Binary Search</a> only works on arrays (or anything else with O(1) random access, like a balanced binary search tree navigated top-down) — not on singly or doubly linked lists.</div>
+
+      <h2>Visual model: watch the walk</h2>
+      <p>Search for a target and step through it. Notice there's no "jump ahead" — every step visits exactly the next node in the chain, whether the target turns out to be nearby or not.</p>
+      <div class="viz" id="search-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="search-quiz"></div>
+
+      <div class="article-nav">
+        <a href="vs-arrays.html">← Arrays vs. Linked Lists</a>
+        <a href="index.html">Back to Linked Lists overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/linked-list-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initLLSearchViz(document.getElementById("search-viz"));
+  initQuiz(document.getElementById("search-quiz"), [
+    {
+      q: "A linked list's values happen to be sorted. Can you binary search it in O(log n)?",
+      options: [
+        "Yes, sorted data always allows binary search",
+        "No — you can't jump to the middle node without walking there first, which already costs O(n)",
+        "Yes, but only for doubly linked lists",
+        "No, because linked lists can't be sorted",
+      ],
+      correct: 1,
+      explain: "Binary search's speed comes from jumping directly to an index. A linked list has no address formula for 'the middle node' — reaching it requires walking from the head, which erases the advantage before any comparison happens.",
+    },
+    {
+      q: "What's the worst-case time complexity of searching an unsorted linked list?",
+      options: ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      correct: 2,
+      explain: "Same as linear search on an array: in the worst case, every node has to be checked.",
+    },
+    {
+      q: "Why does an array support binary search but a linked list doesn't, even though both can hold sorted data?",
+      options: [
+        "Arrays are always smaller than linked lists",
+        "Only arrays can be sorted in the first place",
+        "Arrays support O(1) random access via address arithmetic; linked lists only support sequential access via pointers",
+        "Linked lists don't support comparison operators",
+      ],
+      correct: 2,
+      explain: "Binary search needs O(1) access to an arbitrary index to jump to the middle. Arrays have that (address = base + i×size); linked lists fundamentally don't.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

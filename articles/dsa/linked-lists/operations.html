@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert &amp; Delete Operations — Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="../binary-search/index.html">Binary Search</a></li>
+      <li><a href="index.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Linked Lists</a> / Insert &amp; Delete Operations</div>
+    <article>
+      <h1>Insert &amp; Delete Operations</h1>
+      <p>Every insert or delete on a linked list has two parts: <strong>getting to the spot</strong> (which costs O(n), since you have to walk pointers from the head) and <strong>relinking a few pointers once you're there</strong> (which costs O(1)). The overall cost depends entirely on how much walking the first part needs.</p>
+
+      <h2>Insert at head</h2>
+      <p>No walking required — you already have <code>head</code>.</p>
+      <pre><code>def insert_at_head(self, value):
+    new_node = Node(value)
+    new_node.next = self.head
+    self.head = new_node</code></pre>
+      <p><strong>O(1)</strong>, full stop.</p>
+
+      <h2>Insert at tail</h2>
+      <p>A singly linked list with no separate tail pointer has to walk the whole chain to find the last node first.</p>
+      <pre><code>def insert_at_tail(self, value):
+    new_node = Node(value)
+    if not self.head:
+        self.head = new_node
+        return
+    current = self.head
+    while current.next:
+        current = current.next
+    current.next = new_node</code></pre>
+      <p><strong>O(n)</strong> — the walk dominates. (Some implementations keep an explicit <code>tail</code> pointer specifically to make this O(1); the tradeoff is keeping that pointer correct through every delete.)</p>
+
+      <h2>Insert after a node / delete a node</h2>
+      <p>If you already hold a reference to the node (e.g. you're mid-traversal), relinking is O(1): point the new node's <code>next</code> at what the previous node pointed to, then repoint the previous node at the new one. Deleting a node (other than the head) means the <em>previous</em> node needs to skip over it — which means you need a reference to the previous node, not just the one being removed.</p>
+
+      <div class="note">This is the source of the common misconception that "linked lists are fast to insert into." They're only O(1) once you already have a pointer to the right spot. Finding that spot — by index, by value, by any means other than already holding it — costs O(n), same as everything else in an unindexed structure.</div>
+
+      <h2>Visual model: try each operation</h2>
+      <p>Insert at head, at tail, after a given index, or delete by index — and watch the reported complexity change based on how much walking each one actually needs.</p>
+      <div class="viz" id="ops-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ops-quiz"></div>
+
+      <div class="article-nav">
+        <a href="introduction.html">← Introduction &amp; Node Structure</a>
+        <a href="vs-arrays.html">Next: Arrays vs. Linked Lists →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/linked-list-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initLLOperationsViz(document.getElementById("ops-viz"));
+  initQuiz(document.getElementById("ops-quiz"), [
+    {
+      q: "Inserting at the head of a linked list is O(1). Why?",
+      options: [
+        "Because linked lists are always short",
+        "Because you already have a reference to head — no walking is needed to reach the insertion point",
+        "Because the new node is stored separately from the rest",
+        "It's actually O(n), not O(1)",
+      ],
+      correct: 1,
+      explain: "The insertion point (before the current head) is already known — you just repoint two pointers, no traversal required.",
+    },
+    {
+      q: "Why is inserting at the TAIL of a singly linked list O(n), unlike an array's O(1) end-insert?",
+      options: [
+        "Linked lists can't have a last element",
+        "Without a stored tail pointer, you must walk the entire chain from head to find the last node first",
+        "Tail insertion is actually faster than head insertion",
+        "Because values must be sorted first",
+      ],
+      correct: 1,
+      explain: "An array's end is always at a known address (base + n×size). A singly linked list has no such shortcut — the only way to find the end is to walk there.",
+    },
+    {
+      q: "\"Linked lists are always fast to insert into.\" What's wrong with this statement?",
+      options: [
+        "Nothing, it's completely accurate",
+        "Insertion is only O(1) if you already have a pointer to the exact spot — finding that spot (by index or value) costs O(n)",
+        "Linked lists can never insert in O(1) time",
+        "It's only true for doubly linked lists",
+      ],
+      correct: 1,
+      explain: "The O(1) claim is about the relinking step only. Locating the insertion point from scratch — the far more common case — is O(n), the same as an array insert.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

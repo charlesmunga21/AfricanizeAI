@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction &amp; Node Structure — Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="../binary-search/index.html">Binary Search</a></li>
+      <li><a href="index.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Linked Lists</a> / Introduction &amp; Node Structure</div>
+    <article>
+      <h1>Introduction &amp; Node Structure</h1>
+      <p>A linked list stores a sequence of elements the way arrays do, but without requiring contiguous memory. Each element ("node") holds its value plus a pointer to the next node. The list itself only needs to remember where the first node ("head") lives — everything after that is found by following pointers.</p>
+
+      <h2>Node structure</h2>
+      <pre><code>class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None</code></pre>
+      <p>A list is just a chain of these: <code>head → [10] → [4] → [17] → None</code>. The last node's <code>next</code> points to nothing, marking the end.</p>
+
+      <div class="note">This is the opposite storage strategy from an array. An array guarantees its elements sit next to each other in memory, which is what makes address arithmetic possible. A linked list's nodes can live anywhere — the only thing holding them together is the chain of pointers.</div>
+
+      <h2>Visual model: traverse the chain</h2>
+      <p>There's no index arithmetic here — the only way to reach a node is to follow <code>next</code> from wherever you currently are, starting at <code>head</code>. Click Traverse to watch that walk happen one pointer at a time.</p>
+      <div class="viz" id="traverse-viz"></div>
+
+      <h2>Building one</h2>
+      <pre><code>class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, value):
+        new_node = Node(value)
+        if not self.head:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+
+ll = LinkedList()
+for n in [10, 4, 17]:
+    ll.append(n)</code></pre>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="intro-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Linked Lists overview</a>
+        <a href="operations.html">Next: Insert &amp; Delete Operations →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/linked-list-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initLLTraverseViz(document.getElementById("traverse-viz"));
+  initQuiz(document.getElementById("intro-quiz"), [
+    {
+      q: "What does a linked list need to store in order to access the whole sequence?",
+      options: [
+        "The memory address of every node",
+        "Just a reference to the head node — the rest is found by following next pointers",
+        "The total number of nodes",
+        "A sorted index of values",
+      ],
+      correct: 1,
+      explain: "As long as you have head, you can reach any node by repeatedly following .next — no other bookkeeping is required.",
+    },
+    {
+      q: "Why can't you jump directly to the 5th node the way you'd jump to arr[4] in an array?",
+      options: [
+        "Linked lists don't support indexing syntax",
+        "Nodes aren't guaranteed to be contiguous in memory, so there's no address formula — you have to walk the chain",
+        "The 5th node doesn't have an index",
+        "It's a language limitation, not a structural one",
+      ],
+      correct: 1,
+      explain: "An array's O(1) access relies on contiguous memory and address arithmetic. A linked list's nodes can be scattered anywhere, so the only way to reach node 5 is to visit nodes 1 through 4 first.",
+    },
+    {
+      q: "What marks the end of a singly linked list?",
+      options: [
+        "A special 'end' node with no value",
+        "The last node's next pointer is None (or null)",
+        "A separate length counter reaching zero",
+        "The head pointer becomes None",
+      ],
+      correct: 1,
+      explain: "There's no sentinel node needed — the last real node's next is simply None, which traversal code checks for.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

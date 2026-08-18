@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays vs. Linked Lists — Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="../binary-search/index.html">Binary Search</a></li>
+      <li><a href="index.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / <a href="index.html">Linked Lists</a> / Arrays vs. Linked Lists</div>
+    <article>
+      <h1>Arrays vs. Linked Lists</h1>
+      <p>Arrays and linked lists solve the same problem — store a sequence of values — with opposite tradeoffs. Neither is "better"; each wins on exactly the operations the other loses on.</p>
+
+      <ul>
+        <li><strong>Access by index:</strong> arrays O(1), linked lists O(n) — you must walk from the head.</li>
+        <li><strong>Insert/delete at a known position:</strong> arrays O(n) (shifting), linked lists O(1) (just repoint pointers), <em>once you already have a reference to that node</em>.</li>
+        <li><strong>Memory layout:</strong> arrays are contiguous, so they're cache-friendly. Linked list nodes can be scattered anywhere in memory.</li>
+        <li><strong>Extra memory:</strong> each linked list node stores a pointer in addition to its value, which arrays don't need.</li>
+      </ul>
+
+      <h2>Visual model: insert at the front, side by side</h2>
+      <p>This is the single clearest example of the tradeoff. Insert the same value at the front of an array and a linked list holding the same data, and watch what each one actually has to do.</p>
+      <div class="viz" id="vs-viz"></div>
+      <p>The array has to shift every existing element to make room at index 0. The linked list just points a new node at the old head and updates <code>head</code> — nothing else in the list is touched, regardless of how many nodes there are.</p>
+
+      <div class="note">The reverse is true at the other end: appending to an array (with spare capacity) is O(1), while appending to a singly linked list without a tail pointer is O(n) — see <a href="operations.html">Insert &amp; Delete Operations</a>.</div>
+
+      <h2>When to use which</h2>
+      <p>Reach for an array when you need fast random access by index and insertions mostly happen at the end. Reach for a linked list when you need frequent insertions/deletions at the front or middle of a sequence and don't need random access — implementing a queue, an undo history, or a stack, for example.</p>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="vs-quiz"></div>
+
+      <div class="article-nav">
+        <a href="operations.html">← Insert &amp; Delete Operations</a>
+        <a href="traversal-search.html">Next: Traversal &amp; Search →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/linked-list-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initLLVsArrayViz(document.getElementById("vs-viz"));
+  initQuiz(document.getElementById("vs-quiz"), [
+    {
+      q: "You insert one value at the front of a 10,000-element array and, separately, at the head of a 10,000-node linked list. Compare the cost.",
+      options: [
+        "Both are O(1)",
+        "Both are O(n)",
+        "The array insert is O(n) — ~10,000 elements shift; the linked list insert is O(1) — only head changes",
+        "The linked list insert is O(n) and the array insert is O(1)",
+      ],
+      correct: 2,
+      explain: "Arrays must preserve contiguity, so every element from index 0 onward shifts right. A linked list just points a new node at the old head — no other node is touched.",
+    },
+    {
+      q: "Which structure is more cache-friendly for sequential traversal, and why?",
+      options: [
+        "Linked lists, because nodes contain pointers",
+        "Arrays, because elements are stored contiguously in memory",
+        "They're identical in cache behavior",
+        "Neither — cache behavior doesn't apply to these structures",
+      ],
+      correct: 1,
+      explain: "Contiguous memory means reading element i+1 right after element i is likely already in cache. Linked list nodes can be scattered anywhere, so each .next hop can be a cache miss.",
+    },
+    {
+      q: "You're building an undo history where you constantly add and remove the most recent action. Which is the better fit?",
+      options: [
+        "An array, because access by index is O(1)",
+        "A linked list, because insert/delete at one end (the head) is O(1) and you never need to index into the middle",
+        "Neither works for this use case",
+        "It doesn't matter, they perform identically",
+      ],
+      correct: 1,
+      explain: "This workload is exactly what linked lists are good at: frequent insert/delete at one end, no need for random access by position.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

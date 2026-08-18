@@ -290,6 +290,11 @@ button.viz-box { cursor: pointer; }
 .callstack-frame.is-found { border-color: var(--green); background: #d7f0dc; }
 .callstack-empty { color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
 
+/* Linked list node chain: boxes connected by arrows, terminated by a None node */
+.ll-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem; margin-bottom: 0.75rem; }
+.ll-arrow { color: var(--text-muted); font-size: 1.1rem; padding: 0 0.15rem; }
+.ll-null { display: flex; align-items: center; justify-content: center; min-width: 3.6rem; min-height: 3.2rem; border: 1.5px dashed var(--border); border-radius: 6px; color: var(--text-muted); font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.72rem; }
+
 /* Comparisons-race bars (linear vs binary worst case) */
 .race-row { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 0.25rem; }
 .race-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }

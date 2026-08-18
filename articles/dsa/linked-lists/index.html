@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linked Lists — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../arrays/index.html">Arrays</a></li>
+      <li><a href="../binary-search/index.html">Binary Search</a></li>
+      <li><a href="index.html" class="active">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../computer-vision-intro.html">Intro to Computer Vision</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai-business-use-cases.html">AI for Business</a></li>
+      <li><a href="../../ai-creativity.html">AI for Creativity</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Data Structures &amp; Algorithms / Linked Lists</div>
+
+    <section class="module-hero">
+      <h1>Linked Lists</h1>
+      <p>A linked list stores a sequence of elements the way arrays do, but without requiring contiguous memory. Each element ("node") holds its value plus a pointer to the next node — the list itself only needs to remember where the first node ("head") lives.</p>
+      <p>Linked lists are the array's mirror image: everything that's expensive for an array (insert/delete away from the end) is cheap here, and everything that's cheap for an array (access by index) is expensive here. This module covers the structure, the operations, a direct side-by-side against arrays, and why linked lists can never binary search.</p>
+      <ul class="learn-list">
+        <li>Node structure, and how a chain of nodes forms a list</li>
+        <li>Why insert/delete is O(1) <em>once you have a pointer to the spot</em> — and O(n) to get there</li>
+        <li>A direct comparison: inserting at the front of an array vs. a linked list</li>
+        <li>Why there's no such thing as binary search on a linked list</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="introduction.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>Introduction &amp; Node Structure</h3>
+        <p>What a node is, how the chain connects, and what "traversal" actually looks like.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="operations.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>Insert &amp; Delete Operations</h3>
+        <p>Insert at head, at tail, or after a node; delete by index — with the real cost of each.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="vs-arrays.html">
+        <span class="submodule-card__step">3 · Comparison</span>
+        <h3>Arrays vs. Linked Lists</h3>
+        <p>Insert the same value at the front of both, side by side, and watch the cost diverge.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="traversal-search.html">
+        <span class="submodule-card__step">4 · Limits</span>
+        <h3>Traversal &amp; Search</h3>
+        <p>Why every search in a linked list is O(n) — even if the values happen to be sorted.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Operation</th><th>Array</th><th>Linked List</th></tr></thead>
+      <tbody>
+        <tr><td>Access by index</td><td><code>O(1)</code></td><td><code>O(n)</code></td></tr>
+        <tr><td>Search</td><td><code>O(n)</code>, or <code>O(log n)</code> sorted</td><td><code>O(n)</code> always — no binary search</td></tr>
+        <tr><td>Insert/delete at front</td><td><code>O(n)</code></td><td><code>O(1)</code></td></tr>
+        <tr><td>Insert/delete at end</td><td><code>O(1)</code></td><td><code>O(n)</code> (no tail pointer)</td></tr>
+        <tr><td>Extra memory per element</td><td>None</td><td>One pointer</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="introduction.html">Start: Introduction &amp; Node Structure →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
