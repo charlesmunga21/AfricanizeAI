@@ -9,6 +9,7 @@ import { AnnotationCanvas } from "./canvas.js";
 import { ToolController } from "./tools.js";
 import { buildExportZip } from "./export.js";
 import { importYoloZip } from "./import.js";
+import * as assist from "./assist.js";
 
 frame.mountAll();
 
@@ -43,6 +44,15 @@ const el = {
   deleteBtn: $("an-delete"),
   fitBtn: $("an-fit"),
   shortcutsBtn: $("an-shortcuts"),
+  suggestBtn: $("an-suggest"),
+
+  consentModal: $("an-consent-modal"),
+  consentTitle: $("an-consent-title"),
+  consentBody: $("an-consent-body"),
+  consentProgress: $("an-consent-progress"),
+  consentBar: $("an-consent-bar"),
+  consentOk: $("an-consent-ok"),
+  consentCancel: $("an-consent-cancel"),
   prevBtn: $("an-prev"),
   nextBtn: $("an-next"),
   navPos: $("an-nav-pos"),
@@ -266,6 +276,116 @@ el.fitBtn.addEventListener("click", () => {
 });
 el.shortcutsBtn.addEventListener("click", () => el.shortcutsModal.showModal());
 el.shortcutsClose.addEventListener("click", () => el.shortcutsModal.close());
+
+// ---------- Assisted labelling ----------
+// §4.2's highest-value feature: run YOLO11n (the same model/weights live.html
+// uses) over the current still image and drop in editable box predictions.
+// One-shot, main-thread — see assist.js for why that's fine here but would
+// not be for live video.
+
+function askModelConsent(name, bytes) {
+  return new Promise((resolve) => {
+    el.consentTitle.textContent = `Download ${name}`;
+    el.consentBody.textContent = `This connection looks metered or slow. ${name} is ${assist.formatBytes(bytes)}. Download it now?`;
+    el.consentProgress.hidden = true;
+    el.consentBar.style.width = "0%";
+    el.consentModal.showModal();
+    const cleanup = () => {
+      el.consentOk.onclick = null;
+      el.consentCancel.onclick = null;
+      el.consentModal.close();
+    };
+    el.consentOk.onclick = () => {
+      cleanup();
+      resolve(true);
+    };
+    el.consentCancel.onclick = () => {
+      cleanup();
+      resolve(false);
+    };
+  });
+}
+
+async function ensureAssistModel() {
+  const cached = await assist.isModelCached();
+  if (!cached && assist.isMeteredConnection()) {
+    const ok = await askModelConsent(assist.modelName, assist.modelBytes);
+    if (!ok) throw Object.assign(new Error("Download declined"), { code: "declined" });
+    el.consentModal.showModal();
+    el.consentProgress.hidden = false;
+  }
+  showStatus(`Downloading ${assist.modelName} — 0 of ${assist.formatBytes(assist.modelBytes)}`);
+  await assist.ensureSession(({ loaded, total, fromCache }) => {
+    if (fromCache) return;
+    const t = total || assist.modelBytes;
+    const pct = Math.round((loaded / t) * 100);
+    showStatus(`Downloading ${assist.modelName} — ${assist.formatBytes(loaded)} of ${assist.formatBytes(t)}`);
+    if (el.consentModal.open) el.consentBar.style.width = `${pct}%`;
+  });
+  if (el.consentModal.open) el.consentModal.close();
+}
+
+el.suggestBtn.addEventListener("click", async () => {
+  if (state.imageIndex < 0 || !state.currentBitmap) {
+    showStatus("Select an image first.", "warn");
+    return;
+  }
+  const img = state.images[state.imageIndex];
+  el.suggestBtn.disabled = true;
+  const prevLabel = el.suggestBtn.textContent;
+  try {
+    await ensureAssistModel();
+    frame.setState("ANNOTATE", "live", "DETECTING");
+    el.suggestBtn.textContent = "Detecting…";
+    const boxes = await assist.suggestBoxes(state.currentBitmap);
+
+    // Map each detected COCO class name to a project class, creating one the
+    // first time it's seen this run so e.g. three "car" boxes share one class
+    // instead of creating three.
+    let classes = state.project.classes;
+    const idByName = new Map(classes.map((c) => [c.name.toLowerCase(), c.id]));
+    const items = boxes.map((b) => {
+      const key = b.className.toLowerCase();
+      let classId = idByName.get(key);
+      if (!classId) {
+        const created = classOps.create(classes, b.className);
+        classes = [...classes, created];
+        idByName.set(key, created.id);
+        classId = created.id;
+      }
+      return {
+        classId,
+        type: "box",
+        data: {
+          x: b.x1 / img.width,
+          y: b.y1 / img.height,
+          w: (b.x2 - b.x1) / img.width,
+          h: (b.y2 - b.y1) / img.height,
+        },
+      };
+    });
+
+    if (classes !== state.project.classes) await persistClasses(classes);
+
+    if (!items.length) {
+      showStatus("No objects detected above the confidence threshold.");
+    } else {
+      tools.addBatch(items);
+      showStatus(
+        `Added ${items.length} suggested box${items.length === 1 ? "" : "es"} — check them before exporting. Undo (Cmd/Ctrl+Z) removes them all.`
+      );
+    }
+  } catch (err) {
+    if (err.code !== "declined") {
+      console.error(err);
+      showStatus("Couldn't run detection — see console for details.", "warn");
+    }
+  } finally {
+    frame.setState("ANNOTATE", "live", img.name.toUpperCase());
+    el.suggestBtn.disabled = false;
+    el.suggestBtn.textContent = prevLabel;
+  }
+});
 
 // ---------- Canvas pointer interaction ----------
 

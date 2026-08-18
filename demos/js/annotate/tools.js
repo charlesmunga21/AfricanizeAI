@@ -256,6 +256,42 @@ export class ToolController {
     this.onChange(this.annotations);
   }
 
+  // Adds several annotations (e.g. a batch of assisted-labelling suggestions)
+  // as ONE undo step — the point is that "check before saving" needs a single
+  // Cmd+Z escape hatch, not N of them, if the suggestions are mostly noise.
+  addBatch(items) {
+    const entries = items.map(({ classId, type, data }) => ({
+      id: crypto.randomUUID(),
+      imageId: this.imageId,
+      classId,
+      type,
+      data,
+      createdAt: Date.now(),
+    }));
+    const annotations = this.annotations;
+    const command = {
+      do: () => {
+        annotations.push(...entries);
+        for (const a of entries) store.annotations.add(a).catch(console.error);
+        this.onChange(annotations);
+      },
+      undo: () => {
+        const ids = new Set(entries.map((a) => a.id));
+        for (let i = annotations.length - 1; i >= 0; i--) {
+          if (ids.has(annotations[i].id)) annotations.splice(i, 1);
+        }
+        for (const a of entries) store.annotations.delete(a.id).catch(console.error);
+        if (ids.has(this.selectedId)) {
+          this.selectedId = null;
+          this.onSelect(null);
+        }
+        this.onChange(annotations);
+      },
+    };
+    this.commands.push(command);
+    return entries;
+  }
+
   // ---------- Commands ----------
 
   _commitAdd({ classId, type, data }) {

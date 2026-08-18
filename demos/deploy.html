@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Up Your Own AI Platform — AfricanizeAI Demos</title>
+<meta name="description" content="Answer five questions about your project and get a real, downloadable Colab notebook, Hugging Face Space, browser deployment stub, and Docker bundle — plus an honest cost comparison across free training and hosting tiers.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/deploy.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Set Up Your Own AI Platform — AfricanizeAI Demos">
+<meta property="og:description" content="Answer five questions, get a real, working deployment config — a Colab notebook, a Hugging Face Space, a browser stub, and a Docker bundle.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/deploy.html">
+<meta property="og:image" content="https://charlesmunga21.github.io/AfricanizeAI/demos/assets/og-deploy.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Set Up Your Own AI Platform",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://charlesmunga21.github.io/AfricanizeAI/demos/deploy.html",
+  "description": "A decision tree that generates a real Colab notebook, Hugging Face Space, browser deployment stub, and Docker bundle from five questions about your project.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+  .dp-layout { display: grid; grid-template-columns: 320px 1fr; gap: var(--space-6); align-items: start; }
+  .dp-questions .field { margin-bottom: var(--space-4); }
+  .dp-questions label { font-size: 0.85rem; color: var(--ink-2); }
+  .dp-questions select { width: 100%; padding: 0.5rem; border: 1px solid var(--rule); border-radius: var(--frame-radius); background: var(--surface-2); color: var(--ink); font-size: 0.9rem; }
+  .dp-hint { font-size: 0.75rem; color: var(--ink-3); margin-top: 0.15rem; }
+
+  .dp-summary { margin-bottom: var(--space-6); }
+  .dp-summary p { margin: 0; }
+
+  .dp-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-4); }
+  .dp-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); }
+  .dp-card h3 { margin: 0; font-size: 1rem; }
+  .dp-card p { margin: 0; color: var(--ink-2); font-size: 0.85rem; flex: 1; }
+  .dp-card .btn { align-self: flex-start; font-size: 0.8rem; padding: 0.45rem 0.8rem; }
+  .dp-card--recommended { border-color: var(--box); }
+  .dp-card--recommended .frame__tab { color: var(--box); }
+  .dp-recommended-tag { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--box); }
+
+  .dp-empty { color: var(--ink-3); font-size: 0.9rem; }
+
+  .dp-table-wrap { overflow-x: auto; margin-top: var(--space-4); }
+  table.dp-table { border-collapse: collapse; width: 100%; font-size: 0.85rem; min-width: 760px; }
+  table.dp-table th, table.dp-table td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.dp-table th { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-3); }
+  table.dp-table td.dp-yes { color: var(--conf); }
+  table.dp-table td.dp-maybe { color: var(--warn); }
+  .dp-checked { font-family: "JetBrains Mono", monospace; font-size: 0.75rem; color: var(--ink-3); margin-top: var(--space-2); }
+
+  @media (max-width: 860px) {
+    .dp-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main">
+  <div class="demo-hero">
+    <h1>Set Up Your Own AI Platform</h1>
+    <p>You've trained a toy net, labelled a dataset, watched detection run live. This closes the loop: answer five questions, get real files that run.</p>
+  </div>
+
+  <div class="dp-layout">
+    <aside class="frame dp-questions" data-frame data-module="DEPLOY" data-state="idle">
+      <div id="dp-fields"></div>
+      <button type="button" id="dp-generate" class="btn">Generate plan</button>
+    </aside>
+
+    <section>
+      <div id="dp-results">
+        <p class="dp-empty">Answer the questions on the left and press <strong>Generate plan</strong> — recommendations and downloadable files appear here.</p>
+      </div>
+
+      <div class="frame" data-frame data-module="COSTS" data-state="idle" style="margin-top: var(--space-8);">
+        <h2 style="margin-top:0;">Cost and constraints, compared honestly</h2>
+        <p style="color: var(--ink-2); font-size: 0.9rem;">The column every Western tutorial skips: whether the payment method actually works from an African bank card. Coverage varies by country and changes without notice — verify with your own bank before committing a project to a paid tier.</p>
+        <div class="dp-table-wrap">
+          <table class="dp-table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Session limits</th>
+                <th>GPU availability</th>
+                <th>Cold start</th>
+                <th>African bank card</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Colab (Free)</td>
+                <td>~12h/session, idle disconnect ~90 min, usage caps vary day to day</td>
+                <td>Shared T4, not guaranteed</td>
+                <td>Seconds</td>
+                <td class="dp-yes">N/A — free</td>
+                <td>No payment method needed. Best default for training.</td>
+              </tr>
+              <tr>
+                <td>Colab Pro</td>
+                <td>Longer sessions, priority GPU access</td>
+                <td>Better odds of T4/A100</td>
+                <td>Seconds</td>
+                <td class="dp-maybe">Depends on country</td>
+                <td>Billed through Google Play; card support varies a lot by country and changes without notice.</td>
+              </tr>
+              <tr>
+                <td>Kaggle Kernels</td>
+                <td>12h/session, 30h GPU/week quota</td>
+                <td>Shared T4/P100</td>
+                <td>Tens of seconds</td>
+                <td class="dp-yes">N/A — free</td>
+                <td>No payment method needed. Good backup when Colab's daily cap is hit.</td>
+              </tr>
+              <tr>
+                <td>HF Spaces (Free)</td>
+                <td>Sleeps after inactivity</td>
+                <td>None — CPU only</td>
+                <td>~30s cold start after sleep</td>
+                <td class="dp-yes">N/A — free</td>
+                <td>Fine for a demo link; too slow to cold-start for a product.</td>
+              </tr>
+              <tr>
+                <td>HF Spaces (Upgraded)</td>
+                <td>Always-on, hourly billing</td>
+                <td>T4/A10G/A100 tiers available</td>
+                <td>None once running</td>
+                <td class="dp-maybe">Depends on card issuer</td>
+                <td>Stripe-billed; works with more cards than Google Play billing does, but still verify first.</td>
+              </tr>
+              <tr>
+                <td>Local CPU</td>
+                <td>None</td>
+                <td>None (unless you have a discrete GPU)</td>
+                <td>Instant</td>
+                <td class="dp-yes">N/A — free</td>
+                <td>Fine for small models and the browser-stub / Docker paths this page generates.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="dp-checked">Last checked: 2026-08</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<script type="module" src="js/deploy/ui.js"></script>
+</body>
+</html>

@@ -100,6 +100,8 @@
   .an-split-ratios input { width: 100%; padding: 0.3rem; border: 1px solid var(--rule); border-radius: var(--frame-radius); }
   .an-shortcut-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem var(--space-4); font-size: 0.85rem; margin-top: var(--space-4); }
   .an-shortcut-grid .kbd { font-family: "JetBrains Mono", monospace; background: var(--surface); border: 1px solid var(--rule); border-radius: 3px; padding: 0.05rem 0.4rem; justify-self: start; }
+  .an-progress { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; margin-top: var(--space-3); }
+  .an-progress-bar { height: 100%; background: var(--box); width: 0%; transition: width 100ms linear; }
 
   @media (max-width: 860px) {
     .an-layout { grid-template-columns: 1fr; }
@@ -177,6 +179,8 @@
           <div class="an-toolbar-sep"></div>
           <button type="button" class="btn btn--ghost" id="an-fit" title="Fit to screen (F)">Fit</button>
           <button type="button" class="btn btn--ghost" id="an-shortcuts" title="Keyboard shortcuts (?)">?</button>
+          <div class="an-toolbar-sep"></div>
+          <button type="button" class="btn btn--ghost" id="an-suggest" title="Run YOLO11n over this image and add editable boxes">Suggest boxes</button>
           <span class="an-readout mono" id="an-coord">–, –</span>
         </div>
 
@@ -232,6 +236,16 @@
   <div class="an-modal-actions">
     <button type="button" class="btn btn--ghost" id="an-export-cancel">Cancel</button>
     <button type="button" class="btn" id="an-export-go">Download zip</button>
+  </div>
+</dialog>
+
+<dialog class="an-modal" id="an-consent-modal">
+  <h3 id="an-consent-title">Download model</h3>
+  <p id="an-consent-body">This connection looks metered or slow. Downloading the model will use data.</p>
+  <div class="an-progress" id="an-consent-progress" hidden><div class="an-progress-bar" id="an-consent-bar"></div></div>
+  <div class="an-modal-actions">
+    <button type="button" class="btn btn--ghost" id="an-consent-cancel">Not now</button>
+    <button type="button" class="btn" id="an-consent-ok">Download</button>
   </div>
 </dialog>
 
