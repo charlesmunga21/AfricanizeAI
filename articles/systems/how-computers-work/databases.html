@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Databases: SQLite vs. Postgres — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / Databases: SQLite vs. Postgres</div>
+    <article>
+      <h1>Databases: SQLite vs. Postgres</h1>
+      <p>A database's entire job comes down to one tension: it has to store your data on <strong>disk</strong>, because disk is the only place that survives a restart — but disk is, as you just saw, roughly 1,000 times slower to read than RAM. If every query had to go straight to disk, every database would feel painfully slow. So every serious database — SQLite and Postgres included — is built around the same trick: keep a cache of frequently-used data in RAM, and only touch disk when it truly has to.</p>
+
+      <h2>Two very different databases, the same underlying trick</h2>
+      <p><strong>SQLite</strong> is <em>embedded</em> — there's no separate database server. It's a library that runs directly inside your app's own process, and it reads and writes a single file on disk. Its cache — called the <strong>page cache</strong> — lives right there in your app's own memory, holding recently-used chunks ("pages") of that file so it doesn't have to keep re-reading disk.</p>
+      <p><strong>Postgres</strong> is <em>client-server</em> — a separate, long-running server process holds the actual data, and your application connects to it (often over a network) to run queries. Postgres keeps its own cache in the server's memory, called <strong>shared_buffers</strong>, and — as PlanetScale's engineering blog explains — it also benefits from a second layer underneath: the operating system's own page cache, which keeps recently-read disk pages in RAM even after Postgres itself is done with them. That's two layers of RAM caching between a query and the disk, not just one.</p>
+
+      <div class="note">A genuinely counterintuitive point from that same PlanetScale post: a Postgres server using a <em>lot</em> of RAM is usually a <strong>good</strong> sign, not a warning sign. High memory use there generally means the cache is doing its job — most of your data is sitting ready in RAM instead of waiting on disk. The number to actually worry about is high, sustained <em>CPU</em> usage — that's what tells you queries can't keep up.</div>
+
+      <h2>Visual model: watch a query's actual path</h2>
+      <p>Toggle between SQLite and Postgres, pick a row, and run a query. Watch whether it's a fast <strong>hit</strong> (already cached in RAM) or a slower <strong>miss</strong> (has to go all the way to disk).</p>
+      <div class="viz" id="db-viz"></div>
+
+      <h2>Writing safely: the write-ahead log (WAL)</h2>
+      <p>Reads are only half the story — a database also has to guarantee that once it tells you a write succeeded, that data is genuinely safe, even if the power dies one second later. Writing straight into the middle of a big, carefully organized data file on every single change would be slow and risky. Instead, both SQLite and Postgres use the same idea: a <strong>write-ahead log (WAL)</strong>.</p>
+      <p>When you change a row, the database first appends that change to a simple, ever-growing log file — one quick, sequential write, which disks handle much faster than jumping around to update scattered pages. Only the WAL needs to be safely on disk for the write to be considered durable. Later, in the background, a <strong>checkpoint</strong> takes everything piled up in the WAL and folds it into the real, organized data file. If the power dies in between, the database just replays the WAL on restart and ends up exactly where it left off — nothing is lost, and nothing was ever slowly written twice.</p>
+      <p>Click <strong>Write Row</strong> in the visual above to see both steps happen, in order.</p>
+
+      <div class="note">Sources: <a href="https://planetscale.com/blog/high-memory-usage-in-postgres-is-good-actually" target="_blank" rel="noopener">"High memory usage in Postgres is good, actually"</a> and <a href="https://planetscale.com/blog/caching" target="_blank" rel="noopener">"Caching"</a>, both from the PlanetScale engineering blog; latency figures from Brendan Gregg's <em>Systems Performance</em> (O'Reilly).</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="db-quiz"></div>
+
+      <div class="article-nav">
+        <a href="disk.html">← Disk</a>
+        <a href="index.html">Back to How Computers Work overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initDbQueryViz(document.getElementById("db-viz"));
+  initQuiz(document.getElementById("db-quiz"), [
+    {
+      q: "What's the fundamental difference between how SQLite and Postgres are structured?",
+      options: [
+        "SQLite is embedded and runs inside your app; Postgres is a separate server process your app connects to",
+        "SQLite is always faster than Postgres",
+        "Postgres doesn't use disk at all",
+        "There's no real difference — they're the same underneath",
+      ],
+      correct: 0,
+      explain: "SQLite runs in-process as a library reading a single file. Postgres runs as its own long-running server, with clients connecting to it.",
+    },
+    {
+      q: "According to the PlanetScale blog, why can high RAM usage on a Postgres server actually be a good sign?",
+      options: [
+        "It means the server is about to crash",
+        "It usually means the cache (shared_buffers and the OS page cache) is holding a lot of data ready in RAM, avoiding slow disk reads",
+        "It means Postgres is broken and leaking memory",
+        "RAM usage has no relationship to performance",
+      ],
+      correct: 1,
+      explain: "High memory use generally reflects effective caching. The metric actually worth watching for trouble is sustained high CPU usage.",
+    },
+    {
+      q: "Why do SQLite and Postgres both write changes to a write-ahead log (WAL) before updating the main data file?",
+      options: [
+        "It's a legacy feature nobody uses anymore",
+        "It makes writes appear faster without actually being safe",
+        "Appending to a log is a fast, sequential disk write, and replaying it after a crash guarantees no committed data is lost",
+        "It avoids ever having to use RAM",
+      ],
+      correct: 2,
+      explain: "The WAL turns a write into one quick sequential append. The real data file is updated later via a checkpoint — and if power is lost first, the WAL can be replayed to recover safely.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

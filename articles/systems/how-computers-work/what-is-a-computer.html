@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is a Computer? — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / What Is a Computer?</div>
+    <article>
+      <h1>What Is a Computer?</h1>
+      <p>Strip away the screen, the apps, and the icons, and a computer is doing one very simple thing over and over: it takes some <strong>input</strong>, follows a list of instructions (a <strong>program</strong>) to <strong>process</strong> that input, and produces some <strong>output</strong>. Along the way, it needs somewhere to hold things it's currently working on, and somewhere to keep things permanently. That's really the whole story — everything else is detail.</p>
+
+      <h2>The five jobs, and the four parts that do them</h2>
+      <p>Every computer, from a phone to a server rack in a data centre, needs to do the same five things:</p>
+      <ul class="learn-list">
+        <li><strong>Take input</strong> — a keyboard press, a tap, a camera frame, a request arriving over the internet.</li>
+        <li><strong>Compute</strong> — actually do something with that input. This is the <strong>CPU</strong>'s job.</li>
+        <li><strong>Remember things it's using right now</strong> — the program's current state, the data it's working on. This is <strong>RAM</strong>'s job (with a tiny, even faster helper called <strong>cache</strong> sitting right on the CPU itself).</li>
+        <li><strong>Keep things permanently</strong> — files, installed apps, database records — so they're still there after a restart. This is the <strong>disk</strong>'s job.</li>
+        <li><strong>Produce output</strong> — a picture on a screen, a sound, a saved file, a reply sent back over the network.</li>
+      </ul>
+      <p>The next four submodules each take one of these physical parts — CPU, cache, RAM, disk — and explain it on its own. This page is just the map.</p>
+
+      <h2>Visual model: following a request through the machine</h2>
+      <p>Click each part below to see what it actually does. This is the same path any request takes, whether it's you opening a photo or a web server answering a database query.</p>
+      <div class="viz" id="flow-viz"></div>
+
+      <h2>A concrete example</h2>
+      <p>Say you tap "open" on a photo. Input (your tap) tells the <strong>CPU</strong> to run the photo app's instructions. The CPU asks the operating system to load the app and the image file from <strong>disk</strong> into <strong>RAM</strong>, because RAM is far faster to work from than disk. As the CPU decodes and draws the image pixel by pixel, it leans on its own tiny <strong>cache</strong> to avoid constantly reaching all the way out to RAM. Finally, the finished picture is sent to the screen — the <strong>output</strong>.</p>
+
+      <div class="note">Keep that example in your head. Every one of the next four submodules is really just zooming into one step of it — and the final submodule does the exact same walk-through, except the "app" is a database like SQLite or Postgres, and the "photo" is a row of data.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="wic-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← How Computers Work overview</a>
+        <a href="cpu.html">Next: The CPU →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initComputerFlowViz(document.getElementById("flow-viz"));
+  initQuiz(document.getElementById("wic-quiz"), [
+    {
+      q: "Which part of the computer is responsible for actually running a program's instructions?",
+      options: ["RAM", "Disk", "The CPU", "The screen"],
+      correct: 2,
+      explain: "The CPU is the part that does the computing. RAM and disk exist to give it data to work with; the screen just shows the result.",
+    },
+    {
+      q: "Why does the computer copy an app and its data from disk into RAM before running it, instead of working from disk directly?",
+      options: [
+        "It doesn't — programs run straight from disk",
+        "RAM is far faster to read from and write to than disk",
+        "Disk can only be read once",
+        "RAM is cheaper than disk",
+      ],
+      correct: 1,
+      explain: "RAM is dramatically faster than disk (you'll see the actual numbers in the RAM and Disk submodules), so the computer stages things there before working on them.",
+    },
+    {
+      q: "What happens to whatever is sitting in RAM if the power goes off?",
+      options: ["Nothing — RAM keeps its contents", "It's automatically saved to disk", "It's lost", "It moves into the CPU cache"],
+      correct: 2,
+      explain: "RAM is volatile — it needs continuous power to hold data. Anything not also saved to disk disappears the moment the power cuts.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

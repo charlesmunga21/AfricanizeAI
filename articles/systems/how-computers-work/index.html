@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / How Computers Work</div>
+
+    <section class="module-hero">
+      <h1>How Computers Work</h1>
+      <p>Every app you use — including a database — is just a program asking a computer for two things over and over: "do some work" and "remember something." Underneath that simple request sit four physical parts working together: a <strong>CPU</strong> that does the work, a tiny <strong>cache</strong> next to it for things it needs right now, <strong>RAM</strong> for things it needs soon, and a <strong>disk</strong> for things it needs to keep even after the power goes off.</p>
+      <p>This module walks through those four parts in plain language — no electronics degree required — and then ties them together with something you'll actually build with: how real databases like <strong>SQLite</strong> and <strong>Postgres</strong> use this exact same hardware to answer your queries fast. Ideas here are drawn from Brendan Gregg's book <em>Systems Performance</em> and PlanetScale's engineering blog. Every submodule has a small interactive model to play with, and a short quiz at the end.</p>
+      <ul class="learn-list">
+        <li>What a computer actually is, in terms of the four parts that do all the work</li>
+        <li>What the CPU does, and why it can only do one tiny step at a time — just extremely fast</li>
+        <li>Why CPUs have a "cache," and why that one idea explains almost everything about computer speed</li>
+        <li>Why RAM is fast but forgets everything, and how a computer decides what to keep in it</li>
+        <li>Why disks are slow but permanent, and what that trade-off actually costs in real time</li>
+        <li>How SQLite and Postgres — two very different databases — both lean on RAM and disk to be fast <em>and</em> safe</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="what-is-a-computer.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>What Is a Computer?</h3>
+        <p>The big picture: input, processing, memory, storage, output — and where each of the four main parts fits in.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="cpu.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>The CPU</h3>
+        <p>The part that actually "computes" — and why it works in a tireless, tiny four-step loop.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="cpu-cache.html">
+        <span class="submodule-card__step">3 · Core Skill</span>
+        <h3>CPU Cache</h3>
+        <p>A tiny notepad built right next to the CPU — and the one idea that explains almost all computer speed.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="ram.html">
+        <span class="submodule-card__step">4 · Core Skill</span>
+        <h3>RAM</h3>
+        <p>The desk a program works at — roomy and fast, but wiped clean the moment the power goes off.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="disk.html">
+        <span class="submodule-card__step">5 · Core Skill</span>
+        <h3>Disk</h3>
+        <p>The filing cabinet — slower to reach than the desk, but nothing in it disappears when you turn off the lights.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="databases.html">
+        <span class="submodule-card__step">6 · Applied</span>
+        <h3>Databases: SQLite vs. Postgres</h3>
+        <p>Watch a real query travel through cache, RAM, and disk — and see why SQLite and Postgres take different paths to the same speed.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Part</th><th>Job</th><th>Typical size</th><th>Keeps data with no power?</th></tr></thead>
+      <tbody>
+        <tr><td>CPU</td><td>Runs instructions, does the actual computing</td><td>4–16+ cores</td><td>—</td></tr>
+        <tr><td>CPU Cache</td><td>Tiny superfast memory sitting right on the CPU chip</td><td>A few KB to tens of MB</td><td>No</td></tr>
+        <tr><td>RAM</td><td>Fast working memory for whatever's running right now</td><td>8–64 GB</td><td>No</td></tr>
+        <tr><td>Disk (SSD/HDD)</td><td>Long-term storage for files and databases</td><td>256 GB–a few TB</td><td>Yes</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="what-is-a-computer.html">Start: What Is a Computer? →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

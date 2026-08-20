@@ -321,6 +321,8 @@ button.viz-box { cursor: pointer; }
 .race-bar { height: 1.1rem; background: #e2e2e2; border-radius: 6px; overflow: hidden; }
 .race-bar__fill { height: 100%; width: 0%; background: var(--green); }
 .race-bar__fill--binary { background: var(--green-dark); }
+.race-bar__fill--amber { background: #c9971f; }
+.race-bar__fill--danger { background: #c0392b; }
 .race-count { font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 0.8rem; margin-top: 0.3rem; color: var(--text-muted); }
 
 /* Quiz */

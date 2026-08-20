@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disk — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / Disk</div>
+    <article>
+      <h1>Disk</h1>
+      <p>If RAM is the desk, <strong>disk</strong> is the filing cabinet across the room — an SSD (solid-state drive) or an older HDD (spinning hard disk). It's where everything that needs to outlive a restart actually lives: your files, your installed apps, and every database on the machine. Walking to the filing cabinet takes longer than reaching across your own desk — but nothing on it disappears when the lights go out.</p>
+
+      <h2>Why disk is so much slower than RAM</h2>
+      <p>Going back to the scaled numbers from the <a href="cpu-cache.html">CPU Cache</a> submodule: if a CPU cache reference takes 1 second, a RAM reference takes a few minutes — but reading from an SSD stretches out to roughly <strong>six days</strong>, and a seek on an older spinning disk stretches to roughly <strong>ten months</strong>. PlanetScale's engineering blog puts the everyday version of that number simply: reading a page of data from RAM is "roughly 1,000 times faster" than reading it from even a fast modern SSD.</p>
+      <p>Why the huge gap? RAM is electronic circuitry built to be read and written near-instantly. An SSD has to route the request through flash memory chips designed for durability and cost per gigabyte, not raw speed. A spinning HDD is slower still, because there's an actual mechanical arm that has to physically move to the right spot on a spinning platter before it can read anything — that physical motion is what those extra milliseconds are spent on.</p>
+
+      <h2>The trade-off, in one sentence</h2>
+      <p>Disk is slower than RAM because it's built to be <em>large, cheap, and permanent</em> instead of fast — and that's exactly the job it needs to do. You wouldn't want your family photos to vanish the moment you unplug your laptop.</p>
+
+      <h2>Visual model: power off, and see what survives</h2>
+      <p>Open a program (goes to RAM) and save a file (goes to disk), then power the computer off. Watch which one survives.</p>
+      <div class="viz" id="disk-viz"></div>
+
+      <div class="note">This exact RAM-vs-disk trade-off is the entire reason database engines are engineered so carefully — they have to give you disk's permanence, at something closer to RAM's speed. That's the whole subject of the next, final submodule.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="disk-quiz"></div>
+
+      <div class="article-nav">
+        <a href="ram.html">← RAM</a>
+        <a href="databases.html">Next: Databases: SQLite vs. Postgres →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initDiskViz(document.getElementById("disk-viz"));
+  initQuiz(document.getElementById("disk-quiz"), [
+    {
+      q: "What survives when a computer loses power?",
+      options: ["Only what's in the CPU cache", "Only what's in RAM", "Only what's saved to disk", "Nothing survives"],
+      correct: 2,
+      explain: "Disk is persistent storage — it doesn't need continuous power to hold data, unlike RAM or cache.",
+    },
+    {
+      q: "According to the numbers in this module, roughly how much faster is reading from RAM than reading from a fast SSD?",
+      options: ["About 2× faster", "About 1,000× faster", "About the same speed", "SSD is actually faster than RAM"],
+      correct: 1,
+      explain: "PlanetScale's engineering blog puts it plainly: RAM reads are roughly 1,000× faster than even a fast NVMe SSD read.",
+    },
+    {
+      q: "Why is an older spinning hard disk (HDD) typically slower than a solid-state drive (SSD)?",
+      options: [
+        "HDDs use older, slower electricity",
+        "An HDD has a mechanical arm that must physically move before it can read data, while an SSD has no moving parts",
+        "HDDs are actually faster than SSDs",
+        "HDDs can only store text files",
+      ],
+      correct: 1,
+      explain: "The physical seek time — moving a read arm to the right spot on a spinning platter — is what makes HDDs slower than the purely electronic flash chips inside an SSD.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

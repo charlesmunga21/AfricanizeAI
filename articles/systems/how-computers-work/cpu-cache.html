@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPU Cache — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / CPU Cache</div>
+    <article>
+      <h1>CPU Cache</h1>
+      <p>The CPU is astonishingly fast. Plain RAM, by comparison, is slow — not slow in human terms, but slow compared to the CPU. If the CPU had to reach all the way out to RAM for every single piece of data it needed, it would spend most of its time just waiting. The fix is the <strong>cache</strong>: a small pocket of extremely fast memory built directly onto the CPU chip itself, so close it barely takes any time to reach.</p>
+
+      <h2>A notepad, not a filing cabinet</h2>
+      <p>Think of the CPU cache as a notepad sitting right at your elbow, versus RAM as a filing cabinet across the room. You don't put a copy of every document on your notepad — just the handful you're actively using right now. Whenever the CPU needs a piece of data, it checks the notepad first. If it's there, that's called a <strong>cache hit</strong> — almost instant. If it's not, that's a <strong>cache miss</strong>, and the CPU has to make the slower trip out to RAM — and while it's there, it copies that data onto the notepad too, in case it's needed again soon.</p>
+      <p>Real CPUs actually have a few of these notepads stacked in size — a tiny, blazing-fast one (called L1) right on the core, a slightly bigger and slightly slower backup (L2), and often a larger shared one (L3) for the whole chip. You don't need to memorize the levels; the idea is the same at every level — smaller and closer trades capacity for speed.</p>
+
+      <h2>Why this one idea explains so much about computer speed</h2>
+      <p>The gap between "on the notepad" and "in the filing cabinet" is enormous — and it only gets bigger once you add disk into the picture. Brendan Gregg's book <em>Systems Performance</em> makes this vivid with a simple trick: scale every latency up so that a CPU cache reference takes <strong>1 second</strong>, and see what the others become.</p>
+
+      <div class="viz" id="latency-viz"></div>
+
+      <p>That's not a rounding error — reaching RAM instead of cache is the difference between "instant" and "put the kettle on," and reaching disk is the difference between "instant" and "wait for a package to ship." This single fact — cache is dramatically faster than RAM, and RAM is dramatically faster than disk — is the reason almost every fast piece of software, databases very much included, is obsessively designed around keeping frequently-used data as close to the CPU as possible.</p>
+
+      <div class="note">Source: latency figures adapted from Brendan Gregg, <em>Systems Performance</em> (O'Reilly) — exact numbers vary a little by hardware generation, but the relative gaps between cache, RAM, and disk have stayed roughly this dramatic for years.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="cache-quiz"></div>
+
+      <div class="article-nav">
+        <a href="cpu.html">← The CPU</a>
+        <a href="ram.html">Next: RAM →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initLatencyViz(document.getElementById("latency-viz"));
+  initQuiz(document.getElementById("cache-quiz"), [
+    {
+      q: "What is a CPU cache, in plain terms?",
+      options: [
+        "A backup copy of the hard disk",
+        "A small, extremely fast memory built onto the CPU chip that holds recently-used data",
+        "The part of RAM reserved for the operating system",
+        "A folder on disk where temporary files are kept",
+      ],
+      correct: 1,
+      explain: "The cache sits right on the CPU chip itself — physically close, which is what makes it so much faster to reach than RAM.",
+    },
+    {
+      q: "What's a 'cache miss'?",
+      options: [
+        "The CPU crashes",
+        "The data the CPU needs isn't in the cache, so it has to fetch it from slower RAM instead",
+        "The cache is turned off",
+        "A program fails to start",
+      ],
+      correct: 1,
+      explain: "A miss just means the notepad didn't have what was needed, so the CPU has to make the slower trip out to RAM — and copies the result onto the notepad for next time.",
+    },
+    {
+      q: "In the scaled-latency comparison, if a CPU cache reference takes 1 second, roughly how long does an SSD read take?",
+      options: ["Also 1 second", "About 3 minutes", "About 6 days", "About 10 months"],
+      correct: 2,
+      explain: "RAM lands around a few minutes on this scale, and an SSD read stretches out to roughly six days — disk is that much further away from the CPU than cache is.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAM — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / RAM</div>
+    <article>
+      <h1>RAM</h1>
+      <p><strong>RAM</strong> (Random Access Memory) is where a program's working data lives while it runs. Picture it as a desk: roomy enough to spread out everything you're currently doing, and fast to reach — nowhere near as fast as the CPU's own cache notepad, but leagues faster than walking to a filing cabinet across the room. Every open app, every tab, every piece of data currently "in use" on your computer is sitting in RAM right now.</p>
+
+      <h2>Two things worth knowing about RAM</h2>
+      <ul class="learn-list">
+        <li><strong>It's limited.</strong> A desk only has so much surface area. A computer might have 8, 16, or 32 gigabytes of RAM — once it's full, something has to give.</li>
+        <li><strong>It's volatile.</strong> The moment power is cut, everything on the desk is swept onto the floor. RAM needs continuous electricity to hold its contents — that's the trade-off for being so fast.</li>
+      </ul>
+      <p>This is exactly why your computer nags you to "save" your work: whatever's only in RAM doesn't survive a crash or a shutdown. Only once it's written to disk is it actually safe.</p>
+
+      <h2>What happens when RAM fills up</h2>
+      <p>When you open a new app and there's no free space left, the operating system has to make room — usually by closing or "swapping out" whatever hasn't been used in a while. That's the real reason a computer with too many tabs and apps open starts to feel sluggish: it's constantly shuffling things in and out of a desk that's too small for everything you're asking it to hold at once.</p>
+
+      <h2>Visual model: a desk with limited space</h2>
+      <p>Open a few programs below and watch what happens once RAM fills up — and then try powering the computer off.</p>
+      <div class="viz" id="ram-viz"></div>
+
+      <div class="note">This is also exactly how a database's in-memory cache behaves — SQLite and Postgres both keep a limited, RAM-sized "desk" of recently-used data for the exact same reason your apps do. You'll see this play out with real numbers in the <a href="databases.html">Databases</a> submodule.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ram-quiz"></div>
+
+      <div class="article-nav">
+        <a href="cpu-cache.html">← CPU Cache</a>
+        <a href="disk.html">Next: Disk →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initRamViz(document.getElementById("ram-viz"));
+  initQuiz(document.getElementById("ram-quiz"), [
+    {
+      q: "What does it mean for RAM to be 'volatile'?",
+      options: [
+        "It can catch fire",
+        "It loses its contents when power is cut",
+        "It gets slower over time",
+        "It can only store numbers, not text",
+      ],
+      correct: 1,
+      explain: "Volatile means it needs continuous power to hold data. Cut the power, and everything only in RAM is gone.",
+    },
+    {
+      q: "You have several apps open and RAM is full. You open one more app. What typically happens?",
+      options: [
+        "The new app refuses to open",
+        "The computer adds more RAM automatically",
+        "The operating system closes or swaps out something that hasn't been used recently, to make room",
+        "Nothing — RAM has no real limit",
+      ],
+      correct: 2,
+      explain: "RAM is a limited resource, so the OS has to evict something to make space — which is also why too many open apps can make a computer feel sluggish.",
+    },
+    {
+      q: "Why does a computer ask you to 'save' your work before closing it?",
+      options: [
+        "It's just a formality",
+        "Because unsaved work only exists in volatile RAM and would be lost on shutdown or a crash",
+        "Because RAM is read-only",
+        "To free up CPU cache",
+      ],
+      correct: 1,
+      explain: "Only data written to disk survives a shutdown. Anything still only in RAM disappears with the power.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

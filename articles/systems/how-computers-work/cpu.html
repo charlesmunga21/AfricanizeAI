@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The CPU — How Computers Work — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="index.html" class="active">How Computers Work</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">How Computers Work</a> / The CPU</div>
+    <article>
+      <h1>The CPU</h1>
+      <p>The <strong>CPU</strong> (Central Processing Unit) is the part of the computer that actually <em>does</em> things — often called "the brain." Physically, it's a chip covered in billions of microscopic switches. But you don't need to think about the switches. What matters is what the CPU does with them: it runs one simple, tireless loop, over and over, billions of times a second.</p>
+
+      <h2>The loop: fetch, decode, execute, store</h2>
+      <p>A program is really just a long list of tiny instructions — "add these two numbers," "compare this to that," "move this piece of data over there." The CPU works through that list one instruction at a time, and each instruction goes through the same four steps:</p>
+      <ul class="learn-list">
+        <li><strong>Fetch</strong> — grab the next instruction from memory.</li>
+        <li><strong>Decode</strong> — figure out what it's asking for.</li>
+        <li><strong>Execute</strong> — actually do it.</li>
+        <li><strong>Store</strong> — write the result somewhere it can be used next.</li>
+      </ul>
+      <p>Then it fetches the next instruction, and does it all again. That's it — that's the whole trick. A CPU doesn't "understand" a program the way you understand a recipe; it just tirelessly marches through millions of these tiny, dumb steps, and the illusion of intelligence emerges from doing that unbelievably fast.</p>
+
+      <h2>Visual model: step through the cycle</h2>
+      <p>Click <strong>Step</strong> to walk through fetch → decode → execute → store one stage at a time, or hit <strong>Auto Play</strong> to watch it loop on its own.</p>
+      <div class="viz" id="cycle-viz"></div>
+
+      <h2>What "GHz" and "cores" actually mean</h2>
+      <p>A CPU's clock speed (say, 3.5 GHz) is just how many times per second it can run through that fetch-decode-execute-store loop — 3.5 <em>billion</em> times a second, in that example. A "core" is a full, independent copy of this whole machinery. A CPU with 8 cores is really 8 small brains that can each run their own loop at the same time, which is why modern computers can genuinely do several things in parallel rather than just switching between them very quickly.</p>
+
+      <div class="note">Here's the catch: every single one of those fetch and store steps normally means reaching out to memory to get or put data — and memory is much slower than the CPU itself. If the CPU had to wait for plain RAM on every single step, it would sit idle most of the time. That problem, and its fix, is exactly what the next submodule — <a href="cpu-cache.html">CPU Cache</a> — is about.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="cpu-quiz"></div>
+
+      <div class="article-nav">
+        <a href="what-is-a-computer.html">← What Is a Computer?</a>
+        <a href="cpu-cache.html">Next: CPU Cache →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/computer-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initCpuCycleViz(document.getElementById("cycle-viz"));
+  initQuiz(document.getElementById("cpu-quiz"), [
+    {
+      q: "What are the four steps a CPU repeats for every single instruction?",
+      options: [
+        "Open, read, write, close",
+        "Fetch, decode, execute, store",
+        "Input, process, output, repeat",
+        "Compile, link, load, run",
+      ],
+      correct: 1,
+      explain: "Fetch the instruction, decode what it means, execute it, and store the result — then start over on the next instruction.",
+    },
+    {
+      q: "A CPU is described as running at 3.5 GHz. What does that actually measure?",
+      options: [
+        "How much RAM it can use",
+        "How many programs it can run at once",
+        "How many fetch-decode-execute-store cycles it can complete per second",
+        "How hot it can get before shutting down",
+      ],
+      correct: 2,
+      explain: "GHz (gigahertz) is billions of cycles per second — 3.5 GHz means 3.5 billion of those fetch-decode-execute-store loops every second.",
+    },
+    {
+      q: "Why does having 8 CPU cores let a computer genuinely do more than one thing at the same time?",
+      options: [
+        "Each core is a full, independent copy of the fetch-decode-execute machinery",
+        "Cores share one instruction and split the work in half automatically",
+        "More cores just means a bigger cache",
+        "It doesn't — extra cores are only for marketing",
+      ],
+      correct: 0,
+      explain: "Each core can run its own fetch-decode-execute-store loop independently, so multiple cores really can process different instructions at the same instant.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
