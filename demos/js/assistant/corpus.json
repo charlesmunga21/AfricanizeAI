@@ -1,0 +1,1629 @@
+{
+ "version": "14664d245d5b",
+ "chunks": [
+  {
+   "id": 0,
+   "url": "articles/ai/business/automation.html",
+   "module": "AI for Business",
+   "title": "Automating Repetitive Decisions",
+   "heading": null,
+   "text": "Tasks that follow a pattern a human could describe but do too slowly at volume: fraud transaction flagging, loan pre-screening, invoice/document processing, customer support ticket routing. Automation here works best combined with a human-in-the-loop for edge cases and low-confidence predictions."
+  },
+  {
+   "id": 1,
+   "url": "articles/ai/business/automation.html",
+   "module": "AI for Business",
+   "title": "Automating Repetitive Decisions",
+   "heading": "The threshold is the real decision",
+   "text": "A fraud-detection model doesn't output \"fraud\" or \"not fraud\" — it outputs a risk score. Someone still has to pick the cutoff: flag everything above score X for review, auto-approve everything below. Set the threshold too low and you flood a human reviewer with false alarms; set it too high and real fraud slips through unflagged. There's no threshold that eliminates both kinds of mistakes — moving it only trades one kind for the other. This tradeoff has names: a lower threshold catches more true fraud (higher recall) at the cost of more false alarms (lower precision); a higher threshold does the reverse. Which side to favor is a business decision, not a modeling one — it depends on how expensive a false alarm is versus a missed case."
+  },
+  {
+   "id": 2,
+   "url": "articles/ai/business/automation.html",
+   "module": "AI for Business",
+   "title": "Automating Repetitive Decisions",
+   "heading": "Visual model: move the threshold yourself",
+   "text": "Each box is one transaction, labeled with its risk score. Drag the threshold and watch which transactions get auto-flagged (amber = the auto-decision was wrong for that transaction) versus auto-approved."
+  },
+  {
+   "id": 3,
+   "url": "articles/ai/business/index.html",
+   "module": "AI for Business",
+   "title": "AI for Business",
+   "heading": null,
+   "text": "Beyond the hype, AI creates measurable business value in a fairly small number of recurring patterns: predicting outcomes, automating repetitive decisions, understanding unstructured data, and personalizing at scale. Recognizing which pattern a problem fits is the first step to using AI well. Each submodule below covers one pattern with a runnable version of the actual mechanism behind it — a real regression fit, a real threshold tradeoff, a real (if simplified) text classifier, a real recommender — not just a description of what these tools do. Why forecasting/prediction is usually the lowest-risk, highest-ROI AI project The tradeoff a threshold controls when automating a decision How \"AI reads your documents\" reduces to classifying unstructured text Why personalization means different inputs producing different outputs, mechanically"
+  },
+  {
+   "id": 4,
+   "url": "articles/ai/business/personalization.html",
+   "module": "AI for Business",
+   "title": "Personalization at Scale",
+   "heading": null,
+   "text": "Recommendation systems and dynamic pricing/content adjust the experience per user instead of showing everyone the same thing — the mechanism behind product recommendations, personalized pricing, and adaptive learning platforms."
+  },
+  {
+   "id": 5,
+   "url": "articles/ai/business/personalization.html",
+   "module": "AI for Business",
+   "title": "Personalization at Scale",
+   "heading": "The mechanism: different input, different output",
+   "text": "\"Personalization\" sounds abstract until you see the actual computation: the same model, given a different profile or history as input, produces a different output. A real recommender is trained on millions of purchase histories to learn which items tend to co-occur; the visual model below uses a small hand-built co-occurrence table instead, to make that \"same model, different input, different output\" mechanism directly visible."
+  },
+  {
+   "id": 6,
+   "url": "articles/ai/business/personalization.html",
+   "module": "AI for Business",
+   "title": "Personalization at Scale",
+   "heading": "Visual model: change the cart, change the recommendation",
+   "text": "Check different combinations of items and click Get Recommendations. Nothing about the underlying logic changes between clicks — only the input does, and that alone is enough to change the output. Real recommenders use far richer signals than co-purchase pairs — browsing time, ratings, similarity between users with overlapping histories — but the core shape is the same one you just used: given this profile, which items have a track record of going together for people like this?"
+  },
+  {
+   "id": 7,
+   "url": "articles/ai/business/prediction-forecasting.html",
+   "module": "AI for Business",
+   "title": "Prediction & Forecasting",
+   "heading": null,
+   "text": "Models trained on historical data to predict a future number or event: demand forecasting for inventory, cash-flow forecasting, credit risk scoring, equipment failure prediction (predictive maintenance). These are usually the highest-ROI, lowest-risk AI projects because the output is a number that a human still reviews before acting."
+  },
+  {
+   "id": 8,
+   "url": "articles/ai/business/prediction-forecasting.html",
+   "module": "AI for Business",
+   "title": "Prediction & Forecasting",
+   "heading": "A simple forecasting example",
+   "text": "Even a basic regression model illustrates the pattern used in many forecasting tools: from sklearn.linear_model import LinearRegression import numpy as np # Past 6 months of units sold months = np.array([1, 2, 3, 4, 5, 6]).reshape(-1, 1) units_sold = np.array([120, 135, 150, 170, 190, 205]) model = LinearRegression().fit(months, units_sold) next_month_prediction = model.predict([[7]]) print(next_month_prediction) # estimated demand for month 7 Regression finds the line that minimizes the total squared distance between itself and every data point — that's what \"fitting\" means. It's not magic, it's an equation for the line that best matches history, extended one step forward."
+  },
+  {
+   "id": 9,
+   "url": "articles/ai/business/prediction-forecasting.html",
+   "module": "AI for Business",
+   "title": "Prediction & Forecasting",
+   "heading": "Visual model: fit the line yourself",
+   "text": "This is the same 6-month dataset as the code above. Edit any month's value and re-fit — watch the line, and the month-7 prediction, respond to the data you gave it."
+  },
+  {
+   "id": 10,
+   "url": "articles/ai/business/unstructured-data.html",
+   "module": "AI for Business",
+   "title": "Understanding Unstructured Data",
+   "heading": null,
+   "text": "Most business data isn't in neat rows and columns — it's emails, contracts, call transcripts, product photos, satellite imagery. AI models (NLP for text, computer vision for images) extract structured information from this: summarizing contracts, classifying support emails by intent, detecting product defects from photos on a production line."
+  },
+  {
+   "id": 11,
+   "url": "articles/ai/business/unstructured-data.html",
+   "module": "AI for Business",
+   "title": "Understanding Unstructured Data",
+   "heading": "The core mechanism: classification",
+   "text": "A huge share of \"AI reads your documents\" products reduce to the same underlying task as the image classification covered in the Computer Vision module — just applied to text instead of pixels: take an unstructured input, output one of a fixed set of labels. A real production system learns this mapping from thousands of labeled examples; the visual model below uses simple keyword rules instead, to make the underlying idea — text in, category out — visible without needing a trained model."
+  },
+  {
+   "id": 12,
+   "url": "articles/ai/business/unstructured-data.html",
+   "module": "AI for Business",
+   "title": "Understanding Unstructured Data",
+   "heading": "Visual model: classify a ticket",
+   "text": "Type your own support-ticket text, or try an example, and see it get routed to a category based on the words it contains. A real system would use a trained model instead of a keyword list, but the shape of the task — and why some inputs are ambiguous — is the same. Notice what happens when nothing matches — a well-designed system doesn't guess with false confidence, it routes the ambiguous case to a human. The keyword rule here is a simplification of a much more capable trained classifier, but the same \"route what you're unsure about\" principle applies to the real thing."
+  },
+  {
+   "id": 13,
+   "url": "articles/ai/creativity/human-judgment.html",
+   "module": "AI for Creativity",
+   "title": "Where Human Judgment Matters",
+   "heading": null,
+   "text": "Every submodule so far has shown a generative mechanism producing options quickly. None of them decide which option is good. That gap is exactly where human judgment lives, and it doesn't shrink as the models get better at generating — it just moves the bottleneck from \"produce a draft\" to \"evaluate the drafts.\" Taste — choosing which of many generated options is actually good. Original concept — the model can't decide what story is worth telling or what problem a design should solve. Cultural and contextual nuance — models trained mostly on global/Western data often miss local context, references, and language nuance that a human creator supplies."
+  },
+  {
+   "id": 14,
+   "url": "articles/ai/creativity/human-judgment.html",
+   "module": "AI for Creativity",
+   "title": "Where Human Judgment Matters",
+   "heading": "Visual model: make the call yourself",
+   "text": "These four taglines all came from the same well-specified prompt in the Writing & Prompt Iteration submodule. There's no hidden \"correct\" answer here — pick the one you'd actually ship. If you compared notes with someone else who did this exercise, you might well have picked differently — and neither of you would be wrong. That's the point: taste doesn't converge to one right answer the way a math problem does, which is exactly why it isn't something a model can compute for you."
+  },
+  {
+   "id": 15,
+   "url": "articles/ai/creativity/index.html",
+   "module": "AI for Creativity",
+   "title": "AI for Creativity",
+   "heading": null,
+   "text": "Generative AI models don't replace the creative decisions — what to make, for whom, and why — but they collapse the time between an idea and a rough draft of it, across writing, visual art, and music. Each submodule pairs the concept with something you can actually run: a prompt-specificity tool that mirrors real LLM output quality, a step-through simulation of how diffusion models turn noise into an image, a mood-based chord generator, and an exercise that makes the limits of automation concrete rather than just asserted. Why prompt iteration — not the first output — is where the real craft is How diffusion models actually get from random noise to a coherent image What \"a starting point to react to\" means for AI-assisted music Which creative decisions still can't be automated, and why"
+  },
+  {
+   "id": 16,
+   "url": "articles/ai/creativity/music.html",
+   "module": "AI for Creativity",
+   "title": "Music Generation",
+   "heading": null,
+   "text": "AI music tools can generate backing tracks, suggest chord progressions, or produce full compositions from a text prompt or hummed melody, useful for scoring quick drafts, generating royalty-free background music, or breaking creative block by producing a starting point to react to."
+  },
+  {
+   "id": 17,
+   "url": "articles/ai/creativity/music.html",
+   "module": "AI for Creativity",
+   "title": "Music Generation",
+   "heading": "\"A starting point to react to\"",
+   "text": "This is the recurring theme across every creative medium in this module: the useful output usually isn't a finished piece, it's raw material a human then edits, rejects, or builds on. A generated chord progression that's \"almost right\" is often more useful than a blank page — it gives you something concrete to push against."
+  },
+  {
+   "id": 18,
+   "url": "articles/ai/creativity/music.html",
+   "module": "AI for Creativity",
+   "title": "Music Generation",
+   "heading": "Visual model: generate a progression",
+   "text": "Pick a mood, and get a 4-chord progression built for that mood. Regenerate for a different starting point within the same mood — a real tool works the same way: same intent, multiple candidate outputs, you pick or iterate."
+  },
+  {
+   "id": 19,
+   "url": "articles/ai/creativity/visual-art.html",
+   "module": "AI for Creativity",
+   "title": "Visual Art & Diffusion Models",
+   "heading": null,
+   "text": "Diffusion models (like those behind popular image generators) turn a text description into an image by starting from random noise and gradually refining it to match the prompt. Designers use these for rapid concept exploration — mood boards, style variations, and rough visual drafts — before committing time to a final polished version by hand or in traditional tools."
+  },
+  {
+   "id": 20,
+   "url": "articles/ai/creativity/visual-art.html",
+   "module": "AI for Creativity",
+   "title": "Visual Art & Diffusion Models",
+   "heading": "The core idea: denoise, step by step",
+   "text": "A diffusion model is trained to do one narrow thing extremely well: given a noisy image and a text prompt, predict a slightly less noisy version of it. Run that step repeatedly — each time feeding the output back in as the new input — and a coherent image gradually emerges from what started as pure static. No single step \"draws\" the picture; the picture is the accumulated result of many small denoising steps. This is a genuinely different mechanism from the classification/detection covered in Computer Vision Fundamentals — those models take an image in and produce a label out; a diffusion model takes noise (and a prompt) in and produces an image out."
+  },
+  {
+   "id": 21,
+   "url": "articles/ai/creativity/visual-art.html",
+   "module": "AI for Creativity",
+   "title": "Visual Art & Diffusion Models",
+   "heading": "Visual model: denoise it yourself",
+   "text": "This grid starts as random black-and-white noise. Click \"Denoise Step\" repeatedly (8 steps total) and watch cells resolve toward a hidden target shape, one step at a time — exactly the \"slightly less noisy each step\" mechanism described above, simplified down to a grid you can run yourself."
+  },
+  {
+   "id": 22,
+   "url": "articles/ai/creativity/writing.html",
+   "module": "AI for Creativity",
+   "title": "Writing & Prompt Iteration",
+   "heading": null,
+   "text": "Large language models draft, rewrite, and restructure text: blog posts, ad copy, scripts, and story outlines. The most effective creative use isn't \"generate my final piece\" but iteration — producing multiple angles or openings quickly, then a human selects and refines the strongest one."
+  },
+  {
+   "id": 23,
+   "url": "articles/ai/creativity/writing.html",
+   "module": "AI for Creativity",
+   "title": "Writing & Prompt Iteration",
+   "heading": "Most of the craft is in the prompt",
+   "text": "# Round 1 — too generic prompt = \"Write a tagline for a coffee shop\" # Round 2 — adds specificity that shapes the output prompt = ( \"Write 5 taglines for a coffee shop in Nairobi that roasts \" \"its own single-origin Kenyan beans, aimed at young professionals. \" \"Keep each under 8 words.\" ) The output quality of generative tools depends heavily on how specific and constrained the prompt is — vague prompts produce generic output, and the craft is in the constraints you provide, not just the request."
+  },
+  {
+   "id": 24,
+   "url": "articles/ai/creativity/writing.html",
+   "module": "AI for Creativity",
+   "title": "Writing & Prompt Iteration",
+   "heading": "Visual model: watch specificity change the output",
+   "text": "Every checkbox below is one real constraint from the \"Round 2\" prompt above. Add them one at a time and watch the generated taglines get sharper — this is illustrative (not a live model call), but it mirrors the real relationship: more genuine constraint, more usable output."
+  },
+  {
+   "id": 25,
+   "url": "articles/cv/fundamentals/convolution.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "How Convolution Works",
+   "heading": null,
+   "text": "Most modern vision systems are built on Convolutional Neural Networks (CNNs). Instead of connecting every pixel to every neuron (which would be enormous and ignore spatial structure), a convolution slides a small filter (\"kernel\") across the image, learning to detect local patterns — edges, textures, corners — which get combined into more complex shapes in deeper layers. import torch.nn as nn model = nn.Sequential( nn.Conv2d(in_channels=3, out_channels=16, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2), nn.Conv2d(16, 32, kernel_size=3, padding=1), nn.ReLU(), nn.MaxPool2d(2), nn.Flatten(), nn.Linear(32 * 8 * 8, 10) # e.g. 10 output classes )"
+  },
+  {
+   "id": 26,
+   "url": "articles/cv/fundamentals/convolution.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "How Convolution Works",
+   "heading": "What a convolution actually computes",
+   "text": "At each position, the kernel overlaps a patch of the input the same size as itself. Every overlapping pair of numbers gets multiplied, and all those products are summed into a single output number. Then the kernel slides one step over and repeats — producing an entire grid of outputs, the \"feature map.\""
+  },
+  {
+   "id": 27,
+   "url": "articles/cv/fundamentals/convolution.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "How Convolution Works",
+   "heading": "Visual model: slide the kernel yourself",
+   "text": "This 3×3 kernel is a simple vertical-edge detector. Step through it and watch it slide across the 5×5 input, computing one output value per position — and notice the output lights up exactly where the input actually has a vertical edge (the boundary between the 0s and the 1s). Want to see a network actually learn a decision boundary instead of just reading about it? Try the Neural Network Playground — train one in your browser, no setup."
+  },
+  {
+   "id": 28,
+   "url": "articles/cv/fundamentals/core-tasks.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Core Vision Tasks",
+   "heading": null,
+   "text": "\"Computer vision\" isn't one task — it's a family of related tasks that ask different questions about the same image, and get very different kinds of answers back. Image classification — assign a label to an entire image (\"cat\" vs. \"dog\"). Object detection — find where objects are, drawing bounding boxes and labeling each one. Semantic segmentation — classify every individual pixel, useful when you need exact object boundaries (e.g. separating crop from soil in a farm photo). Object tracking — follow an identified object across video frames over time. Detection and segmentation are easier to understand once you've watched them run. Real-Time Detection points your camera at the world and draws YOLO boxes and MobileSAM masks live, on-device — nothing there is a screenshot or a canned example."
+  },
+  {
+   "id": 29,
+   "url": "articles/cv/fundamentals/core-tasks.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Core Vision Tasks",
+   "heading": "Visual model: same scene, three different answers",
+   "text": "This is one synthetic scene with two objects. Switch between the three localized tasks and watch the exact same objects get annotated completely differently — that's the real distinction, not just terminology."
+  },
+  {
+   "id": 30,
+   "url": "articles/cv/fundamentals/images-as-data.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Images as Data",
+   "heading": null,
+   "text": "A digital image is just a grid of numbers. A grayscale image is a 2D array of pixel intensities (0–255); a color image adds three such arrays, one each for red, green, and blue. A computer vision model never \"sees\" a picture the way a person does — it operates purely on this array of numbers. # A tiny 3x3 grayscale image, as a computer would represent it image = [ [0, 128, 255], [64, 200, 90], [255, 30, 10], ] 0 is black, 255 is white, and everything in between is a shade of gray. A color (RGB) image is the same idea three times over — one grid for how much red is at each position, one for green, one for blue — stacked together. This is the same idea as the multi-dimensional arrays submodule in the Arrays module: an image is a 2D (or 3D, with color channels) array, stored the same way any other array is, with the same row-major memory layout underneath."
+  },
+  {
+   "id": 31,
+   "url": "articles/cv/fundamentals/images-as-data.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Images as Data",
+   "heading": "Visual model: edit the numbers, watch the picture",
+   "text": "This is a real 6×6 grayscale grid. Click any cell to change its value — the image and the number are the same thing, just two different ways of looking at it."
+  },
+  {
+   "id": 32,
+   "url": "articles/cv/fundamentals/index.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Computer Vision Fundamentals",
+   "heading": null,
+   "text": "Computer vision is the field of teaching computers to extract meaning from images and video — going from raw pixel grids to information like \"there is a car here\" or \"this is a picture of a maize field under drought stress.\" A model never \"sees\" a picture the way a person does; it operates purely on arrays of numbers. This module goes from that raw representation up to how a real vision system gets built in practice: what an image actually is to a computer, the different tasks vision models perform, the convolution operation that makes CNNs work, and why almost nobody trains one from scratch anymore. Why an image is just a grid (or three) of numbers, nothing more The difference between classification, detection, and segmentation How a convolution kernel actually computes a feature map, step by step Why fine-tuning a pretrained model needs far less data than training from scratch"
+  },
+  {
+   "id": 33,
+   "url": "articles/cv/fundamentals/transfer-learning.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Transfer Learning & Applications",
+   "heading": null,
+   "text": "You rarely train a CNN from scratch today. Pretrained backbones (ResNet, EfficientNet, ViT) already know general visual features — edges, textures, shapes — from millions of images. You fine-tune them on your specific dataset instead, which needs far less data and compute than starting from random weights."
+  },
+  {
+   "id": 34,
+   "url": "articles/cv/fundamentals/transfer-learning.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Transfer Learning & Applications",
+   "heading": "Why fine-tuning works",
+   "text": "Early convolution layers in a trained network tend to learn very generic features (edges, corners, color gradients) that are useful for almost any visual task, not just the one the network was originally trained on. Fine-tuning keeps those early layers mostly intact and retrains only the later, more task-specific layers on your data — so the network isn't learning \"what an edge is\" from zero, it's already starting from a network that understands images in general."
+  },
+  {
+   "id": 35,
+   "url": "articles/cv/fundamentals/transfer-learning.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Transfer Learning & Applications",
+   "heading": "Visual model: how much data does each approach need?",
+   "text": "These are illustrative, rounded figures to show the shape of the gap — not a benchmark from a specific paper. Adjust how similar your task is to typical photos (what most pretrained backbones were trained on) and compare."
+  },
+  {
+   "id": 36,
+   "url": "articles/cv/fundamentals/transfer-learning.html",
+   "module": "Computer Vision Fundamentals",
+   "title": "Transfer Learning & Applications",
+   "heading": "Where it shows up in practice",
+   "text": "Computer vision powers crop health monitoring from drone or satellite imagery, quality inspection on manufacturing lines, medical image analysis (X-rays, retinal scans), license plate recognition, and mobile document scanning apps — among many other applications covered in the AI for Business module."
+  },
+  {
+   "id": 37,
+   "url": "articles/dsa/arrays/index.html",
+   "module": "Arrays",
+   "title": "Arrays",
+   "heading": null,
+   "text": "An array is a collection of elements stored in contiguous memory locations, all of the same type, and accessed using an index. It's the simplest possible way to group values together, and almost every other data structure — lists, stacks, queues, hash tables — is built on top of one. This module breaks arrays down the way a full course would: how they're addressed in memory, what each operation actually costs, how to search them efficiently, and how the same idea extends to more than one dimension. Every submodule has a small interactive model to poke at, and a short quiz to check what stuck. Why arr[i] is O(1) — the address arithmetic behind index access The real cost of insert, delete, and traversal, and why it depends on position Linear vs. binary search, and why binary search needs sorted data How 2D arrays are actually laid out as flat 1D memory"
+  },
+  {
+   "id": 38,
+   "url": "articles/dsa/arrays/introduction.html",
+   "module": "Arrays",
+   "title": "Introduction & Memory Layout",
+   "heading": null,
+   "text": "An array is a collection of elements stored in contiguous memory locations, all of the same type, and accessed using an index. It's the simplest possible way to group a fixed number of values together, and almost every other data structure — lists, stacks, queues, hash tables — is built on top of one."
+  },
+  {
+   "id": 39,
+   "url": "articles/dsa/arrays/introduction.html",
+   "module": "Arrays",
+   "title": "Introduction & Memory Layout",
+   "heading": "Why contiguous memory matters",
+   "text": "Because array elements sit next to each other in memory, the location of any element can be calculated directly from its index, instead of being searched for. If an array starts at memory address base and each element takes up size bytes, the address of element i is: address(i) = base + (i * size) This is why reading or writing arr[i] takes constant time, O(1), regardless of how large the array is — there's no traversal, just arithmetic. Contrast this with a linked list, where elements can live anywhere in memory and are connected by pointers. That flexibility is what makes insertion cheap in a linked list and expensive in an array — see linked lists for the full tradeoff."
+  },
+  {
+   "id": 40,
+   "url": "articles/dsa/arrays/introduction.html",
+   "module": "Arrays",
+   "title": "Introduction & Memory Layout",
+   "heading": "Visual model: address arithmetic",
+   "text": "Change the base address or element size below, or click a box, and watch the formula update. This is exactly what the CPU does every time your code reads arr[i]."
+  },
+  {
+   "id": 41,
+   "url": "articles/dsa/arrays/introduction.html",
+   "module": "Arrays",
+   "title": "Introduction & Memory Layout",
+   "heading": "Static vs. dynamic arrays",
+   "text": "A static array has a fixed size decided at creation — the memory block is allocated once. A dynamic array (Python's list, JavaScript's Array, C++'s std::vector) looks like it can grow freely, but under the hood it's still a contiguous block: when it runs out of room, the runtime allocates a new, larger block (usually double the size) and copies everything over. That occasional copy is why dynamic array growth is amortized O(1) per append, even though any single append can occasionally cost O(n)."
+  },
+  {
+   "id": 42,
+   "url": "articles/dsa/arrays/introduction.html",
+   "module": "Arrays",
+   "title": "Introduction & Memory Layout",
+   "heading": "Example",
+   "text": "scores = [72, 88, 95, 61, 79] print(scores[2]) # O(1) — direct address calculation -> 95"
+  },
+  {
+   "id": 43,
+   "url": "articles/dsa/arrays/multidimensional.html",
+   "module": "Arrays",
+   "title": "Multi-Dimensional Arrays",
+   "heading": null,
+   "text": "A 2D array — a grid, a matrix, an image's pixels — looks like a table when you draw it, but computer memory is one long, flat, linear sequence of addresses. There's no such thing as a \"row\" in memory; a 2D array is really a 1D array with an indexing scheme layered on top."
+  },
+  {
+   "id": 44,
+   "url": "articles/dsa/arrays/multidimensional.html",
+   "module": "Arrays",
+   "title": "Multi-Dimensional Arrays",
+   "heading": "Row-major vs. column-major order",
+   "text": "To flatten a grid with rows rows and cols columns into 1D, you have to pick an order to walk it in: Row-major (C, Python, JavaScript, most languages): lay out row 0 completely, then row 1, then row 2. The flat index of grid[r][c] is r * cols + c. Column-major (Fortran, MATLAB, R): lay out column 0 completely, then column 1. The flat index of grid[r][c] is c * rows + r. Combined with the address formula from the introduction, the full formula for row-major is: address(r, c) = base + (r * cols + c) * size This is why looping over a 2D array in the \"wrong\" order (column-outer, row-inner, on a row-major array) can be noticeably slower on real hardware: it jumps around memory instead of reading it sequentially, which defeats the CPU's cache. Looping row-outer, column-inner keeps memory access sequential."
+  },
+  {
+   "id": 45,
+   "url": "articles/dsa/arrays/multidimensional.html",
+   "module": "Arrays",
+   "title": "Multi-Dimensional Arrays",
+   "heading": "Visual model: click a cell",
+   "text": "Click any cell to see its row/column position converted into a flat memory address. Switch the order to see the same grid produce different addresses depending on how it's walked."
+  },
+  {
+   "id": 46,
+   "url": "articles/dsa/arrays/multidimensional.html",
+   "module": "Arrays",
+   "title": "Multi-Dimensional Arrays",
+   "heading": "Code",
+   "text": "# Python: a 3x4 grid as a list of lists (row-major by construction) grid = [ [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], ] print(grid[1][2]) # row 1, col 2 -> 6 # The same data, flattened row-major: flat = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] r, c, cols = 1, 2, 4 print(flat[r * cols + c]) # -> 6, same value"
+  },
+  {
+   "id": 47,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": null,
+   "text": "Arrays support a small set of core operations. Their costs aren't uniform — some are O(1), some are O(n) — and the difference comes entirely from whether the operation has to preserve contiguity."
+  },
+  {
+   "id": 48,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Access",
+   "text": "Reading or writing arr[i] is O(1): direct address arithmetic, covered in the previous submodule."
+  },
+  {
+   "id": 49,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Traversal",
+   "text": "Visiting every element once — printing them, summing them, mapping a function over them — is O(n), since there are n elements and each is visited exactly once."
+  },
+  {
+   "id": 50,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Insertion",
+   "text": "Inserting at the end is O(1) if there's spare capacity: drop the value in, no other element moves. Inserting at the start or middle is O(n): every element from that index onward has to shift right one slot first, to make room while staying contiguous."
+  },
+  {
+   "id": 51,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Deletion",
+   "text": "Symmetric to insertion. Deleting from the end is O(1). Deleting from the start or middle is O(n), because everything after the removed slot has to shift left to close the gap. Insertion and deletion in the middle are expensive precisely because of the property that makes access fast: contiguity. Move one element out of place, and everything after it has to move too. If your workload is insert/delete-heavy away from the end, a linked list is often the better fit — see linked lists."
+  },
+  {
+   "id": 52,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Visual model: try each operation",
+   "text": "Pick an index and value, then run an operation. Watch which boxes move, and how the reported complexity changes based on where the operation happens."
+  },
+  {
+   "id": 53,
+   "url": "articles/dsa/arrays/operations.html",
+   "module": "Arrays",
+   "title": "Array Operations",
+   "heading": "Code",
+   "text": "arr = [10, 20, 30, 40, 50] arr[1] # access — O(1) -> 20 arr.append(60) # insert at end — O(1) arr.insert(0, 5) # insert at start — O(n), shifts everything right arr.pop() # delete at end — O(1) del arr[0] # delete at start — O(n), shifts everything left"
+  },
+  {
+   "id": 54,
+   "url": "articles/dsa/arrays/searching.html",
+   "module": "Arrays",
+   "title": "Searching: Linear & Binary",
+   "heading": null,
+   "text": "Finding whether a value exists in an array — and at what index — has two standard approaches, and which one you can use depends entirely on whether the data is sorted."
+  },
+  {
+   "id": 55,
+   "url": "articles/dsa/arrays/searching.html",
+   "module": "Arrays",
+   "title": "Searching: Linear & Binary",
+   "heading": "Linear search",
+   "text": "Check every element in order until you find the target or run out of elements. It works on any array, sorted or not, but in the worst case (target absent, or at the very end) it checks all n elements: O(n). def linear_search(arr, target): for i, value in enumerate(arr): if value == target: return i return -1"
+  },
+  {
+   "id": 56,
+   "url": "articles/dsa/arrays/searching.html",
+   "module": "Arrays",
+   "title": "Searching: Linear & Binary",
+   "heading": "Binary search",
+   "text": "If the array is sorted, you don't need to check every element. Compare the target to the middle element: if it matches, done. If the target is smaller, it can only be in the left half; if larger, only the right half. Either way, you just eliminated half the remaining elements in one comparison. Repeating this gives O(log n) — for a million elements, about 20 comparisons instead of up to a million. def binary_search(arr, target): lo, hi = 0, len(arr) - 1 while lo <= hi: mid = (lo + hi) // 2 if arr[mid] == target: return mid elif arr[mid] < target: lo = mid + 1 else: hi = mid - 1 return -1 Binary search's requirement — sorted data — isn't free. If the array changes often, keeping it sorted (or sorting it once, O(n log n)) has to be worth the repeated O(log n) searches it buys you. For a one-off search on unsorted data, linear search is simpler and just as fast in practice."
+  },
+  {
+   "id": 57,
+   "url": "articles/dsa/arrays/searching.html",
+   "module": "Arrays",
+   "title": "Searching: Linear & Binary",
+   "heading": "Visual model: step through both",
+   "text": "Pick a target, choose an algorithm, then step through it (or auto-play) and watch exactly which comparisons happen. For binary search, dimmed boxes are outside the current search range — notice how fast that range shrinks."
+  },
+  {
+   "id": 58,
+   "url": "articles/dsa/binary-search/boundaries.html",
+   "module": "Binary Search",
+   "title": "Finding Boundaries",
+   "heading": null,
+   "text": "The standard algorithm assumes the target appears at most once. Real data often has duplicates — and then \"found it\" isn't a complete answer. If you're looking up the start of a date range, or counting how many times a value occurs, you need the first or last occurrence specifically, not just any match."
+  },
+  {
+   "id": 59,
+   "url": "articles/dsa/binary-search/boundaries.html",
+   "module": "Binary Search",
+   "title": "Finding Boundaries",
+   "heading": "The trick: don't stop at the first match",
+   "text": "When arr[mid] == target, the standard algorithm returns immediately. To find the first occurrence instead, record that index as a candidate, then keep searching the left half in case there's an earlier match — high = mid - 1, not a return. To find the last occurrence, keep searching the right half instead — low = mid + 1. Either way, the loop only ends when low > high, and the last recorded candidate is the answer."
+  },
+  {
+   "id": 60,
+   "url": "articles/dsa/binary-search/boundaries.html",
+   "module": "Binary Search",
+   "title": "Finding Boundaries",
+   "heading": "The trick: don't stop at the first match",
+   "text": "def find_first(arr, target): low, high, result = 0, len(arr) - 1, -1 while low <= high: mid = (low + high) // 2 if arr[mid] == target: result = mid high = mid - 1 # keep looking left for an earlier match elif arr[mid] < target: low = mid + 1 else: high = mid - 1 return result This same \"record a candidate, keep narrowing\" pattern is exactly how bisect_left/ bisect_right (Python's bisect module) and lower_bound/ upper_bound (C++'s <algorithm>) work — this isn't a one-off trick, it's the general shape of every binary-search variant."
+  },
+  {
+   "id": 61,
+   "url": "articles/dsa/binary-search/boundaries.html",
+   "module": "Binary Search",
+   "title": "Finding Boundaries",
+   "heading": "Visual model: watch the candidate change",
+   "text": "This array has a run of repeated 4s and a run of repeated 9s. Search for either value in \"Find First\" or \"Find Last\" mode — amber boxes are candidates found along the way, and the final green box is the actual answer."
+  },
+  {
+   "id": 62,
+   "url": "articles/dsa/binary-search/complexity-pitfalls.html",
+   "module": "Binary Search",
+   "title": "Complexity & Common Pitfalls",
+   "heading": null,
+   "text": "Binary search's O(log n) time is what makes it worth the sorted-data requirement. Here's how big that gap actually gets, and the handful of classic bugs that quietly turn a correct-looking implementation into a wrong one."
+  },
+  {
+   "id": 63,
+   "url": "articles/dsa/binary-search/complexity-pitfalls.html",
+   "module": "Binary Search",
+   "title": "Complexity & Common Pitfalls",
+   "heading": "Just how big is the gap?",
+   "text": "Every additional element roughly doubles what linear search has to check in the worst case, while binary search only needs one more comparison. For a million elements, that's the difference between checking up to a million values and checking about twenty."
+  },
+  {
+   "id": 64,
+   "url": "articles/dsa/binary-search/complexity-pitfalls.html",
+   "module": "Binary Search",
+   "title": "Complexity & Common Pitfalls",
+   "heading": "Visual model: the comparisons race",
+   "text": "Set an array size and compare the worst-case comparison counts side by side."
+  },
+  {
+   "id": 65,
+   "url": "articles/dsa/binary-search/complexity-pitfalls.html",
+   "module": "Binary Search",
+   "title": "Complexity & Common Pitfalls",
+   "heading": "Common pitfalls",
+   "text": "1. Running it on unsorted data Binary search doesn't check whether the array is sorted — it just trusts the precondition. On unsorted data it silently returns wrong answers (or misses a value that's actually present) instead of erroring. This is the single most common real bug. 2. Off-by-one in the loop condition # Wrong — misses checking the case low == high while low < high: ... # Right — low == high is a valid single-element range to check while low <= high: ... 3. Forgetting to move a boundary # Wrong — infinite loop: when arr[mid] < target, low never changes while low <= high: mid = (low + high) // 2 if arr[mid] < target: pass # bug: forgot \"low = mid + 1\" else: high = mid - 1 If a boundary doesn't move on some branch, low and high can stop converging entirely — the loop never terminates. 4."
+  },
+  {
+   "id": 66,
+   "url": "articles/dsa/binary-search/complexity-pitfalls.html",
+   "module": "Binary Search",
+   "title": "Complexity & Common Pitfalls",
+   "heading": "Common pitfalls",
+   "text": "Integer overflow in mid (C, Java, and other fixed-width-integer languages) // Can overflow if low and high are both close to INT_MAX int mid = (low + high) / 2; // Safer — never adds two large numbers together int mid = low + (high - low) / 2; Python and JavaScript don't have this specific problem (their numbers don't silently wrap on overflow the way fixed-width integers do), but it's a real, historically significant bug — it shipped in Java's standard library binarySearch for years before being fixed."
+  },
+  {
+   "id": 67,
+   "url": "articles/dsa/binary-search/how-it-works.html",
+   "module": "Binary Search",
+   "title": "How It Works",
+   "heading": null,
+   "text": "Binary search finds a target value in a sorted array in O(log n) time by repeatedly cutting the search space in half, instead of checking every element one by one."
+  },
+  {
+   "id": 68,
+   "url": "articles/dsa/binary-search/how-it-works.html",
+   "module": "Binary Search",
+   "title": "How It Works",
+   "heading": "The idea",
+   "text": "Look at the middle element of the array. If it's the target, you're done. If the target is smaller, it must be in the left half — discard the right half entirely. If it's larger, discard the left half. Repeat on the remaining half until the target is found or the search space is empty. Each step throws away half of what's left, so for an array of size n, you need at most log₂(n) steps — roughly 20 steps for a million elements."
+  },
+  {
+   "id": 69,
+   "url": "articles/dsa/binary-search/how-it-works.html",
+   "module": "Binary Search",
+   "title": "How It Works",
+   "heading": "Implementation",
+   "text": "def binary_search(arr, target): low, high = 0, len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] == target: return mid elif arr[mid] < target: low = mid + 1 else: high = mid - 1 return -1 Binary search only works if the array is already sorted. Running it on unsorted data gives incorrect results without any error — a common source of subtle bugs. See Complexity & Common Pitfalls for more of these."
+  },
+  {
+   "id": 70,
+   "url": "articles/dsa/binary-search/how-it-works.html",
+   "module": "Binary Search",
+   "title": "How It Works",
+   "heading": "Visual model: step through it",
+   "text": "Pick a target and run it, or step through one comparison at a time. The pointer row above the array shows exactly where low, mid, and high are at each step, and dimmed boxes are outside the current search range."
+  },
+  {
+   "id": 71,
+   "url": "articles/dsa/binary-search/index.html",
+   "module": "Binary Search",
+   "title": "Binary Search",
+   "heading": null,
+   "text": "Binary search finds a value in a sorted array in O(log n) time by repeatedly cutting the search space in half, instead of checking every element one by one. It's the algorithm every efficient lookup — dictionaries, database indexes, version-control bisection — is a variation of. This module covers the standard algorithm, the iterative-vs-recursive tradeoff, the most common real-world variant (finding a boundary in data with duplicates), and the complexity payoff that makes all of it worth doing. The core idea: eliminate half the remaining search space with every comparison Why the recursive version costs O(log n) extra space and the iterative one doesn't How to find the first or last occurrence of a value when duplicates exist Just how large the O(n) vs O(log n) gap gets as data grows"
+  },
+  {
+   "id": 72,
+   "url": "articles/dsa/binary-search/iterative-vs-recursive.html",
+   "module": "Binary Search",
+   "title": "Iterative vs. Recursive",
+   "heading": null,
+   "text": "Binary search can be written two ways: a loop that mutates low and high in place, or a function that calls itself on a smaller range. Both do the same comparisons in the same order — the difference is entirely about what happens in memory while the search runs."
+  },
+  {
+   "id": 73,
+   "url": "articles/dsa/binary-search/iterative-vs-recursive.html",
+   "module": "Binary Search",
+   "title": "Iterative vs. Recursive",
+   "heading": "Iterative",
+   "text": "def binary_search(arr, target): low, high = 0, len(arr) - 1 while low <= high: mid = (low + high) // 2 if arr[mid] == target: return mid elif arr[mid] < target: low = mid + 1 else: high = mid - 1 return -1 One set of variables, reused every iteration. Space complexity: O(1)."
+  },
+  {
+   "id": 74,
+   "url": "articles/dsa/binary-search/iterative-vs-recursive.html",
+   "module": "Binary Search",
+   "title": "Iterative vs. Recursive",
+   "heading": "Recursive",
+   "text": "def binary_search(arr, target, low=0, high=None): if high is None: high = len(arr) - 1 if low > high: return -1 mid = (low + high) // 2 if arr[mid] == target: return mid elif arr[mid] < target: return binary_search(arr, target, mid + 1, high) else: return binary_search(arr, target, low, mid - 1) Every call that hasn't returned yet stays on the call stack, waiting for the one below it to finish. Space complexity: O(log n) — proportional to how deep the recursion goes, which is exactly the number of times you can halve n. This is a general pattern, not specific to binary search: any recursive algorithm's space cost includes its maximum call stack depth, on top of whatever it explicitly allocates. An iterative version with an explicit loop variable instead of recursive calls avoids that cost entirely."
+  },
+  {
+   "id": 75,
+   "url": "articles/dsa/binary-search/iterative-vs-recursive.html",
+   "module": "Binary Search",
+   "title": "Iterative vs. Recursive",
+   "heading": "Visual model: watch the call stack",
+   "text": "Run the recursive version and step through it — a frame is pushed onto the stack for every call, and popped when that call returns. Then try the iterative version on the same target: notice it never uses more than one frame."
+  },
+  {
+   "id": 76,
+   "url": "articles/dsa/linked-lists/index.html",
+   "module": "Linked Lists",
+   "title": "Linked Lists",
+   "heading": null,
+   "text": "A linked list stores a sequence of elements the way arrays do, but without requiring contiguous memory. Each element (\"node\") holds its value plus a pointer to the next node — the list itself only needs to remember where the first node (\"head\") lives. Linked lists are the array's mirror image: everything that's expensive for an array (insert/delete away from the end) is cheap here, and everything that's cheap for an array (access by index) is expensive here. This module covers the structure, the operations, a direct side-by-side against arrays, and why linked lists can never binary search. Node structure, and how a chain of nodes forms a list Why insert/delete is O(1) once you have a pointer to the spot — and O(n) to get there A direct comparison: inserting at the front of an array vs. a linked list Why there's no such thing as binary search on a linked list"
+  },
+  {
+   "id": 77,
+   "url": "articles/dsa/linked-lists/introduction.html",
+   "module": "Linked Lists",
+   "title": "Introduction & Node Structure",
+   "heading": null,
+   "text": "A linked list stores a sequence of elements the way arrays do, but without requiring contiguous memory. Each element (\"node\") holds its value plus a pointer to the next node. The list itself only needs to remember where the first node (\"head\") lives — everything after that is found by following pointers."
+  },
+  {
+   "id": 78,
+   "url": "articles/dsa/linked-lists/introduction.html",
+   "module": "Linked Lists",
+   "title": "Introduction & Node Structure",
+   "heading": "Node structure",
+   "text": "class Node: def __init__(self, value): self.value = value self.next = None A list is just a chain of these: head → [10] → [4] → [17] → None. The last node's next points to nothing, marking the end. This is the opposite storage strategy from an array. An array guarantees its elements sit next to each other in memory, which is what makes address arithmetic possible. A linked list's nodes can live anywhere — the only thing holding them together is the chain of pointers."
+  },
+  {
+   "id": 79,
+   "url": "articles/dsa/linked-lists/introduction.html",
+   "module": "Linked Lists",
+   "title": "Introduction & Node Structure",
+   "heading": "Visual model: traverse the chain",
+   "text": "There's no index arithmetic here — the only way to reach a node is to follow next from wherever you currently are, starting at head. Click Traverse to watch that walk happen one pointer at a time."
+  },
+  {
+   "id": 80,
+   "url": "articles/dsa/linked-lists/introduction.html",
+   "module": "Linked Lists",
+   "title": "Introduction & Node Structure",
+   "heading": "Building one",
+   "text": "class LinkedList: def __init__(self): self.head = None def append(self, value): new_node = Node(value) if not self.head: self.head = new_node return current = self.head while current.next: current = current.next current.next = new_node ll = LinkedList() for n in [10, 4, 17]: ll.append(n)"
+  },
+  {
+   "id": 81,
+   "url": "articles/dsa/linked-lists/operations.html",
+   "module": "Linked Lists",
+   "title": "Insert & Delete Operations",
+   "heading": null,
+   "text": "Every insert or delete on a linked list has two parts: getting to the spot (which costs O(n), since you have to walk pointers from the head) and relinking a few pointers once you're there (which costs O(1)). The overall cost depends entirely on how much walking the first part needs."
+  },
+  {
+   "id": 82,
+   "url": "articles/dsa/linked-lists/operations.html",
+   "module": "Linked Lists",
+   "title": "Insert & Delete Operations",
+   "heading": "Insert at head",
+   "text": "No walking required — you already have head. def insert_at_head(self, value): new_node = Node(value) new_node.next = self.head self.head = new_node O(1), full stop."
+  },
+  {
+   "id": 83,
+   "url": "articles/dsa/linked-lists/operations.html",
+   "module": "Linked Lists",
+   "title": "Insert & Delete Operations",
+   "heading": "Insert at tail",
+   "text": "A singly linked list with no separate tail pointer has to walk the whole chain to find the last node first. def insert_at_tail(self, value): new_node = Node(value) if not self.head: self.head = new_node return current = self.head while current.next: current = current.next current.next = new_node O(n) — the walk dominates. (Some implementations keep an explicit tail pointer specifically to make this O(1); the tradeoff is keeping that pointer correct through every delete.)"
+  },
+  {
+   "id": 84,
+   "url": "articles/dsa/linked-lists/operations.html",
+   "module": "Linked Lists",
+   "title": "Insert & Delete Operations",
+   "heading": "Insert after a node / delete a node",
+   "text": "If you already hold a reference to the node (e.g. you're mid-traversal), relinking is O(1): point the new node's next at what the previous node pointed to, then repoint the previous node at the new one. Deleting a node (other than the head) means the previous node needs to skip over it — which means you need a reference to the previous node, not just the one being removed. This is the source of the common misconception that \"linked lists are fast to insert into.\" They're only O(1) once you already have a pointer to the right spot. Finding that spot — by index, by value, by any means other than already holding it — costs O(n), same as everything else in an unindexed structure."
+  },
+  {
+   "id": 85,
+   "url": "articles/dsa/linked-lists/operations.html",
+   "module": "Linked Lists",
+   "title": "Insert & Delete Operations",
+   "heading": "Visual model: try each operation",
+   "text": "Insert at head, at tail, after a given index, or delete by index — and watch the reported complexity change based on how much walking each one actually needs."
+  },
+  {
+   "id": 86,
+   "url": "articles/dsa/linked-lists/traversal-search.html",
+   "module": "Linked Lists",
+   "title": "Traversal & Search",
+   "heading": null,
+   "text": "Searching a linked list means the same thing it means for an array: walk it, comparing each value to the target, until you find a match or run out of nodes. The difference is that a linked list gives you exactly one way to do that walk — there's no shortcut available. def search(head, target): current = head while current: if current.value == target: return current current = current.next return None This is O(n) in the worst case, same as linear search on an array. But unlike an array, a linked list has no faster option — even if every value in the list happens to be sorted."
+  },
+  {
+   "id": 87,
+   "url": "articles/dsa/linked-lists/traversal-search.html",
+   "module": "Linked Lists",
+   "title": "Traversal & Search",
+   "heading": "Why binary search doesn't work here",
+   "text": "Binary search's entire speedup comes from jumping straight to the middle element — arr[(low+high)//2] — which is only possible because array elements have addresses you can compute directly. A linked list node has no address formula; the only way to reach \"the middle\" is to walk there one next at a time from the head, which already costs O(n) before you've made a single useful comparison. Halving a search space you can't jump into buys you nothing. This is exactly why the Arrays module's Binary Search only works on arrays (or anything else with O(1) random access, like a balanced binary search tree navigated top-down) — not on singly or doubly linked lists."
+  },
+  {
+   "id": 88,
+   "url": "articles/dsa/linked-lists/traversal-search.html",
+   "module": "Linked Lists",
+   "title": "Traversal & Search",
+   "heading": "Visual model: watch the walk",
+   "text": "Search for a target and step through it. Notice there's no \"jump ahead\" — every step visits exactly the next node in the chain, whether the target turns out to be nearby or not."
+  },
+  {
+   "id": 89,
+   "url": "articles/dsa/linked-lists/vs-arrays.html",
+   "module": "Linked Lists",
+   "title": "Arrays vs. Linked Lists",
+   "heading": null,
+   "text": "Arrays and linked lists solve the same problem — store a sequence of values — with opposite tradeoffs. Neither is \"better\"; each wins on exactly the operations the other loses on. Access by index: arrays O(1), linked lists O(n) — you must walk from the head. Insert/delete at a known position: arrays O(n) (shifting), linked lists O(1) (just repoint pointers), once you already have a reference to that node. Memory layout: arrays are contiguous, so they're cache-friendly. Linked list nodes can be scattered anywhere in memory. Extra memory: each linked list node stores a pointer in addition to its value, which arrays don't need."
+  },
+  {
+   "id": 90,
+   "url": "articles/dsa/linked-lists/vs-arrays.html",
+   "module": "Linked Lists",
+   "title": "Arrays vs. Linked Lists",
+   "heading": "Visual model: insert at the front, side by side",
+   "text": "This is the single clearest example of the tradeoff. Insert the same value at the front of an array and a linked list holding the same data, and watch what each one actually has to do. The array has to shift every existing element to make room at index 0. The linked list just points a new node at the old head and updates head — nothing else in the list is touched, regardless of how many nodes there are. The reverse is true at the other end: appending to an array (with spare capacity) is O(1), while appending to a singly linked list without a tail pointer is O(n) — see Insert & Delete Operations."
+  },
+  {
+   "id": 91,
+   "url": "articles/dsa/linked-lists/vs-arrays.html",
+   "module": "Linked Lists",
+   "title": "Arrays vs. Linked Lists",
+   "heading": "When to use which",
+   "text": "Reach for an array when you need fast random access by index and insertions mostly happen at the end. Reach for a linked list when you need frequent insertions/deletions at the front or middle of a sequence and don't need random access — implementing a queue, an undo history, or a stack, for example."
+  },
+  {
+   "id": 92,
+   "url": "articles/iot/hardware-meets-software/arduino-vs-raspberry-pi.html",
+   "module": "Hardware Meets Software",
+   "title": "Arduino vs. Raspberry Pi",
+   "heading": null,
+   "text": "These two get lumped together constantly, and they solve different problems. An Arduino is a microcontroller board: it runs one compiled program, has no operating system, and boots in milliseconds. A Raspberry Pi is a single-board computer: it boots a full Linux operating system — the same kind of system you met in the Operating Systems Basics module, complete with a scheduler juggling many processes — and your program runs as one of them."
+  },
+  {
+   "id": 93,
+   "url": "articles/iot/hardware-meets-software/arduino-vs-raspberry-pi.html",
+   "module": "Hardware Meets Software",
+   "title": "Arduino vs. Raspberry Pi",
+   "heading": "What that actually buys you",
+   "text": "Arduino's lack of an OS is a feature, not a limitation, for a certain kind of job: real-time control where you need a predictable, unwavering response time — reading a sensor and firing an actuator on a strict schedule, with nothing else ever allowed to interrupt that loop. There's no scheduler deciding to give some other process a turn at a bad moment. Raspberry Pi's Linux gets you everything an OS gives you: a file system, real networking, the ability to run Python or Node, drive a display, and run several things \"at once.\" That flexibility costs you the same context-switching overhead and non-determinism you learned about in Scheduling — fine for most jobs, but not for a control loop that needs to fire an actuator at an exact, guaranteed instant."
+  },
+  {
+   "id": 94,
+   "url": "articles/iot/hardware-meets-software/arduino-vs-raspberry-pi.html",
+   "module": "Hardware Meets Software",
+   "title": "Arduino vs. Raspberry Pi",
+   "heading": "What that actually buys you",
+   "text": "In practice, real projects often use both together: an Arduino (or similar microcontroller) handling the fast, deterministic hardware interaction, talking to a Raspberry Pi that handles logic, a user interface, networking, and data logging."
+  },
+  {
+   "id": 95,
+   "url": "articles/iot/hardware-meets-software/arduino-vs-raspberry-pi.html",
+   "module": "Hardware Meets Software",
+   "title": "Arduino vs. Raspberry Pi",
+   "heading": "Visual model: what \"power on\" actually means",
+   "text": "Pick a board and power it on. Sources: official documentation at arduino.cc and raspberrypi.com; comparison details corroborated across DigiKey and Electronics Hub."
+  },
+  {
+   "id": 96,
+   "url": "articles/iot/hardware-meets-software/camera-to-actuator.html",
+   "module": "Hardware Meets Software",
+   "title": "A Camera, an AI Model, and an Actuator",
+   "heading": null,
+   "text": "This is your third example from the start of this module — \"a camera can be connected to a computer and work\" — and there's a genuinely well-documented real system built entirely around it. Blue River Technology, a Stanford-founded startup acquired by John Deere in 2017 for $305 million, builds See & Spray: a machine that's pulled through a field and decides, plant by plant, whether to spray it."
+  },
+  {
+   "id": 97,
+   "url": "articles/iot/hardware-meets-software/camera-to-actuator.html",
+   "module": "Hardware Meets Software",
+   "title": "A Camera, an AI Model, and an Actuator",
+   "heading": "The pipeline, at machine speed",
+   "text": "As the machine moves through the field — modern systems run at up to 16 mph — cameras (as many as 36 on the largest systems) continuously capture the crop row passing beneath. Each frame is classified in real time: crop, or weed. There's no time to send that frame to the cloud and wait for an answer — the model runs directly on the machine, an approach called edge computing, precisely because the round-trip latency of a network call (remember the Latency & Bandwidth submodule) would be far too slow for a decision that has to happen dozens of times a second. Deere reports the system performing plant-level classification, decision-making, and actuation in milliseconds, processing images upward of 20 times a second."
+  },
+  {
+   "id": 98,
+   "url": "articles/iot/hardware-meets-software/camera-to-actuator.html",
+   "module": "Hardware Meets Software",
+   "title": "A Camera, an AI Model, and an Actuator",
+   "heading": "The pipeline, at machine speed",
+   "text": "The last step is exactly the actuator pattern from earlier in this module: the classification decision becomes a GPIO write, and a nozzle actuator fires — or doesn't — on that exact spot. Deere reports growers cutting non-residual herbicide use by nearly half using this system."
+  },
+  {
+   "id": 99,
+   "url": "articles/iot/hardware-meets-software/camera-to-actuator.html",
+   "module": "Hardware Meets Software",
+   "title": "A Camera, an AI Model, and an Actuator",
+   "heading": "Every module in this section, in one machine",
+   "text": "A camera and a CPU running a model — Computer Vision and How Computers Work. A decision made on-device instead of over a slow network round trip — Networking Basics. An embedded control loop reading a classification and writing an actuator — this module's Sensors & Actuators. A whole computer, running an OS, coordinating cameras, a model, and actuators all at once — Operating Systems Basics."
+  },
+  {
+   "id": 100,
+   "url": "articles/iot/hardware-meets-software/camera-to-actuator.html",
+   "module": "Hardware Meets Software",
+   "title": "A Camera, an AI Model, and an Actuator",
+   "heading": "Visual model: capture to spray, in milliseconds",
+   "text": "Step through one frame's trip from the camera to the nozzle. Sources: Blue River Technology; AgFunderNews — \"John Deere Acquires 'See & Spray' Robotics Startup Blue River Technology for $305m\"; \"A Deep Dive on the See & Spray Ultimate System from John Deere & Blue River\"."
+  },
+  {
+   "id": 101,
+   "url": "articles/iot/hardware-meets-software/index.html",
+   "module": "Hardware Meets Software",
+   "title": "Hardware Meets Software",
+   "heading": null,
+   "text": "You already know how to write software. This module is for working backwards from there: taking the concepts you already have — loops, event handlers, client-server calls, processes — and showing how they map onto the physical devices that read soil moisture, watch a conveyor belt, or steer a spray nozzle. A microcontroller's main loop is a while(true). A GPIO pin is a variable wired to a real circuit. An IoT sensor pushing data to a dashboard is just a client and a server, with a radio link in between instead of Wi-Fi. Examples throughout are real, not invented: an industrial PLC moving a robotic arm off a button press, a soil probe reporting to a cloud dashboard through a field datalogger, a center-pivot irrigation system you can watch and control from your phone, and a tractor-mounted camera making a spray decision in milliseconds."
+  },
+  {
+   "id": 102,
+   "url": "articles/iot/hardware-meets-software/index.html",
+   "module": "Hardware Meets Software",
+   "title": "Hardware Meets Software",
+   "heading": null,
+   "text": "Sourced from published research, official Arduino/Raspberry Pi documentation, and the sites of the companies actually running this technology in the field — cited throughout, since there's no single reference book for this one. Where your code actually stops and the physical world begins — GPIO, sensors, and actuators The \"scan cycle\" that turns a button press into a moving robotic arm Arduino vs. Raspberry Pi — a microcontroller with no OS, versus a full Linux computer The real pipeline from a field sensor to a cloud dashboard, over LoRaWAN or cellular A working case study: how commercial center-pivot irrigation is monitored and controlled remotely Putting it together: a camera, an edge AI model, and an actuator, acting in milliseconds"
+  },
+  {
+   "id": 103,
+   "url": "articles/iot/hardware-meets-software/precision-irrigation-case-study.html",
+   "module": "Hardware Meets Software",
+   "title": "Precision Irrigation Pivots",
+   "heading": null,
+   "text": "A center-pivot irrigator — the machine that creates those circular green fields you see from an airplane — is a genuinely good case study, because commercial systems have already built the entire pipeline from the last submodule, at scale, for years."
+  },
+  {
+   "id": 104,
+   "url": "articles/iot/hardware-meets-software/precision-irrigation-case-study.html",
+   "module": "Hardware Meets Software",
+   "title": "Precision Irrigation Pivots",
+   "heading": "What's actually on the machine",
+   "text": "Lindsay Corporation's FieldNET Pivot Watch is a real product built around exactly this idea: a solar-powered telemetry unit that mounts onto a center pivot — any pivot, regardless of age or brand — and radios back the machine's own status: whether water is flowing, its current position in the field, and its direction and speed. Valmont's competing Valley brand offers a similar system, AgSense 365, which extends beyond monitoring into remote control of pivots, pumps, and moisture probes from one app. On the research side, a 2025 study published in a peer-reviewed sensors journal took this a step further: mounting soil moisture sensors (\"smart stakes\") directly in the field, communicating over Bluetooth Low Energy to a rotating receiver mounted on the pivot boom itself as it sweeps overhead — collecting moisture readings across the whole field, not just at one fixed point."
+  },
+  {
+   "id": 105,
+   "url": "articles/iot/hardware-meets-software/precision-irrigation-case-study.html",
+   "module": "Hardware Meets Software",
+   "title": "Precision Irrigation Pivots",
+   "heading": "Why remote monitoring matters here specifically",
+   "text": "A pivot can be hundreds of meters long, watering a field far from the farmhouse, and a stopped or misaligned pivot wastes water, wastes electricity, and can under- or over-water a section of crop for hours before anyone notices by driving out to look. A telemetry unit turns \"drive out and check\" into a push notification. That's the entire value proposition of an otherwise fairly ordinary embedded system: a few sensors, a cheap radio, and a scheduled read-and-send loop."
+  },
+  {
+   "id": 106,
+   "url": "articles/iot/hardware-meets-software/precision-irrigation-case-study.html",
+   "module": "Hardware Meets Software",
+   "title": "Precision Irrigation Pivots",
+   "heading": "Visual model: the pivot's data chain",
+   "text": "Click through the pieces of a real commercial system. Sources: Lindsay Corporation — FieldNET Pivot Watch; Valmont Industries — Valley AgSense 365; \"Smart Bluetooth Stakes: Deployment of Soil Moisture Sensors with Rotating High-Gain Antenna Receiver on Center Pivot Irrigation Boom in a Commercial Wheat Field\" (peer-reviewed, 2025)."
+  },
+  {
+   "id": 107,
+   "url": "articles/iot/hardware-meets-software/sensor-to-cloud.html",
+   "module": "Hardware Meets Software",
+   "title": "From Sensor to Cloud",
+   "heading": null,
+   "text": "Take the exact scenario you described: a sensor buried in soil, reporting to a box in the field, which somehow ends up as a chart on a dashboard you check from your phone. None of the individual hops are exotic — you've met most of these ideas already, just wearing different clothes."
+  },
+  {
+   "id": 108,
+   "url": "articles/iot/hardware-meets-software/sensor-to-cloud.html",
+   "module": "Hardware Meets Software",
+   "title": "From Sensor to Cloud",
+   "heading": "The chain",
+   "text": "Soil sensor — a probe reads a raw electrical property of the soil (often capacitance or resistance) and converts it into a moisture value. Meter box (datalogger) — a field enclosure, often solar-powered, that reads one or more sensors on a schedule, timestamps each reading, and holds onto it. Research-grade dataloggers from companies like Campbell Scientific and METER Group are the industrial version of this; it's the same \"read and store\" loop from the Sensors & Actuators submodule. Low-power radio link — out in a field, Wi-Fi and cellular towers aren't always reachable. LoRaWAN is a low-power, wide-area network protocol purpose-built for exactly this: license-free, long-range (kilometers, not meters), and stingy enough with power that a battery-run sensor can last years — at the cost of sending only small, infrequent messages."
+  },
+  {
+   "id": 109,
+   "url": "articles/iot/hardware-meets-software/sensor-to-cloud.html",
+   "module": "Hardware Meets Software",
+   "title": "From Sensor to Cloud",
+   "heading": "The chain",
+   "text": "Gateway → Internet — a gateway receives the radio transmission and hands it onto the ordinary internet. From here, it's just packets, hopping across routers exactly like the Networking Basics module described — the \"last mile\" was special, nothing after it is. Cloud dashboard — a server receives the data, stores it, and a dashboard queries it back out — the same client-server relationship as any web app, database included."
+  },
+  {
+   "id": 110,
+   "url": "articles/iot/hardware-meets-software/sensor-to-cloud.html",
+   "module": "Hardware Meets Software",
+   "title": "From Sensor to Cloud",
+   "heading": "Visual model: watch a reading make the trip",
+   "text": "Step through one soil reading's full journey. Speaking your language: a LoRaWAN gateway is basically a reverse proxy for radio — it terminates a totally different protocol on one side (long-range, low-power radio) and speaks ordinary IP on the other, so everything past it looks like normal internet traffic. Sources: NDSU Extension — \"Basics of LoRa Technology for Crop and Livestock Management\"; Campbell Scientific — Environmental Research dataloggers; METER Group, maker of agricultural soil sensors and dataloggers."
+  },
+  {
+   "id": 111,
+   "url": "articles/iot/hardware-meets-software/sensors-and-actuators.html",
+   "module": "Hardware Meets Software",
+   "title": "Sensors & Actuators",
+   "heading": null,
+   "text": "The clearest real-world version of \"a button moves a hand in a factory\" is a PLC — a Programmable Logic Controller, the industrial computer that has run factory floors since the 1960s. A PLC continuously monitors sensors, executes control logic, and operates motors, valves, and other equipment in real time. It's not exotic hardware, and it's not doing anything you haven't already written in software — it's just running that logic against real inputs and outputs instead of an HTTP request."
+  },
+  {
+   "id": 112,
+   "url": "articles/iot/hardware-meets-software/sensors-and-actuators.html",
+   "module": "Hardware Meets Software",
+   "title": "Sensors & Actuators",
+   "heading": "The scan cycle: a while(true) loop for the physical world",
+   "text": "A PLC repeats the same three-step cycle continuously, often hundreds or thousands of times per second: Read Inputs — check the current state of every connected sensor, switch, or button. Evaluate Logic — run the stored program against those inputs to decide what should happen. Update Outputs — change the state of connected actuators: motors, valves, lights, robotic arms. Then it starts again. If you've ever written a game loop or a polling loop, this will look extremely familiar — it's the same while(true) { read(); update(); render(); } shape, just with sensors and actuators standing in for keyboard input and pixels."
+  },
+  {
+   "id": 113,
+   "url": "articles/iot/hardware-meets-software/sensors-and-actuators.html",
+   "module": "Hardware Meets Software",
+   "title": "Sensors & Actuators",
+   "heading": "Sensors: the inputs",
+   "text": "A sensor's whole job is turning a physical quantity — light, temperature, pressure, distance, moisture — into an electrical signal, which gets converted into a number your code can read. Some are simple digital sensors (a button: pressed or not, nothing in between). Others are analog, reporting a continuous range — a soil moisture probe might report anywhere from \"bone dry\" to \"saturated,\" not just two states."
+  },
+  {
+   "id": 114,
+   "url": "articles/iot/hardware-meets-software/sensors-and-actuators.html",
+   "module": "Hardware Meets Software",
+   "title": "Sensors & Actuators",
+   "heading": "Actuators: the outputs",
+   "text": "An actuator converts an electrical signal from your code back into physical action: a motor spins, a valve opens, an LED lights up, a robotic arm extends. In the classic factory example, that arm doesn't move on its own — a PLC reads a button's state during \"Read Inputs,\" decides to extend the arm during \"Evaluate Logic,\" and only actually moves it during \"Update Outputs.\""
+  },
+  {
+   "id": 115,
+   "url": "articles/iot/hardware-meets-software/sensors-and-actuators.html",
+   "module": "Hardware Meets Software",
+   "title": "Sensors & Actuators",
+   "heading": "Visual model: the scan cycle, live",
+   "text": "Hold the virtual button down (or don't), and step through the scan cycle to see exactly when the arm actually moves. Notice the arm never moves the instant you press the button — it only updates once the cycle reaches \"Update Outputs.\" That one-cycle delay is real, and it's exactly the kind of timing detail that matters once you're controlling actual machinery. Sources: STMicroelectronics — Programmable Logic Controllers (PLC); Inductive Automation — What Is a PLC?"
+  },
+  {
+   "id": 116,
+   "url": "articles/iot/hardware-meets-software/where-software-meets-hardware.html",
+   "module": "Hardware Meets Software",
+   "title": "Where Software Meets Hardware",
+   "heading": null,
+   "text": "Strip away the buzzwords, and \"IoT\" (Internet of Things) is a fairly plain idea: ordinary physical objects — a soil probe, a factory arm, a pivot irrigator — get a small computer, a way to sense or act on the world, and a network connection. A widely-cited 2013 survey by Gubbi, Buyya, Marusic, and Palaniswami frames it simply: sensors and actuators \"blend seamlessly with the environment,\" and the resulting information gets shared across platforms — devices and cloud software cooperating over a network, the same way any client and server do."
+  },
+  {
+   "id": 117,
+   "url": "articles/iot/hardware-meets-software/where-software-meets-hardware.html",
+   "module": "Hardware Meets Software",
+   "title": "Where Software Meets Hardware",
+   "heading": "The part you already know",
+   "text": "Almost all of embedded and IoT programming is variations on one loop: read some input, decide something, write some output. That's not a new idea — it's the same shape as a game loop, an event listener, or a request handler. What's different is what the input and output actually are: not a keystroke or an HTTP request, but a real voltage on a physical pin."
+  },
+  {
+   "id": 118,
+   "url": "articles/iot/hardware-meets-software/where-software-meets-hardware.html",
+   "module": "Hardware Meets Software",
+   "title": "Where Software Meets Hardware",
+   "heading": "The bridge: GPIO",
+   "text": "A GPIO (General-Purpose Input/Output) pin is the bridge. Treat it like a variable that's physically wired to a circuit: read it, and you get a real voltage from the outside world; write to it, and you change a real voltage out there. On an Arduino, digitalRead(pin) and digitalWrite(pin, HIGH) are literally get/set on that variable — the \"hardware\" part is just that the variable happens to be soldered to something real."
+  },
+  {
+   "id": 119,
+   "url": "articles/iot/hardware-meets-software/where-software-meets-hardware.html",
+   "module": "Hardware Meets Software",
+   "title": "Where Software Meets Hardware",
+   "heading": "Sensors and actuators: two directions of the same idea",
+   "text": "A sensor converts something physical — light, moisture, motion, temperature — into a signal your code can read. It's an input, a getter. An actuator converts a signal your code writes into physical motion, heat, or light. It's an output, a setter. Everything else in this module — a button moving a robotic arm, a soil probe reporting to the cloud, a camera triggering a spray nozzle — is this same read/decide/write pattern, just with progressively more interesting things on either end."
+  },
+  {
+   "id": 120,
+   "url": "articles/iot/hardware-meets-software/where-software-meets-hardware.html",
+   "module": "Hardware Meets Software",
+   "title": "Where Software Meets Hardware",
+   "heading": "Visual model: code, GPIO, and the physical world",
+   "text": "Click each part to see its role. Source: Gubbi, J., Buyya, R., Marusic, S., & Palaniswami, M. (2013). \"Internet of Things (IoT): A Vision, Architectural Elements, and Future Directions.\" Future Generation Computer Systems, 29(7), 1645–1660."
+  },
+  {
+   "id": 121,
+   "url": "articles/systems/how-computers-work/cpu-cache.html",
+   "module": "How Computers Work",
+   "title": "CPU Cache",
+   "heading": null,
+   "text": "The CPU is astonishingly fast. Plain RAM, by comparison, is slow — not slow in human terms, but slow compared to the CPU. If the CPU had to reach all the way out to RAM for every single piece of data it needed, it would spend most of its time just waiting. The fix is the cache: a small pocket of extremely fast memory built directly onto the CPU chip itself, so close it barely takes any time to reach."
+  },
+  {
+   "id": 122,
+   "url": "articles/systems/how-computers-work/cpu-cache.html",
+   "module": "How Computers Work",
+   "title": "CPU Cache",
+   "heading": "A notepad, not a filing cabinet",
+   "text": "Think of the CPU cache as a notepad sitting right at your elbow, versus RAM as a filing cabinet across the room. You don't put a copy of every document on your notepad — just the handful you're actively using right now. Whenever the CPU needs a piece of data, it checks the notepad first. If it's there, that's called a cache hit — almost instant. If it's not, that's a cache miss, and the CPU has to make the slower trip out to RAM — and while it's there, it copies that data onto the notepad too, in case it's needed again soon. Real CPUs actually have a few of these notepads stacked in size — a tiny, blazing-fast one (called L1) right on the core, a slightly bigger and slightly slower backup (L2), and often a larger shared one (L3) for the whole chip. You don't need to memorize the levels; the idea is the same at every level — smaller and closer trades capacity for speed."
+  },
+  {
+   "id": 123,
+   "url": "articles/systems/how-computers-work/cpu-cache.html",
+   "module": "How Computers Work",
+   "title": "CPU Cache",
+   "heading": "Why this one idea explains so much about computer speed",
+   "text": "The gap between \"on the notepad\" and \"in the filing cabinet\" is enormous — and it only gets bigger once you add disk into the picture. Brendan Gregg's book Systems Performance makes this vivid with a simple trick: scale every latency up so that a CPU cache reference takes 1 second, and see what the others become. That's not a rounding error — reaching RAM instead of cache is the difference between \"instant\" and \"put the kettle on,\" and reaching disk is the difference between \"instant\" and \"wait for a package to ship.\" This single fact — cache is dramatically faster than RAM, and RAM is dramatically faster than disk — is the reason almost every fast piece of software, databases very much included, is obsessively designed around keeping frequently-used data as close to the CPU as possible."
+  },
+  {
+   "id": 124,
+   "url": "articles/systems/how-computers-work/cpu-cache.html",
+   "module": "How Computers Work",
+   "title": "CPU Cache",
+   "heading": "Why this one idea explains so much about computer speed",
+   "text": "Source: latency figures adapted from Brendan Gregg, Systems Performance (O'Reilly) — exact numbers vary a little by hardware generation, but the relative gaps between cache, RAM, and disk have stayed roughly this dramatic for years."
+  },
+  {
+   "id": 125,
+   "url": "articles/systems/how-computers-work/cpu.html",
+   "module": "How Computers Work",
+   "title": "The CPU",
+   "heading": null,
+   "text": "The CPU (Central Processing Unit) is the part of the computer that actually does things — often called \"the brain.\" Physically, it's a chip covered in billions of microscopic switches. But you don't need to think about the switches. What matters is what the CPU does with them: it runs one simple, tireless loop, over and over, billions of times a second."
+  },
+  {
+   "id": 126,
+   "url": "articles/systems/how-computers-work/cpu.html",
+   "module": "How Computers Work",
+   "title": "The CPU",
+   "heading": "The loop: fetch, decode, execute, store",
+   "text": "A program is really just a long list of tiny instructions — \"add these two numbers,\" \"compare this to that,\" \"move this piece of data over there.\" The CPU works through that list one instruction at a time, and each instruction goes through the same four steps: Fetch — grab the next instruction from memory. Decode — figure out what it's asking for. Execute — actually do it. Store — write the result somewhere it can be used next. Then it fetches the next instruction, and does it all again. That's it — that's the whole trick. A CPU doesn't \"understand\" a program the way you understand a recipe; it just tirelessly marches through millions of these tiny, dumb steps, and the illusion of intelligence emerges from doing that unbelievably fast."
+  },
+  {
+   "id": 127,
+   "url": "articles/systems/how-computers-work/cpu.html",
+   "module": "How Computers Work",
+   "title": "The CPU",
+   "heading": "Visual model: step through the cycle",
+   "text": "Click Step to walk through fetch → decode → execute → store one stage at a time, or hit Auto Play to watch it loop on its own."
+  },
+  {
+   "id": 128,
+   "url": "articles/systems/how-computers-work/cpu.html",
+   "module": "How Computers Work",
+   "title": "The CPU",
+   "heading": "What \"GHz\" and \"cores\" actually mean",
+   "text": "A CPU's clock speed (say, 3.5 GHz) is just how many times per second it can run through that fetch-decode-execute-store loop — 3.5 billion times a second, in that example. A \"core\" is a full, independent copy of this whole machinery. A CPU with 8 cores is really 8 small brains that can each run their own loop at the same time, which is why modern computers can genuinely do several things in parallel rather than just switching between them very quickly. Here's the catch: every single one of those fetch and store steps normally means reaching out to memory to get or put data — and memory is much slower than the CPU itself. If the CPU had to wait for plain RAM on every single step, it would sit idle most of the time. That problem, and its fix, is exactly what the next submodule — CPU Cache — is about."
+  },
+  {
+   "id": 129,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": null,
+   "text": "A database's entire job comes down to one tension: it has to store your data on disk, because disk is the only place that survives a restart — but disk is, as you just saw, roughly 1,000 times slower to read than RAM. If every query had to go straight to disk, every database would feel painfully slow. So every serious database — SQLite and Postgres included — is built around the same trick: keep a cache of frequently-used data in RAM, and only touch disk when it truly has to."
+  },
+  {
+   "id": 130,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": "Two very different databases, the same underlying trick",
+   "text": "SQLite is embedded — there's no separate database server. It's a library that runs directly inside your app's own process, and it reads and writes a single file on disk. Its cache — called the page cache — lives right there in your app's own memory, holding recently-used chunks (\"pages\") of that file so it doesn't have to keep re-reading disk. Postgres is client-server — a separate, long-running server process holds the actual data, and your application connects to it (often over a network) to run queries. Postgres keeps its own cache in the server's memory, called shared_buffers, and — as PlanetScale's engineering blog explains — it also benefits from a second layer underneath: the operating system's own page cache, which keeps recently-read disk pages in RAM even after Postgres itself is done with them. That's two layers of RAM caching between a query and the disk, not just one."
+  },
+  {
+   "id": 131,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": "Two very different databases, the same underlying trick",
+   "text": "A genuinely counterintuitive point from that same PlanetScale post: a Postgres server using a lot of RAM is usually a good sign, not a warning sign. High memory use there generally means the cache is doing its job — most of your data is sitting ready in RAM instead of waiting on disk. The number to actually worry about is high, sustained CPU usage — that's what tells you queries can't keep up."
+  },
+  {
+   "id": 132,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": "Visual model: watch a query's actual path",
+   "text": "Toggle between SQLite and Postgres, pick a row, and run a query. Watch whether it's a fast hit (already cached in RAM) or a slower miss (has to go all the way to disk)."
+  },
+  {
+   "id": 133,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": "Writing safely: the write-ahead log (WAL)",
+   "text": "Reads are only half the story — a database also has to guarantee that once it tells you a write succeeded, that data is genuinely safe, even if the power dies one second later. Writing straight into the middle of a big, carefully organized data file on every single change would be slow and risky. Instead, both SQLite and Postgres use the same idea: a write-ahead log (WAL). When you change a row, the database first appends that change to a simple, ever-growing log file — one quick, sequential write, which disks handle much faster than jumping around to update scattered pages. Only the WAL needs to be safely on disk for the write to be considered durable. Later, in the background, a checkpoint takes everything piled up in the WAL and folds it into the real, organized data file."
+  },
+  {
+   "id": 134,
+   "url": "articles/systems/how-computers-work/databases.html",
+   "module": "How Computers Work",
+   "title": "Databases: SQLite vs. Postgres",
+   "heading": "Writing safely: the write-ahead log (WAL)",
+   "text": "If the power dies in between, the database just replays the WAL on restart and ends up exactly where it left off — nothing is lost, and nothing was ever slowly written twice. Click Write Row in the visual above to see both steps happen, in order. Sources: \"High memory usage in Postgres is good, actually\" and \"Caching\", both from the PlanetScale engineering blog; latency figures from Brendan Gregg's Systems Performance (O'Reilly)."
+  },
+  {
+   "id": 135,
+   "url": "articles/systems/how-computers-work/disk.html",
+   "module": "How Computers Work",
+   "title": "Disk",
+   "heading": null,
+   "text": "If RAM is the desk, disk is the filing cabinet across the room — an SSD (solid-state drive) or an older HDD (spinning hard disk). It's where everything that needs to outlive a restart actually lives: your files, your installed apps, and every database on the machine. Walking to the filing cabinet takes longer than reaching across your own desk — but nothing on it disappears when the lights go out."
+  },
+  {
+   "id": 136,
+   "url": "articles/systems/how-computers-work/disk.html",
+   "module": "How Computers Work",
+   "title": "Disk",
+   "heading": "Why disk is so much slower than RAM",
+   "text": "Going back to the scaled numbers from the CPU Cache submodule: if a CPU cache reference takes 1 second, a RAM reference takes a few minutes — but reading from an SSD stretches out to roughly six days, and a seek on an older spinning disk stretches to roughly ten months. PlanetScale's engineering blog puts the everyday version of that number simply: reading a page of data from RAM is \"roughly 1,000 times faster\" than reading it from even a fast modern SSD. Why the huge gap? RAM is electronic circuitry built to be read and written near-instantly. An SSD has to route the request through flash memory chips designed for durability and cost per gigabyte, not raw speed."
+  },
+  {
+   "id": 137,
+   "url": "articles/systems/how-computers-work/disk.html",
+   "module": "How Computers Work",
+   "title": "Disk",
+   "heading": "Why disk is so much slower than RAM",
+   "text": "A spinning HDD is slower still, because there's an actual mechanical arm that has to physically move to the right spot on a spinning platter before it can read anything — that physical motion is what those extra milliseconds are spent on."
+  },
+  {
+   "id": 138,
+   "url": "articles/systems/how-computers-work/disk.html",
+   "module": "How Computers Work",
+   "title": "Disk",
+   "heading": "The trade-off, in one sentence",
+   "text": "Disk is slower than RAM because it's built to be large, cheap, and permanent instead of fast — and that's exactly the job it needs to do. You wouldn't want your family photos to vanish the moment you unplug your laptop."
+  },
+  {
+   "id": 139,
+   "url": "articles/systems/how-computers-work/disk.html",
+   "module": "How Computers Work",
+   "title": "Disk",
+   "heading": "Visual model: power off, and see what survives",
+   "text": "Open a program (goes to RAM) and save a file (goes to disk), then power the computer off. Watch which one survives. This exact RAM-vs-disk trade-off is the entire reason database engines are engineered so carefully — they have to give you disk's permanence, at something closer to RAM's speed. That's the whole subject of the next, final submodule."
+  },
+  {
+   "id": 140,
+   "url": "articles/systems/how-computers-work/index.html",
+   "module": "How Computers Work",
+   "title": "How Computers Work",
+   "heading": null,
+   "text": "Every app you use — including a database — is just a program asking a computer for two things over and over: \"do some work\" and \"remember something.\" Underneath that simple request sit four physical parts working together: a CPU that does the work, a tiny cache next to it for things it needs right now, RAM for things it needs soon, and a disk for things it needs to keep even after the power goes off. This module walks through those four parts in plain language — no electronics degree required — and then ties them together with something you'll actually build with: how real databases like SQLite and Postgres use this exact same hardware to answer your queries fast. Ideas here are drawn from Brendan Gregg's book Systems Performance and PlanetScale's engineering blog. Every submodule has a small interactive model to play with, and a short quiz at the end."
+  },
+  {
+   "id": 141,
+   "url": "articles/systems/how-computers-work/index.html",
+   "module": "How Computers Work",
+   "title": "How Computers Work",
+   "heading": null,
+   "text": "What a computer actually is, in terms of the four parts that do all the work What the CPU does, and why it can only do one tiny step at a time — just extremely fast Why CPUs have a \"cache,\" and why that one idea explains almost everything about computer speed Why RAM is fast but forgets everything, and how a computer decides what to keep in it Why disks are slow but permanent, and what that trade-off actually costs in real time How SQLite and Postgres — two very different databases — both lean on RAM and disk to be fast and safe"
+  },
+  {
+   "id": 142,
+   "url": "articles/systems/how-computers-work/ram.html",
+   "module": "How Computers Work",
+   "title": "RAM",
+   "heading": null,
+   "text": "RAM (Random Access Memory) is where a program's working data lives while it runs. Picture it as a desk: roomy enough to spread out everything you're currently doing, and fast to reach — nowhere near as fast as the CPU's own cache notepad, but leagues faster than walking to a filing cabinet across the room. Every open app, every tab, every piece of data currently \"in use\" on your computer is sitting in RAM right now."
+  },
+  {
+   "id": 143,
+   "url": "articles/systems/how-computers-work/ram.html",
+   "module": "How Computers Work",
+   "title": "RAM",
+   "heading": "Two things worth knowing about RAM",
+   "text": "It's limited. A desk only has so much surface area. A computer might have 8, 16, or 32 gigabytes of RAM — once it's full, something has to give. It's volatile. The moment power is cut, everything on the desk is swept onto the floor. RAM needs continuous electricity to hold its contents — that's the trade-off for being so fast. This is exactly why your computer nags you to \"save\" your work: whatever's only in RAM doesn't survive a crash or a shutdown. Only once it's written to disk is it actually safe."
+  },
+  {
+   "id": 144,
+   "url": "articles/systems/how-computers-work/ram.html",
+   "module": "How Computers Work",
+   "title": "RAM",
+   "heading": "What happens when RAM fills up",
+   "text": "When you open a new app and there's no free space left, the operating system has to make room — usually by closing or \"swapping out\" whatever hasn't been used in a while. That's the real reason a computer with too many tabs and apps open starts to feel sluggish: it's constantly shuffling things in and out of a desk that's too small for everything you're asking it to hold at once."
+  },
+  {
+   "id": 145,
+   "url": "articles/systems/how-computers-work/ram.html",
+   "module": "How Computers Work",
+   "title": "RAM",
+   "heading": "Visual model: a desk with limited space",
+   "text": "Open a few programs below and watch what happens once RAM fills up — and then try powering the computer off. This is also exactly how a database's in-memory cache behaves — SQLite and Postgres both keep a limited, RAM-sized \"desk\" of recently-used data for the exact same reason your apps do. You'll see this play out with real numbers in the Databases submodule."
+  },
+  {
+   "id": 146,
+   "url": "articles/systems/how-computers-work/what-is-a-computer.html",
+   "module": "How Computers Work",
+   "title": "What Is a Computer?",
+   "heading": null,
+   "text": "Strip away the screen, the apps, and the icons, and a computer is doing one very simple thing over and over: it takes some input, follows a list of instructions (a program) to process that input, and produces some output. Along the way, it needs somewhere to hold things it's currently working on, and somewhere to keep things permanently. That's really the whole story — everything else is detail."
+  },
+  {
+   "id": 147,
+   "url": "articles/systems/how-computers-work/what-is-a-computer.html",
+   "module": "How Computers Work",
+   "title": "What Is a Computer?",
+   "heading": "The five jobs, and the four parts that do them",
+   "text": "Every computer, from a phone to a server rack in a data centre, needs to do the same five things: Take input — a keyboard press, a tap, a camera frame, a request arriving over the internet. Compute — actually do something with that input. This is the CPU's job. Remember things it's using right now — the program's current state, the data it's working on. This is RAM's job (with a tiny, even faster helper called cache sitting right on the CPU itself). Keep things permanently — files, installed apps, database records — so they're still there after a restart. This is the disk's job. Produce output — a picture on a screen, a sound, a saved file, a reply sent back over the network. The next four submodules each take one of these physical parts — CPU, cache, RAM, disk — and explain it on its own. This page is just the map."
+  },
+  {
+   "id": 148,
+   "url": "articles/systems/how-computers-work/what-is-a-computer.html",
+   "module": "How Computers Work",
+   "title": "What Is a Computer?",
+   "heading": "Visual model: following a request through the machine",
+   "text": "Click each part below to see what it actually does. This is the same path any request takes, whether it's you opening a photo or a web server answering a database query."
+  },
+  {
+   "id": 149,
+   "url": "articles/systems/how-computers-work/what-is-a-computer.html",
+   "module": "How Computers Work",
+   "title": "What Is a Computer?",
+   "heading": "A concrete example",
+   "text": "Say you tap \"open\" on a photo. Input (your tap) tells the CPU to run the photo app's instructions. The CPU asks the operating system to load the app and the image file from disk into RAM, because RAM is far faster to work from than disk. As the CPU decodes and draws the image pixel by pixel, it leans on its own tiny cache to avoid constantly reaching all the way out to RAM. Finally, the finished picture is sent to the screen — the output. Keep that example in your head. Every one of the next four submodules is really just zooming into one step of it — and the final submodule does the exact same walk-through, except the \"app\" is a database like SQLite or Postgres, and the \"photo\" is a row of data."
+  },
+  {
+   "id": 150,
+   "url": "articles/systems/networking-basics/dns.html",
+   "module": "Networking Basics",
+   "title": "DNS: The Internet's Phonebook",
+   "heading": null,
+   "text": "You never type a server's actual IP address into your browser. You type a name — wikipedia.org, google.com. Something has to translate that friendly name into the real address before your device can connect to anything. That something is DNS, the Domain Name System."
+  },
+  {
+   "id": 151,
+   "url": "articles/systems/networking-basics/dns.html",
+   "module": "Networking Basics",
+   "title": "DNS: The Internet's Phonebook",
+   "heading": "Like looking someone up before you call them",
+   "text": "Think about calling a friend: you don't dial their raw phone number from memory, you look up their name in your contacts app, which hands you the actual number to dial. DNS does exactly that for the internet — you give it a name, and it hands back the address, before your device connects to anything."
+  },
+  {
+   "id": 152,
+   "url": "articles/systems/networking-basics/dns.html",
+   "module": "Networking Basics",
+   "title": "DNS: The Internet's Phonebook",
+   "heading": "Your device remembers, so it doesn't have to ask twice",
+   "text": "Just like the caches you met in the CPU Cache and Databases submodules, DNS answers get cached. Once your device has looked up a name, it remembers the answer for a while, so visiting the same site again doesn't mean asking DNS all over — it's instant, straight from memory, exactly the same \"check nearby first\" idea you've already seen twice in this course."
+  },
+  {
+   "id": 153,
+   "url": "articles/systems/networking-basics/dns.html",
+   "module": "Networking Basics",
+   "title": "DNS: The Internet's Phonebook",
+   "heading": "Visual model: look up a name",
+   "text": "Pick a domain and look it up. Then look up the same one again, and notice what changes."
+  },
+  {
+   "id": 154,
+   "url": "articles/systems/networking-basics/index.html",
+   "module": "Networking Basics",
+   "title": "Networking Basics",
+   "heading": null,
+   "text": "Every time you open a website, send a message, or stream a video, your device is having a conversation with another computer somewhere else — sometimes on the other side of the planet — and it usually takes less than a second. This module explains, in the plainest language possible, how that's even possible. No prior knowledge of networks assumed. We'll build it up one small idea at a time — what a network even is, how your data actually travels, how a name like \"google.com\" becomes a real address, and why some connections feel instant while others feel slow. Every submodule has a small interactive model and a short quiz."
+  },
+  {
+   "id": 155,
+   "url": "articles/systems/networking-basics/index.html",
+   "module": "Networking Basics",
+   "title": "Networking Basics",
+   "heading": null,
+   "text": "What a network is, and why \"the internet\" is really a network of networks How your data gets broken into small pieces called packets before it travels How a website name gets turned into a real address (DNS) How a packet actually finds its way, hopping between machines called routers Why some things feel instant and others feel slow — latency vs. bandwidth Watching it all happen at once: what really happens when you load a web page"
+  },
+  {
+   "id": 156,
+   "url": "articles/systems/networking-basics/latency-and-bandwidth.html",
+   "module": "Networking Basics",
+   "title": "Latency & Bandwidth",
+   "heading": null,
+   "text": "\"The internet feels slow\" can actually mean two completely different things, and it's worth being able to tell them apart: Latency is the delay — how long it takes for the very first bit of a reply to come back after you ask for something. Bandwidth is the capacity — once data is flowing, how much of it can move per second."
+  },
+  {
+   "id": 157,
+   "url": "articles/systems/networking-basics/latency-and-bandwidth.html",
+   "module": "Networking Basics",
+   "title": "Latency & Bandwidth",
+   "heading": "Two everyday analogies",
+   "text": "Latency is like calling someone on the phone: the delay before they pick up, no matter how much you plan to say afterward. Bandwidth is like the number of lanes on a highway: more lanes let more cars move per minute, but adding lanes doesn't make any single car arrive faster once it's driving. A connection can have huge bandwidth and still feel laggy for a video call, or modest bandwidth and still feel snappy for simple browsing — they're genuinely separate things."
+  },
+  {
+   "id": 158,
+   "url": "articles/systems/networking-basics/latency-and-bandwidth.html",
+   "module": "Networking Basics",
+   "title": "Latency & Bandwidth",
+   "heading": "Why distance matters so much",
+   "text": "A big part of latency, especially for long distances, is simply physics: nothing — not even a signal down a fiber-optic cable — can travel faster than the speed of light. Round-tripping to a server on the other side of the planet takes real, physical time no amount of clever engineering can fully erase. You already saw this kind of gap once, comparing CPU cache, RAM, and disk. Network distance turns out to belong on that exact same scale."
+  },
+  {
+   "id": 159,
+   "url": "articles/systems/networking-basics/latency-and-bandwidth.html",
+   "module": "Networking Basics",
+   "title": "Latency & Bandwidth",
+   "heading": "Visual model: the full picture, from CPU cache to another continent",
+   "text": "This extends the scaled-latency comparison from the CPU Cache submodule with two more rows — a round trip within the same data center, and a round trip to another continent. Notice where they land. Look closely and something surprising jumps out: a round trip to another machine in the same data center can be faster than a single seek on a spinning hard disk. Distance across a network, when it's short, doesn't have to be the slow part — physical movement inside a mechanical disk can be slower than a trip \"outside the box\" altogether. Source: latency figures for cache/RAM/SSD/disk from Brendan Gregg, Systems Performance (O'Reilly); the data-center and intercontinental network round-trip figures are the same widely-cited numbers popularized by Google's Jeff Dean and referenced throughout that book and its wider tradition."
+  },
+  {
+   "id": 160,
+   "url": "articles/systems/networking-basics/loading-a-web-page.html",
+   "module": "Networking Basics",
+   "title": "Loading a Web Page, Start to Finish",
+   "heading": null,
+   "text": "You type a web address and hit enter. Less than a second later, a page appears. Here's everything from this module, happening in order, in that one short moment."
+  },
+  {
+   "id": 161,
+   "url": "articles/systems/networking-basics/loading-a-web-page.html",
+   "module": "Networking Basics",
+   "title": "Loading a Web Page, Start to Finish",
+   "heading": "The five steps",
+   "text": "DNS lookup — your browser asks \"what's the address for this name?\" and gets an IP address back, either freshly or from its cache. Routing — your request is split into packets and hops across a chain of routers toward that address. The server — a computer on the other end receives the request. To build the actual page, it might even need to ask its own database — like the Postgres server from the Databases submodule — for the content. The response — the answer travels back the same way, split into packets again. Rendering — your browser reassembles the packets in order and draws the finished page on your screen. Every one of those five steps costs a little time — a DNS lookup, several router hops there, server processing, several router hops back. That's the latency you learned about in the last submodule, stacked up step after step."
+  },
+  {
+   "id": 162,
+   "url": "articles/systems/networking-basics/loading-a-web-page.html",
+   "module": "Networking Basics",
+   "title": "Loading a Web Page, Start to Finish",
+   "heading": "The five steps",
+   "text": "And yet, on a decent connection, this whole chain usually finishes in well under a second."
+  },
+  {
+   "id": 163,
+   "url": "articles/systems/networking-basics/loading-a-web-page.html",
+   "module": "Networking Basics",
+   "title": "Loading a Web Page, Start to Finish",
+   "heading": "Visual model: watch the whole request happen",
+   "text": "Step through it, or hit Auto Play to watch the full round trip happen on its own. This is the payoff of the whole Computer Functions section so far: a web request touches nearly everything you've learned — a CPU running instructions, RAM and cache holding data close by, disk storing it permanently, and now a network carrying it between machines entirely. None of these ideas exist in isolation; every real system leans on all of them at once."
+  },
+  {
+   "id": 164,
+   "url": "articles/systems/networking-basics/packets-and-addresses.html",
+   "module": "Networking Basics",
+   "title": "Packets & IP Addresses",
+   "heading": null,
+   "text": "When you send something over a network — a message, a photo, a request for a web page — it doesn't travel as one single blob. It gets sliced into small pieces called packets, each one sent off on its own, and put back together in the right order once every piece has arrived."
+  },
+  {
+   "id": 165,
+   "url": "articles/systems/networking-basics/packets-and-addresses.html",
+   "module": "Networking Basics",
+   "title": "Packets & IP Addresses",
+   "heading": "Why not just send it as one piece?",
+   "text": "Picture mailing a long letter by tearing it into a stack of numbered postcards and dropping them in the mail separately, instead of one big envelope. That sounds strange for a letter — but for data, it's genuinely useful: If one small packet gets lost or damaged along the way, only that piece needs to be resent — not the entire file. Many different conversations can share the same wires fairly, packet by packet, instead of one huge transfer hogging the connection the whole time. Different packets from the same message can even take slightly different paths and still all arrive — they just get sorted back into order using their sequence number once they land."
+  },
+  {
+   "id": 166,
+   "url": "articles/systems/networking-basics/packets-and-addresses.html",
+   "module": "Networking Basics",
+   "title": "Packets & IP Addresses",
+   "heading": "Every packet needs an address: the IP address",
+   "text": "For a packet to find its way, every device on a network needs a unique address — an IP address (like 192.168.1.5 on a home network, or a public one for a server out on the internet). It works exactly like a street address: it's how a packet knows where it's headed, and it's how the reply knows where to come back to."
+  },
+  {
+   "id": 167,
+   "url": "articles/systems/networking-basics/packets-and-addresses.html",
+   "module": "Networking Basics",
+   "title": "Packets & IP Addresses",
+   "heading": "Visual model: split a message, then reassemble it",
+   "text": "Type a short message, send it, and watch it split into packets that arrive out of order — then reassemble them using their sequence numbers. This is exactly the same principle you saw with SQLite and Postgres reading fixed-size pages from disk instead of the whole file at once — breaking big things into small, individually-addressable pieces shows up everywhere in computing, not just networks."
+  },
+  {
+   "id": 168,
+   "url": "articles/systems/networking-basics/routers.html",
+   "module": "Networking Basics",
+   "title": "Routers: The Path Data Takes",
+   "heading": null,
+   "text": "A packet almost never travels straight from your device to its destination in one jump. It passes through a chain of devices called routers, each one looking at the packet's address and forwarding it one step closer to where it's going."
+  },
+  {
+   "id": 169,
+   "url": "articles/systems/networking-basics/routers.html",
+   "module": "Networking Basics",
+   "title": "Routers: The Path Data Takes",
+   "heading": "Like a postal sorting system",
+   "text": "Your letter doesn't go directly from your mailbox to the recipient's — it passes through a local sorting office, maybe a regional hub, then a hub closer to the destination, then finally local delivery. Routers do the same job for data: your home router hands the packet to your internet provider's router, which hands it toward the destination's network, which hands it to the right server — often five, ten, or more hops in total."
+  },
+  {
+   "id": 170,
+   "url": "articles/systems/networking-basics/routers.html",
+   "module": "Networking Basics",
+   "title": "Routers: The Path Data Takes",
+   "heading": "Each router only needs to know \"which way is closer\"",
+   "text": "No single router needs to know the entire path in advance. It just needs to know, for a given address, which direction gets a packet closer to home — the same way a sorting clerk doesn't need to know your exact street, just which regional hub to send it toward next. Each hop narrows things down a little more, until the packet lands at the right doorstep."
+  },
+  {
+   "id": 171,
+   "url": "articles/systems/networking-basics/routers.html",
+   "module": "Networking Basics",
+   "title": "Routers: The Path Data Takes",
+   "heading": "Visual model: hop by hop",
+   "text": "Step through a packet's journey across a chain of routers to reach its destination. Curious readers: a real tool called traceroute lets you see the actual chain of routers a packet passes through to reach a given address. You don't need it to understand this module — it's just proof that this \"hop by hop\" idea is exactly how it really works, not a simplification invented for this page."
+  },
+  {
+   "id": 172,
+   "url": "articles/systems/networking-basics/what-is-a-network.html",
+   "module": "Networking Basics",
+   "title": "What Is a Network?",
+   "heading": null,
+   "text": "A network is nothing more mysterious than two or more devices that can send messages to each other. Your phone talking to your laptop over Wi-Fi is a network. Your whole house — phone, laptop, smart TV, all sharing one Wi-Fi router — is a network. And the internet is the same idea, just enormous: it's what you get when huge numbers of separately-run networks all agree to pass each other's messages along."
+  },
+  {
+   "id": 173,
+   "url": "articles/systems/networking-basics/what-is-a-network.html",
+   "module": "Networking Basics",
+   "title": "What Is a Network?",
+   "heading": "The internet isn't one thing — it's an agreement",
+   "text": "Nobody owns \"the internet.\" Your internet provider runs its own network. A university runs its own network. A company running a big website runs its own network too. What makes it all \"the internet\" is that these networks agree on common rules for passing messages to each other, so a message from your phone can hop across several different companies' equipment and still arrive at the right place, on the other side of the world, correctly. That's genuinely the whole idea — everything else in this module is detail on how that handoff actually happens."
+  },
+  {
+   "id": 174,
+   "url": "articles/systems/networking-basics/what-is-a-network.html",
+   "module": "Networking Basics",
+   "title": "What Is a Network?",
+   "heading": "Most of what you do online is \"ask, then answer\"",
+   "text": "Almost everything you do on a network follows the same shape: your device (the client) asks a question, and some other computer that's always on and waiting (the server) answers it. Loading a web page, opening an app, watching a video — all of it is a client asking a server for something. You've actually already met this exact pattern. In the Databases submodule, Postgres runs as its own server that a client application connects to. It's the same client-server relationship — the only difference here is that the \"connection\" is happening across a network instead of on one machine."
+  },
+  {
+   "id": 175,
+   "url": "articles/systems/networking-basics/what-is-a-network.html",
+   "module": "Networking Basics",
+   "title": "What Is a Network?",
+   "heading": "Visual model: the chain your request travels",
+   "text": "Click each part below to see what it actually does when you, say, open a website."
+  },
+  {
+   "id": 176,
+   "url": "articles/systems/operating-systems-basics/files-and-filesystems.html",
+   "module": "Operating Systems Basics",
+   "title": "Files & the File System",
+   "heading": null,
+   "text": "A disk, underneath, doesn't actually know what a \"file\" is. It's just a huge stretch of storage, divided into small fixed-size chunks called blocks. Names, folders, and the neat idea of a \"file\" are something the operating system builds on top — that layer is called the file system."
+  },
+  {
+   "id": 177,
+   "url": "articles/systems/operating-systems-basics/files-and-filesystems.html",
+   "module": "Operating Systems Basics",
+   "title": "Files & the File System",
+   "heading": "A file is really just an index entry",
+   "text": "When you save a file, its data usually doesn't land in one single tidy chunk of disk — it gets scattered across whichever blocks happen to be free at the time, sometimes not even next to each other. What makes it feel like one coherent \"file\" is that the file system keeps its own index: a record of exactly which blocks belong to which file, and in what order. Ask for the file by name, and the file system looks it up in that index and reassembles the right blocks for you, instantly. Notice the pattern: this is the same trick you've now seen several times in this section — DNS mapping a name to an address, a packet's pieces reassembled by sequence number, virtual memory mapping a private address to a real one, and now a filename mapping to scattered disk blocks."
+  },
+  {
+   "id": 178,
+   "url": "articles/systems/operating-systems-basics/files-and-filesystems.html",
+   "module": "Operating Systems Basics",
+   "title": "Files & the File System",
+   "heading": "A file is really just an index entry",
+   "text": "Keeping a small lookup table that translates a convenient name into where something really lives shows up everywhere in computing."
+  },
+  {
+   "id": 179,
+   "url": "articles/systems/operating-systems-basics/files-and-filesystems.html",
+   "module": "Operating Systems Basics",
+   "title": "Files & the File System",
+   "heading": "Where SQLite and Postgres actually live",
+   "text": "This is exactly the layer SQLite and Postgres sit on top of. SQLite is famously \"just a file\" — its entire database really is one file, managed through this exact file-system machinery. Postgres keeps a whole directory of files (its \"data directory\"), each one holding pages of table and index data, also just ordinary files as far as the file system is concerned. Neither database needs to know or care which physical disk blocks its data ends up in — that's the file system's job, same as it is for a photo or a text file."
+  },
+  {
+   "id": 180,
+   "url": "articles/systems/operating-systems-basics/files-and-filesystems.html",
+   "module": "Operating Systems Basics",
+   "title": "Files & the File System",
+   "heading": "Visual model: one filename, several disk blocks",
+   "text": "Pick a file and see which raw disk blocks it's actually scattered across."
+  },
+  {
+   "id": 181,
+   "url": "articles/systems/operating-systems-basics/index.html",
+   "module": "Operating Systems Basics",
+   "title": "Operating Systems Basics",
+   "heading": null,
+   "text": "Your computer is running dozens of programs \"at once\" — a browser, a chat app, a music player, maybe a database server — on a machine with far fewer CPU cores than that. Something has to decide who gets the CPU, give each program its own private slice of memory, and organize the disk so files don't collide. That referee is the operating system, and this module explains how it does its job, in plain language. This module closes the loop on the whole Computer Functions section: it's the OS that actually hands out the CPU, cache, RAM, disk, and network from the earlier two modules to every program that asks. Grounded, like the rest of this section, in Brendan Gregg's Systems Performance and PlanetScale's engineering blog by Ben Dicken — this time his post on how Postgres and MySQL each handle connections."
+  },
+  {
+   "id": 182,
+   "url": "articles/systems/operating-systems-basics/index.html",
+   "module": "Operating Systems Basics",
+   "title": "Operating Systems Basics",
+   "heading": null,
+   "text": "What an operating system actually is, and why programs need a referee at all Processes and threads — and why Postgres and MySQL made very different choices here How the CPU gets \"shared\" between many programs by taking rapid turns Why every program gets to believe it has the whole computer's memory to itself How a \"file\" is really just an index over scattered pieces of raw disk Watching it all happen at once: what really happens when you open an app"
+  },
+  {
+   "id": 183,
+   "url": "articles/systems/operating-systems-basics/opening-an-app.html",
+   "module": "Operating Systems Basics",
+   "title": "Opening an App, Start to Finish",
+   "heading": null,
+   "text": "You double-click an icon. A moment later, a window appears, ready to use. Here's everything from this module — and quietly, from the whole Computer Functions section — happening in that short moment."
+  },
+  {
+   "id": 184,
+   "url": "articles/systems/operating-systems-basics/opening-an-app.html",
+   "module": "Operating Systems Basics",
+   "title": "Opening an App, Start to Finish",
+   "heading": "The six steps",
+   "text": "Find it — the OS looks up the app's files on disk, using the file system's index. New process — the OS creates a new process for it, with its own private, virtual slice of memory. Load in — the app's actual code is read from disk into that process's memory. Get a turn — the scheduler adds the new process to the rotation and eventually gives it a turn on the CPU. Run — the CPU executes its instructions, leaning on cache and RAM exactly as you saw in the first module. On screen — output reaches the display, and the app is open and responsive."
+  },
+  {
+   "id": 185,
+   "url": "articles/systems/operating-systems-basics/opening-an-app.html",
+   "module": "Operating Systems Basics",
+   "title": "Opening an App, Start to Finish",
+   "heading": "Visual model: watch it happen",
+   "text": "Step through it, or hit Auto Play to watch the whole sequence run on its own. This is the payoff of the entire Computer Functions section. Opening an app touches nearly everything you've learned across all three modules: a CPU running instructions with cache and RAM close by, disk storing everything permanently through a file system, a network carrying data between machines when needed, and now an operating system tying all of it together — deciding who gets the CPU, handing out private memory, and organizing the disk. None of these ideas work in isolation; every real program you use leans on all of them, every time."
+  },
+  {
+   "id": 186,
+   "url": "articles/systems/operating-systems-basics/processes-and-threads.html",
+   "module": "Operating Systems Basics",
+   "title": "Processes & Threads",
+   "heading": null,
+   "text": "When you open a program, the operating system creates a process for it — a running instance of that program, with its own private slice of memory that nothing else can see or touch. Open the same program twice, and you get two separate processes, each with its own copy of that private memory."
+  },
+  {
+   "id": 187,
+   "url": "articles/systems/operating-systems-basics/processes-and-threads.html",
+   "module": "Operating Systems Basics",
+   "title": "Processes & Threads",
+   "heading": "Threads: lighter workers inside one process",
+   "text": "A process can also split its own work across multiple threads. Threads live inside one process and share all of that process's memory — unlike two separate processes, which are kept fully apart. Because threads share memory instead of each needing their own private copy, they're much cheaper to create and to switch between. How much cheaper? Switching the CPU from one process to another takes roughly 5 microseconds. Switching between threads takes roughly 1 microsecond — about five times faster — because there's far less bookkeeping involved when everyone's already sharing the same memory."
+  },
+  {
+   "id": 188,
+   "url": "articles/systems/operating-systems-basics/processes-and-threads.html",
+   "module": "Operating Systems Basics",
+   "title": "Processes & Threads",
+   "heading": "Two real databases, two different choices",
+   "text": "This isn't just theory — it's exactly why Postgres and MySQL are built differently underneath: Postgres uses one process per connection. Every time an application connects, Postgres spawns a whole new OS process to handle it. MySQL runs as a single process ( mysqld) and instead gives each connection its own lightweight thread inside that one process. Processes are safer and more isolated — one connection crashing is less likely to take down another — but heavier, with real memory and CPU overhead per connection. Threads are cheaper and faster to spin up, but share more risk if something goes wrong."
+  },
+  {
+   "id": 189,
+   "url": "articles/systems/operating-systems-basics/processes-and-threads.html",
+   "module": "Operating Systems Basics",
+   "title": "Processes & Threads",
+   "heading": "Two real databases, two different choices",
+   "text": "Both approaches start to strain once connection counts climb into the thousands, which is exactly why connection poolers exist: a pooler sits between many client connections and the database, and funnels them through a small, fixed set of real connections — typically just 5 to 50 — reusing them instead of creating a new process or thread for every single client."
+  },
+  {
+   "id": 190,
+   "url": "articles/systems/operating-systems-basics/processes-and-threads.html",
+   "module": "Operating Systems Basics",
+   "title": "Processes & Threads",
+   "heading": "Visual model: watch each database handle new connections",
+   "text": "Switch between Postgres and MySQL, and try turning the connection pooler on once things get busy. Source: Ben Dicken, \"Processes and Threads\", PlanetScale engineering blog."
+  },
+  {
+   "id": 191,
+   "url": "articles/systems/operating-systems-basics/scheduling.html",
+   "module": "Operating Systems Basics",
+   "title": "Scheduling: Taking Turns on the CPU",
+   "heading": null,
+   "text": "Recall from the CPU submodule: a single CPU core can only truly run one instruction stream at a time. So how does your computer run dozens of programs \"at once\" on a handful of cores? It doesn't, really — it just switches between them so quickly that it feels simultaneous. That's the scheduler's job."
+  },
+  {
+   "id": 192,
+   "url": "articles/systems/operating-systems-basics/scheduling.html",
+   "module": "Operating Systems Basics",
+   "title": "Scheduling: Taking Turns on the CPU",
+   "heading": "Fast enough turns feel like \"at once\"",
+   "text": "The scheduler gives each runnable process a short slice of CPU time — often just a few milliseconds — then pauses it and lets the next one run. Round and round, dozens of times a second. No single program ever notices the gaps, because each pause is far too short for a human (or even most software) to perceive. That's the whole trick behind multitasking: not true simultaneity, just extremely fast turn-taking."
+  },
+  {
+   "id": 193,
+   "url": "articles/systems/operating-systems-basics/scheduling.html",
+   "module": "Operating Systems Basics",
+   "title": "Scheduling: Taking Turns on the CPU",
+   "heading": "Switching isn't free",
+   "text": "Every time the scheduler swaps one process out for another, it has to save exactly where that process was and restore the next one's state — a context switch. As you saw in the last submodule, that costs real time: roughly 5 microseconds for a full process switch, about 1 microsecond for a thread. It's tiny compared to a human blink — but if it happens constantly, on a heavily loaded server handling thousands of things at once, those microseconds genuinely add up, which is part of why database designers care so much about how many processes or threads they're juggling."
+  },
+  {
+   "id": 194,
+   "url": "articles/systems/operating-systems-basics/scheduling.html",
+   "module": "Operating Systems Basics",
+   "title": "Scheduling: Taking Turns on the CPU",
+   "heading": "Visual model: watch the turns happen",
+   "text": "Step through a few rounds of the CPU giving each program its turn, or let it run on its own. Source: context-switch timings from Ben Dicken, \"Processes and Threads\", PlanetScale engineering blog."
+  },
+  {
+   "id": 195,
+   "url": "articles/systems/operating-systems-basics/virtual-memory.html",
+   "module": "Operating Systems Basics",
+   "title": "Virtual Memory",
+   "heading": null,
+   "text": "Open your task manager and you might see ten programs, each seemingly convinced it can use huge amounts of memory, starting from address zero, as if it were the only thing running. That's not a coincidence — it's a deliberate illusion the operating system maintains, called virtual memory."
+  },
+  {
+   "id": 196,
+   "url": "articles/systems/operating-systems-basics/virtual-memory.html",
+   "module": "Operating Systems Basics",
+   "title": "Virtual Memory",
+   "heading": "Everyone gets their own private illusion",
+   "text": "Every process is handed its own private range of memory addresses to use, called its virtual address space. When that process asks for \"address 0x40,\" the OS (with help from the CPU) quietly translates that into wherever the data actually lives in the computer's real, physical RAM — a location the process never sees or needs to know about. Two completely different programs can both use \"address 0x40\" and never collide, because underneath, they're mapped to two totally different real locations."
+  },
+  {
+   "id": 197,
+   "url": "articles/systems/operating-systems-basics/virtual-memory.html",
+   "module": "Operating Systems Basics",
+   "title": "Virtual Memory",
+   "heading": "Why bother with the illusion?",
+   "text": "Safety — one program can't accidentally (or maliciously) read or overwrite another's memory, because it can't even address it. Simplicity — every program gets to assume it has a clean, private, generously-sized memory space, without needing to coordinate with every other running program about who owns what. Flexibility — the OS is free to physically move a process's data around in real RAM, or even temporarily shuffle rarely-used parts out to disk, without the program ever noticing — the mapping is simply updated underneath it."
+  },
+  {
+   "id": 198,
+   "url": "articles/systems/operating-systems-basics/virtual-memory.html",
+   "module": "Operating Systems Basics",
+   "title": "Virtual Memory",
+   "heading": "Visual model: same address, different reality",
+   "text": "Click each program to see what address it believes it's using — and where that's really mapped in physical RAM. This is the same \"keep it small and give out only what's currently needed\" spirit you saw with RAM's limited capacity in the RAM submodule — virtual memory is the mechanism that lets the OS enforce that fairly and safely across many programs at once."
+  },
+  {
+   "id": 199,
+   "url": "articles/systems/operating-systems-basics/what-is-an-os.html",
+   "module": "Operating Systems Basics",
+   "title": "What Is an Operating System?",
+   "heading": null,
+   "text": "Right now, your computer is probably running a browser, a chat app, some background updater, maybe music — all \"at once,\" on a chip with maybe 8 CPU cores. None of those programs know about each other. None of them wrote code to politely take turns or divide up memory fairly. Something else is doing that job for them: the operating system (Windows, macOS, Linux, Android, iOS)."
+  },
+  {
+   "id": 200,
+   "url": "articles/systems/operating-systems-basics/what-is-an-os.html",
+   "module": "Operating Systems Basics",
+   "title": "What Is an Operating System?",
+   "heading": "A referee with special privileges",
+   "text": "The operating system is itself a program — but a special one, with privileges no ordinary app gets. It's the only thing allowed to talk to the hardware directly. Every other program has to ask it for what it needs: \"give me some memory,\" \"let me read this file,\" \"send this over the network.\" The OS decides who gets what, and when — which is exactly what keeps a browser tab from accidentally overwriting your music player's memory, or hogging every last bit of the CPU."
+  },
+  {
+   "id": 201,
+   "url": "articles/systems/operating-systems-basics/what-is-an-os.html",
+   "module": "Operating Systems Basics",
+   "title": "What Is an Operating System?",
+   "heading": "What it's actually managing",
+   "text": "Everything in this module is really the OS managing the same four things from the earlier modules, just now shared across many programs instead of one: The CPU — who gets to run right now, and for how long (this module's Scheduling submodule). RAM — how it's divided up, and how each program is kept from seeing another's data (Virtual Memory). Disk — how raw storage becomes organized, named files (Files & the File System). The network — which program's request a reply belongs to, and where it should be delivered."
+  },
+  {
+   "id": 202,
+   "url": "articles/systems/operating-systems-basics/what-is-an-os.html",
+   "module": "Operating Systems Basics",
+   "title": "What Is an Operating System?",
+   "heading": "Visual model: apps, the OS, and the hardware",
+   "text": "Click each part to see its role. You've actually met this \"OS as referee\" idea already, just from the database's point of view: when Postgres asks for memory, reads a file, or accepts a network connection, it's making exactly these same requests to the operating system it's running on."
+  }
+ ]
+}

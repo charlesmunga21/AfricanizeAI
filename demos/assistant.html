@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask the Docs — AfricanizeAI Demos</title>
+<meta name="description" content="A reading assistant for this site's tutorials: ask a question in plain language and get pointed straight to the section that answers it. Runs entirely on-device — the model downloads once and every search happens in your browser.">
+<link rel="canonical" href="https://charlesmunga21.github.io/AfricanizeAI/demos/assistant.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ask the Docs — AfricanizeAI Demos">
+<meta property="og:description" content="Ask a question about any tutorial on this site and get pointed straight to the section that answers it — on-device, no server.">
+<meta property="og:url" content="https://charlesmunga21.github.io/AfricanizeAI/demos/assistant.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/base.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Ask the Docs",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "url": "https://charlesmunga21.github.io/AfricanizeAI/demos/assistant.html",
+  "description": "An on-device reading assistant that searches every AfricanizeAI tutorial and points to the section that answers a plain-language question — no server, no data leaves the device.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+  .as-status { margin-bottom: var(--space-4); }
+
+  .as-gate { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
+  .as-gate[hidden] { display: none; }
+  .as-progress { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; width: 100%; max-width: 360px; }
+  .as-progress[hidden] { display: none; }
+  .as-progress-bar { height: 100%; background: var(--box); width: 0%; transition: width 100ms linear; }
+
+  .as-ask-form { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .as-ask-form[hidden] { display: none; }
+  .as-question {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--frame-radius);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  .as-question:focus { outline: 2px solid var(--box); outline-offset: 1px; }
+
+  .as-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+  .as-chip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .as-chip:hover:not(:disabled) { border-color: var(--box); color: var(--box); }
+  .as-chip:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .as-results { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+  .as-results[hidden] { display: none; }
+  .as-empty { color: var(--ink-3); font-size: 0.9rem; }
+
+  .as-card {
+    border: var(--frame-border);
+    border-radius: var(--frame-radius);
+    background: var(--surface-2);
+    padding: var(--space-4);
+  }
+  .as-card--top { border-color: var(--box); }
+  .as-card__kicker { font-size: 0.72rem; color: var(--ink-3); margin: 0 0 var(--space-2); text-transform: uppercase; letter-spacing: 0.03em; }
+  .as-card__excerpt { margin: 0 0 var(--space-3); color: var(--ink-2); line-height: 1.55; }
+  .as-card__link { font-size: 0.88rem; font-weight: 500; }
+
+  dialog.as-modal {
+    border: var(--frame-border);
+    border-radius: var(--frame-radius);
+    padding: var(--space-6);
+    max-width: 420px;
+    color: var(--ink);
+    background: var(--surface-2);
+  }
+  dialog.as-modal::backdrop { background: rgba(14, 17, 22, 0.5); }
+  .as-modal h3 { margin-top: 0; }
+  .as-modal .as-modal-actions { display: flex; gap: var(--space-2); margin-top: var(--space-4); justify-content: flex-end; }
+</style>
+</head>
+<body>
+
+<header class="demo-nav">
+  <div class="demo-nav__row">
+    <a class="demo-nav__brand" href="../index.html">Africanize<span class="accent">AI</span></a>
+    <nav class="demo-nav__links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">All demos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="demo-shell demo-main">
+  <div class="demo-hero">
+    <h1>Ask the Docs</h1>
+    <p>A reading assistant for this site. Ask a question in plain language and it points you to the exact section that answers it — grounded in what's actually written here, not a general-purpose chatbot guessing.</p>
+  </div>
+
+  <section class="frame" data-frame data-module="ASSISTANT" data-state="idle">
+    <div id="as-status" class="note as-status" hidden></div>
+
+    <div class="as-gate" id="as-gate">
+      <p>Loads a small (~24 MB) embedding model and indexes every tutorial on this site — once. Both run in your browser; nothing you ask is sent anywhere.</p>
+      <button type="button" id="as-start" class="btn">Load assistant</button>
+      <div class="as-progress" id="as-progress" hidden><div class="as-progress-bar" id="as-progress-bar"></div></div>
+    </div>
+
+    <form id="as-ask-form" class="as-ask-form" hidden>
+      <input type="text" id="as-question" class="as-question" placeholder="e.g. Why is array access O(1)?" disabled autocomplete="off">
+      <button type="submit" id="as-ask-btn" class="btn" disabled>Ask</button>
+    </form>
+
+    <div class="as-chips">
+      <button type="button" class="as-chip" disabled>Why is array access O(1)?</button>
+      <button type="button" class="as-chip" disabled>How does binary search work?</button>
+      <button type="button" class="as-chip" disabled>What does DNS actually do?</button>
+      <button type="button" class="as-chip" disabled>What is transfer learning?</button>
+      <button type="button" class="as-chip" disabled>Why does a scan cycle matter on a PLC?</button>
+    </div>
+
+    <div class="as-results" id="as-results" hidden></div>
+  </section>
+
+  <div class="note" style="margin-top: var(--space-6);">
+    <strong>How this works.</strong> Every tutorial page is broken into short passages and turned into a vector — a list of numbers that captures its meaning — by a small model (MiniLM) running on your device. Your question gets the same treatment, then the passages whose vectors are closest to your question's vector are shown, unedited, with a link to the real page. Nothing is generated or paraphrased, so there's nothing to hallucinate — you're always reading this site's actual words.
+  </div>
+
+  <p class="mono" style="font-size:.85rem; margin-top: var(--space-4);">
+    <a href="js/assistant/worker.js">Read worker.js — the whole embedding pipeline, in one file</a>
+  </p>
+</main>
+
+<footer class="demo-footer">© AfricanizeAI 2026 — <a href="../index.html">AfricanizeAI</a></footer>
+
+<dialog class="as-modal" id="as-consent">
+  <h3>Download model</h3>
+  <p id="as-consent-body">This connection looks metered or slow. Downloading the model will use data.</p>
+  <div class="as-progress" id="as-consent-progress" hidden><div class="as-progress-bar" id="as-consent-bar"></div></div>
+  <div class="as-modal-actions">
+    <button type="button" class="btn btn--ghost" id="as-consent-cancel">Not now</button>
+    <button type="button" class="btn" id="as-consent-ok">Download</button>
+  </div>
+</dialog>
+
+<script type="module" src="js/assistant/main.js"></script>
+</body>
+</html>
