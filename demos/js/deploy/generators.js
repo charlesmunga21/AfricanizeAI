@@ -390,8 +390,25 @@ async def health():
 
 // ---------- Zipping a multi-file bundle ----------
 
+// Memoized so the first Space/Docker download isn't the one paying for the
+// CDN round-trip — ui.js warms this on page load, so by the time a user
+// actually clicks a .zip button the import has almost always already
+// resolved and this call is synchronous in practice.
+let fflatePromise = null;
+export function preloadFflate() {
+  if (!fflatePromise) {
+    // On failure (offline, CDN blocked) let the next call retry from scratch
+    // instead of caching a permanently-rejected promise.
+    fflatePromise = import(/* @vite-ignore */ FFLATE_URL).catch((err) => {
+      fflatePromise = null;
+      throw err;
+    });
+  }
+  return fflatePromise;
+}
+
 export async function zipBundle(files) {
-  const { zipSync, strToU8 } = await import(/* @vite-ignore */ FFLATE_URL);
+  const { zipSync, strToU8 } = await preloadFflate();
   const encoded = Object.fromEntries(Object.entries(files).map(([name, content]) => [name, strToU8(content)]));
   return new Blob([zipSync(encoded, { level: 6 })], { type: "application/zip" });
 }

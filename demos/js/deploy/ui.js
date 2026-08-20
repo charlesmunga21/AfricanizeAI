@@ -4,9 +4,10 @@
 
 import { frame } from "../frame.js";
 import { QUESTIONS, recommend } from "./questions.js";
-import { generateColabNotebook, generateSpaceBundle, generateBrowserStub, generateDockerBundle, zipBundle } from "./generators.js";
+import { generateColabNotebook, generateSpaceBundle, generateBrowserStub, generateDockerBundle, zipBundle, preloadFflate } from "./generators.js";
 
 frame.mountAll();
+preloadFflate().catch(() => {}); // start the CDN fetch now; zipBundle() surfaces any real failure later, on click
 
 const $ = (id) => document.getElementById(id);
 const fieldsHost = $("dp-fields");
@@ -55,7 +56,7 @@ const ARTIFACTS = {
       btn.textContent = "Building…";
       const notebook = generateColabNotebook(a);
       download(`train-${a.task}.ipynb`, new Blob([notebook], { type: "application/x-ipynb+json" }));
-      btn.textContent = "Download .ipynb";
+      btn.textContent = "Downloaded ✓";
     },
     buttonLabel: "Download .ipynb",
   },
@@ -68,7 +69,7 @@ const ARTIFACTS = {
       const files = generateSpaceBundle(a);
       const blob = await zipBundle(files);
       download("huggingface-space.zip", blob);
-      btn.textContent = "Download .zip";
+      btn.textContent = "Downloaded ✓";
     },
     buttonLabel: "Download .zip",
   },
@@ -80,7 +81,7 @@ const ARTIFACTS = {
       btn.textContent = "Building…";
       const html = generateBrowserStub(a);
       download("model-runner.html", new Blob([html], { type: "text/html" }));
-      btn.textContent = "Download .html";
+      btn.textContent = "Downloaded ✓";
     },
     buttonLabel: "Download .html",
   },
@@ -93,7 +94,7 @@ const ARTIFACTS = {
       const files = generateDockerBundle(a);
       const blob = await zipBundle(files);
       download("docker-api.zip", blob);
-      btn.textContent = "Download .zip";
+      btn.textContent = "Downloaded ✓";
     },
     buttonLabel: "Download .zip",
   },
