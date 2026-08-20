@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Files &amp; the File System — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / Files &amp; the File System</div>
+    <article>
+      <h1>Files &amp; the File System</h1>
+      <p>A disk, underneath, doesn't actually know what a "file" is. It's just a huge stretch of storage, divided into small fixed-size chunks called <strong>blocks</strong>. Names, folders, and the neat idea of a "file" are something the operating system builds on top — that layer is called the <strong>file system</strong>.</p>
+
+      <h2>A file is really just an index entry</h2>
+      <p>When you save a file, its data usually doesn't land in one single tidy chunk of disk — it gets scattered across whichever blocks happen to be free at the time, sometimes not even next to each other. What makes it feel like one coherent "file" is that the file system keeps its own index: a record of exactly which blocks belong to which file, and in what order. Ask for the file by name, and the file system looks it up in that index and reassembles the right blocks for you, instantly.</p>
+
+      <div class="note">Notice the pattern: this is the same trick you've now seen several times in this section — DNS mapping a name to an address, a packet's pieces reassembled by sequence number, virtual memory mapping a private address to a real one, and now a filename mapping to scattered disk blocks. Keeping a small lookup table that translates a convenient name into where something really lives shows up everywhere in computing.</div>
+
+      <h2>Where SQLite and Postgres actually live</h2>
+      <p>This is exactly the layer SQLite and Postgres sit on top of. SQLite is famously "just a file" — its entire database really is one file, managed through this exact file-system machinery. Postgres keeps a whole directory of files (its "data directory"), each one holding pages of table and index data, also just ordinary files as far as the file system is concerned. Neither database needs to know or care which physical disk blocks its data ends up in — that's the file system's job, same as it is for a photo or a text file.</p>
+
+      <h2>Visual model: one filename, several disk blocks</h2>
+      <p>Pick a file and see which raw disk blocks it's actually scattered across.</p>
+      <div class="viz" id="fs-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="fs-quiz"></div>
+
+      <div class="article-nav">
+        <a href="virtual-memory.html">← Virtual Memory</a>
+        <a href="opening-an-app.html">Next: Opening an App, Start to Finish →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initFileSystemViz(document.getElementById("fs-viz"));
+  initQuiz(document.getElementById("fs-quiz"), [
+    {
+      q: "Does a disk actually understand the concept of a 'file'?",
+      options: [
+        "Yes, files are a physical property of the disk hardware",
+        "No — the disk just has raw blocks; the file system is the OS layer that organizes them into named files",
+        "Only SSDs understand files, not hard disks",
+        "Files only exist on the network, never on disk",
+      ],
+      correct: 1,
+      explain: "A disk is just storage divided into blocks. 'Files' are an organizing idea the file system layer builds on top of that raw storage.",
+    },
+    {
+      q: "Why can a single file be made of disk blocks that aren't next to each other?",
+      options: [
+        "It can't — files are always stored in one continuous chunk",
+        "The file system keeps its own index of exactly which blocks belong to a file, so it can reassemble them in order regardless of where they physically sit",
+        "Files are always deleted and rewritten to fix this",
+        "Only SQLite has this problem",
+      ],
+      correct: 1,
+      explain: "Just like packets or virtual memory pages, the pieces don't need to be contiguous — a lookup index is what makes them feel like one coherent whole.",
+    },
+    {
+      q: "How does SQLite relate to the file system you just learned about?",
+      options: [
+        "SQLite bypasses the file system and writes directly to raw disk hardware",
+        "SQLite's entire database is literally one ordinary file, managed by the same file-system machinery as any other file",
+        "SQLite doesn't use disk at all",
+        "SQLite requires a special, custom file system to run",
+      ],
+      correct: 1,
+      explain: "SQLite is famous for being 'just a file' — it relies on the operating system's ordinary file system exactly like a text file or a photo does.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

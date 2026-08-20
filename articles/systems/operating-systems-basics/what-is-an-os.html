@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is an Operating System? — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / What Is an Operating System?</div>
+    <article>
+      <h1>What Is an Operating System?</h1>
+      <p>Right now, your computer is probably running a browser, a chat app, some background updater, maybe music — all "at once," on a chip with maybe 8 CPU cores. None of those programs know about each other. None of them wrote code to politely take turns or divide up memory fairly. Something else is doing that job for them: the <strong>operating system</strong> (Windows, macOS, Linux, Android, iOS).</p>
+
+      <h2>A referee with special privileges</h2>
+      <p>The operating system is itself a program — but a special one, with privileges no ordinary app gets. It's the only thing allowed to talk to the hardware directly. Every other program has to ask it for what it needs: "give me some memory," "let me read this file," "send this over the network." The OS decides who gets what, and when — which is exactly what keeps a browser tab from accidentally overwriting your music player's memory, or hogging every last bit of the CPU.</p>
+
+      <h2>What it's actually managing</h2>
+      <p>Everything in this module is really the OS managing the same four things from the earlier modules, just now shared across many programs instead of one:</p>
+      <ul class="learn-list">
+        <li><strong>The CPU</strong> — who gets to run right now, and for how long (this module's <a href="scheduling.html">Scheduling</a> submodule).</li>
+        <li><strong>RAM</strong> — how it's divided up, and how each program is kept from seeing another's data (<a href="virtual-memory.html">Virtual Memory</a>).</li>
+        <li><strong>Disk</strong> — how raw storage becomes organized, named files (<a href="files-and-filesystems.html">Files &amp; the File System</a>).</li>
+        <li><strong>The network</strong> — which program's request a reply belongs to, and where it should be delivered.</li>
+      </ul>
+
+      <h2>Visual model: apps, the OS, and the hardware</h2>
+      <p>Click each part to see its role.</p>
+      <div class="viz" id="os-overview-viz"></div>
+
+      <div class="note">You've actually met this "OS as referee" idea already, just from the database's point of view: when Postgres asks for memory, reads a file, or accepts a network connection, it's making exactly these same requests to the operating system it's running on.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="wios-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Operating Systems Basics overview</a>
+        <a href="processes-and-threads.html">Next: Processes &amp; Threads →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initOsOverviewViz(document.getElementById("os-overview-viz"));
+  initQuiz(document.getElementById("wios-quiz"), [
+    {
+      q: "Why can't apps just talk directly to the CPU, RAM, and disk themselves?",
+      options: [
+        "They can, and usually do",
+        "Without a referee, apps could overwrite each other's memory or unfairly hog the hardware — the OS exists to prevent that",
+        "Hardware manufacturers forbid it for legal reasons",
+        "It would make apps run faster",
+      ],
+      correct: 1,
+      explain: "The OS is the only thing with direct access to the hardware precisely so it can arbitrate fairly and safely between every program that wants a share of it.",
+    },
+    {
+      q: "What makes the operating system different from an ordinary app?",
+      options: [
+        "It's written in a special programming language",
+        "It has special privileges to control the hardware directly, which ordinary apps don't have",
+        "It never needs any memory",
+        "It only runs once, at startup",
+      ],
+      correct: 1,
+      explain: "The OS is still software, but it runs with elevated privileges — that's what lets it referee between every other program.",
+    },
+    {
+      q: "When Postgres reads a file from disk, who is it really asking?",
+      options: [
+        "It reads the physical disk directly, bypassing the OS",
+        "The operating system it's running on, the same way any other app would",
+        "Another database, over the network",
+        "It doesn't need to ask anyone",
+      ],
+      correct: 1,
+      explain: "Postgres is just another program from the OS's point of view — it requests file access, memory, and CPU time exactly like any other app does.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

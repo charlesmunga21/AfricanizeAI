@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scheduling: Taking Turns on the CPU — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / Scheduling</div>
+    <article>
+      <h1>Scheduling: Taking Turns on the CPU</h1>
+      <p>Recall from the <a href="../how-computers-work/cpu.html">CPU</a> submodule: a single CPU core can only truly run one instruction stream at a time. So how does your computer run dozens of programs "at once" on a handful of cores? It doesn't, really — it just switches between them so quickly that it feels simultaneous. That's the <strong>scheduler</strong>'s job.</p>
+
+      <h2>Fast enough turns feel like "at once"</h2>
+      <p>The scheduler gives each runnable process a short slice of CPU time — often just a few milliseconds — then pauses it and lets the next one run. Round and round, dozens of times a second. No single program ever notices the gaps, because each pause is far too short for a human (or even most software) to perceive. That's the whole trick behind multitasking: not true simultaneity, just extremely fast turn-taking.</p>
+
+      <h2>Switching isn't free</h2>
+      <p>Every time the scheduler swaps one process out for another, it has to save exactly where that process was and restore the next one's state — a <strong>context switch</strong>. As you saw in the last submodule, that costs real time: roughly 5 microseconds for a full process switch, about 1 microsecond for a thread. It's tiny compared to a human blink — but if it happens constantly, on a heavily loaded server handling thousands of things at once, those microseconds genuinely add up, which is part of why database designers care so much about how many processes or threads they're juggling.</p>
+
+      <h2>Visual model: watch the turns happen</h2>
+      <p>Step through a few rounds of the CPU giving each program its turn, or let it run on its own.</p>
+      <div class="viz" id="sch-viz"></div>
+
+      <div class="note">Source: context-switch timings from Ben Dicken, <a href="https://planetscale.com/blog/processes-and-threads" target="_blank" rel="noopener">"Processes and Threads"</a>, PlanetScale engineering blog.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="sch-quiz"></div>
+
+      <div class="article-nav">
+        <a href="processes-and-threads.html">← Processes &amp; Threads</a>
+        <a href="virtual-memory.html">Next: Virtual Memory →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initSchedulerViz(document.getElementById("sch-viz"));
+  initQuiz(document.getElementById("sch-quiz"), [
+    {
+      q: "How does a computer with 4 CPU cores run 20 programs at the same time?",
+      options: [
+        "It only really runs 4 at once — the rest wait forever",
+        "It doesn't truly run all 20 simultaneously; the scheduler rapidly switches each core between programs so it feels simultaneous",
+        "Every program gets its own dedicated hidden core",
+        "Programs merge into one process automatically",
+      ],
+      correct: 1,
+      explain: "Multitasking is an illusion built from very fast turn-taking, not true simultaneous execution beyond the number of physical cores.",
+    },
+    {
+      q: "What is a 'context switch'?",
+      options: [
+        "Changing a program's settings",
+        "The scheduler saving one process's state and restoring another's so it can take its turn on the CPU",
+        "Restarting the entire computer",
+        "A network reconnection",
+      ],
+      correct: 1,
+      explain: "A context switch is the bookkeeping the CPU/OS does every time it hands control from one process (or thread) to another.",
+    },
+    {
+      q: "Why do those microsecond-scale context switches actually matter in practice?",
+      options: [
+        "They don't — they're too small to ever matter",
+        "On a busy server doing this constantly, thousands of times a second, the small costs add up to real, measurable overhead",
+        "They only matter for video games",
+        "They only happen once, at startup",
+      ],
+      correct: 1,
+      explain: "A single switch is tiny, but a heavily loaded server context-switching constantly accumulates real overhead — part of why database engines are so deliberate about how many processes or threads they run.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

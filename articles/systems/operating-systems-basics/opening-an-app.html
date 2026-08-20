@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opening an App, Start to Finish — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / Opening an App, Start to Finish</div>
+    <article>
+      <h1>Opening an App, Start to Finish</h1>
+      <p>You double-click an icon. A moment later, a window appears, ready to use. Here's everything from this module — and quietly, from the whole Computer Functions section — happening in that short moment.</p>
+
+      <h2>The six steps</h2>
+      <ol class="learn-list">
+        <li><strong>Find it</strong> — the OS looks up the app's files on disk, using the file system's index.</li>
+        <li><strong>New process</strong> — the OS creates a new process for it, with its own private, virtual slice of memory.</li>
+        <li><strong>Load in</strong> — the app's actual code is read from disk into that process's memory.</li>
+        <li><strong>Get a turn</strong> — the scheduler adds the new process to the rotation and eventually gives it a turn on the CPU.</li>
+        <li><strong>Run</strong> — the CPU executes its instructions, leaning on cache and RAM exactly as you saw in the first module.</li>
+        <li><strong>On screen</strong> — output reaches the display, and the app is open and responsive.</li>
+      </ol>
+
+      <h2>Visual model: watch it happen</h2>
+      <p>Step through it, or hit Auto Play to watch the whole sequence run on its own.</p>
+      <div class="viz" id="oa-viz"></div>
+
+      <div class="note">This is the payoff of the entire Computer Functions section. Opening an app touches nearly everything you've learned across all three modules: a CPU running instructions with cache and RAM close by, disk storing everything permanently through a file system, a network carrying data between machines when needed, and now an operating system tying all of it together — deciding who gets the CPU, handing out private memory, and organizing the disk. None of these ideas work in isolation; every real program you use leans on all of them, every time.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="oa-quiz"></div>
+
+      <div class="article-nav">
+        <a href="files-and-filesystems.html">← Files &amp; the File System</a>
+        <a href="index.html">Back to Operating Systems Basics overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initOpenAppViz(document.getElementById("oa-viz"));
+  initQuiz(document.getElementById("oa-quiz"), [
+    {
+      q: "What does the OS use to find an app's files on disk in the first place?",
+      options: [
+        "It guesses based on the file's size",
+        "The file system's index, which tracks exactly where every file's data lives",
+        "It asks the network for the file",
+        "Apps are always stored in CPU cache",
+      ],
+      correct: 1,
+      explain: "The file system's lookup index is what lets the OS locate an app's code on disk before it can do anything else.",
+    },
+    {
+      q: "Why does the new app need its own process with private virtual memory, rather than just reusing another program's?",
+      options: [
+        "It doesn't need to — apps can share memory freely",
+        "Isolation: private virtual memory keeps the new app from being corrupted by, or corrupting, any other running program",
+        "Virtual memory is only for databases",
+        "It's purely a historical accident with no real benefit",
+      ],
+      correct: 1,
+      explain: "Giving every process its own private virtual address space is exactly what protects programs from interfering with each other's memory.",
+    },
+    {
+      q: "What ties together everything you've learned across all three Computer Functions modules?",
+      options: [
+        "They're unrelated topics that happen to be grouped together",
+        "Opening a single app touches the CPU, cache, RAM, disk, networking (when needed), and the OS that manages all of them at once",
+        "Only large applications use all of these ideas",
+        "Databases are the only programs that use all of these ideas",
+      ],
+      correct: 1,
+      explain: "Every real program — not just databases — relies on this full stack working together: hardware, an operating system managing it, and (often) a network connecting it to other machines.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

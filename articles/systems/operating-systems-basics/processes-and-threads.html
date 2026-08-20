@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processes &amp; Threads — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / Processes &amp; Threads</div>
+    <article>
+      <h1>Processes &amp; Threads</h1>
+      <p>When you open a program, the operating system creates a <strong>process</strong> for it — a running instance of that program, with its own private slice of memory that nothing else can see or touch. Open the same program twice, and you get two separate processes, each with its own copy of that private memory.</p>
+
+      <h2>Threads: lighter workers inside one process</h2>
+      <p>A process can also split its own work across multiple <strong>threads</strong>. Threads live inside one process and share all of that process's memory — unlike two separate processes, which are kept fully apart. Because threads share memory instead of each needing their own private copy, they're much cheaper to create and to switch between.</p>
+      <p>How much cheaper? Switching the CPU from one process to another takes roughly <strong>5 microseconds</strong>. Switching between threads takes roughly <strong>1 microsecond</strong> — about five times faster — because there's far less bookkeeping involved when everyone's already sharing the same memory.</p>
+
+      <h2>Two real databases, two different choices</h2>
+      <p>This isn't just theory — it's exactly why Postgres and MySQL are built differently underneath:</p>
+      <ul class="learn-list">
+        <li><strong>Postgres</strong> uses one <em>process</em> per connection. Every time an application connects, Postgres spawns a whole new OS process to handle it.</li>
+        <li><strong>MySQL</strong> runs as a single process (<code>mysqld</code>) and instead gives each connection its own lightweight <em>thread</em> inside that one process.</li>
+      </ul>
+      <p>Processes are safer and more isolated — one connection crashing is less likely to take down another — but heavier, with real memory and CPU overhead per connection. Threads are cheaper and faster to spin up, but share more risk if something goes wrong. Both approaches start to strain once connection counts climb into the thousands, which is exactly why <strong>connection poolers</strong> exist: a pooler sits between many client connections and the database, and funnels them through a small, fixed set of real connections — typically just 5 to 50 — reusing them instead of creating a new process or thread for every single client.</p>
+
+      <h2>Visual model: watch each database handle new connections</h2>
+      <p>Switch between Postgres and MySQL, and try turning the connection pooler on once things get busy.</p>
+      <div class="viz" id="pt-viz"></div>
+
+      <div class="note">Source: Ben Dicken, <a href="https://planetscale.com/blog/processes-and-threads" target="_blank" rel="noopener">"Processes and Threads"</a>, PlanetScale engineering blog.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="pt-quiz"></div>
+
+      <div class="article-nav">
+        <a href="what-is-an-os.html">← What Is an Operating System?</a>
+        <a href="scheduling.html">Next: Scheduling →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initProcessThreadViz(document.getElementById("pt-viz"));
+  initQuiz(document.getElementById("pt-quiz"), [
+    {
+      q: "What's the key difference between a process and a thread?",
+      options: [
+        "There's no real difference",
+        "A process has its own private memory; threads live inside a process and share that process's memory",
+        "Threads are only used by the operating system, never by regular apps",
+        "A process is always faster than a thread",
+      ],
+      correct: 1,
+      explain: "Separate processes are isolated from each other. Threads inside the same process share its memory, which is exactly what makes them lighter-weight.",
+    },
+    {
+      q: "Why is switching between threads roughly 5× faster than switching between processes?",
+      options: [
+        "Threads use a faster CPU instruction",
+        "Threads already share memory, so there's far less to set up and tear down on each switch",
+        "It isn't — they're the same speed",
+        "Processes are always given lower priority",
+      ],
+      correct: 1,
+      explain: "Because threads share their process's memory, the OS has much less bookkeeping to do when switching between them compared to switching between fully separate processes.",
+    },
+    {
+      q: "Why do connection poolers exist for databases like Postgres and MySQL?",
+      options: [
+        "To make queries run faster on a single connection",
+        "To encrypt database traffic",
+        "To fund many client connections through a small, fixed set of real database connections, avoiding the overhead of a new process or thread per client",
+        "They're required by SQL itself",
+      ],
+      correct: 2,
+      explain: "Both process-per-connection and thread-per-connection models get expensive at very high connection counts — a pooler reuses a small pool of real connections instead of creating one per client.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

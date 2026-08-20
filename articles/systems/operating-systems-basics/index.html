@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / Operating Systems Basics</div>
+
+    <section class="module-hero">
+      <h1>Operating Systems Basics</h1>
+      <p>Your computer is running dozens of programs "at once" — a browser, a chat app, a music player, maybe a database server — on a machine with far fewer CPU cores than that. Something has to decide who gets the CPU, give each program its own private slice of memory, and organize the disk so files don't collide. That referee is the <strong>operating system</strong>, and this module explains how it does its job, in plain language.</p>
+      <p>This module closes the loop on the whole Computer Functions section: it's the OS that actually hands out the CPU, cache, RAM, disk, and network from the earlier two modules to every program that asks. Grounded, like the rest of this section, in Brendan Gregg's <em>Systems Performance</em> and PlanetScale's engineering blog by Ben Dicken — this time his post on how Postgres and MySQL each handle connections.</p>
+      <ul class="learn-list">
+        <li>What an operating system actually is, and why programs need a referee at all</li>
+        <li>Processes and threads — and why Postgres and MySQL made very different choices here</li>
+        <li>How the CPU gets "shared" between many programs by taking rapid turns</li>
+        <li>Why every program gets to believe it has the whole computer's memory to itself</li>
+        <li>How a "file" is really just an index over scattered pieces of raw disk</li>
+        <li>Watching it all happen at once: what really happens when you open an app</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="what-is-an-os.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>What Is an Operating System?</h3>
+        <p>The big picture: why programs can't just talk to the hardware directly, and what refereeing that looks like.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="processes-and-threads.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>Processes &amp; Threads</h3>
+        <p>What a running program actually is — and why Postgres and MySQL handle connections completely differently.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="scheduling.html">
+        <span class="submodule-card__step">3 · Core Skill</span>
+        <h3>Scheduling: Taking Turns on the CPU</h3>
+        <p>How dozens of programs share a handful of CPU cores by rapidly taking turns.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="virtual-memory.html">
+        <span class="submodule-card__step">4 · Core Skill</span>
+        <h3>Virtual Memory</h3>
+        <p>Every program believes it owns the computer's whole memory. Here's the trick that makes that illusion work.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="files-and-filesystems.html">
+        <span class="submodule-card__step">5 · Core Skill</span>
+        <h3>Files &amp; the File System</h3>
+        <p>A "file" is really just a name attached to scattered pieces of disk — and an index that remembers where they are.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="opening-an-app.html">
+        <span class="submodule-card__step">6 · Applied</span>
+        <h3>Opening an App, Start to Finish</h3>
+        <p>Every idea in this whole section, in order, in the moment between a double-click and a window appearing.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Term</th><th>Plain-English meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Process</td><td>One running instance of a program, with its own private memory</td></tr>
+        <tr><td>Thread</td><td>A lighter-weight worker inside a process, sharing that process's memory</td></tr>
+        <tr><td>Scheduler</td><td>The part of the OS that decides which process gets the CPU next</td></tr>
+        <tr><td>Virtual memory</td><td>The illusion that lets every process believe it has the whole memory to itself</td></tr>
+        <tr><td>File system</td><td>The OS's way of organizing raw disk space into named, findable files</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="what-is-an-os.html">Start: What Is an Operating System? →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

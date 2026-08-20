@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Memory — Operating Systems Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="index.html" class="active">Operating Systems Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Operating Systems Basics</a> / Virtual Memory</div>
+    <article>
+      <h1>Virtual Memory</h1>
+      <p>Open your task manager and you might see ten programs, each seemingly convinced it can use huge amounts of memory, starting from address zero, as if it were the only thing running. That's not a coincidence — it's a deliberate illusion the operating system maintains, called <strong>virtual memory</strong>.</p>
+
+      <h2>Everyone gets their own private illusion</h2>
+      <p>Every process is handed its own private range of memory addresses to use, called its <em>virtual</em> address space. When that process asks for "address 0x40," the OS (with help from the CPU) quietly translates that into wherever the data <em>actually</em> lives in the computer's real, physical RAM — a location the process never sees or needs to know about. Two completely different programs can both use "address 0x40" and never collide, because underneath, they're mapped to two totally different real locations.</p>
+
+      <h2>Why bother with the illusion?</h2>
+      <ul class="learn-list">
+        <li><strong>Safety</strong> — one program can't accidentally (or maliciously) read or overwrite another's memory, because it can't even address it.</li>
+        <li><strong>Simplicity</strong> — every program gets to assume it has a clean, private, generously-sized memory space, without needing to coordinate with every other running program about who owns what.</li>
+        <li><strong>Flexibility</strong> — the OS is free to physically move a process's data around in real RAM, or even temporarily shuffle rarely-used parts out to disk, without the program ever noticing — the mapping is simply updated underneath it.</li>
+      </ul>
+
+      <h2>Visual model: same address, different reality</h2>
+      <p>Click each program to see what address it believes it's using — and where that's really mapped in physical RAM.</p>
+      <div class="viz" id="vm-viz"></div>
+
+      <div class="note">This is the same "keep it small and give out only what's currently needed" spirit you saw with RAM's limited capacity in the <a href="../how-computers-work/ram.html">RAM</a> submodule — virtual memory is the mechanism that lets the OS enforce that fairly and safely across many programs at once.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="vm-quiz"></div>
+
+      <div class="article-nav">
+        <a href="scheduling.html">← Scheduling</a>
+        <a href="files-and-filesystems.html">Next: Files &amp; the File System →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/os-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initVirtualMemoryViz(document.getElementById("vm-viz"));
+  initQuiz(document.getElementById("vm-quiz"), [
+    {
+      q: "What is virtual memory, in plain terms?",
+      options: [
+        "Memory that doesn't really exist",
+        "A private address space the OS gives each process, which it secretly maps to real physical RAM",
+        "A backup copy of RAM stored on disk at all times",
+        "Extra RAM you can buy as a subscription",
+      ],
+      correct: 1,
+      explain: "Virtual memory is the illusion of a private, dedicated memory space — the OS handles translating those addresses to real physical locations behind the scenes.",
+    },
+    {
+      q: "Two different programs both use 'address 0x40'. Why doesn't this cause a conflict?",
+      options: [
+        "It does cause a conflict, and one of them crashes",
+        "Each program's virtual address is mapped to a different real physical location, so they never actually collide",
+        "Only one program is allowed to use any given address, ever",
+        "Addresses are randomly reassigned every second",
+      ],
+      correct: 1,
+      explain: "The 'address' each program sees is virtual — the OS maps it to a distinct real location for each process, so identical virtual addresses can point to completely different physical memory.",
+    },
+    {
+      q: "What's one safety benefit of virtual memory?",
+      options: [
+        "It makes the CPU run faster",
+        "It prevents one program from accidentally reading or overwriting another program's memory",
+        "It eliminates the need for RAM entirely",
+        "It stops all crashes",
+      ],
+      correct: 1,
+      explain: "Because a process can only address its own virtual space, it has no way to directly reach into another process's real memory — that isolation is a major safety win.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
