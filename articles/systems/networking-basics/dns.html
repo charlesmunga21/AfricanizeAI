@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS: The Internet's Phonebook — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / DNS</div>
+    <article>
+      <h1>DNS: The Internet's Phonebook</h1>
+      <p>You never type a server's actual IP address into your browser. You type a name — <code>wikipedia.org</code>, <code>google.com</code>. Something has to translate that friendly name into the real address before your device can connect to anything. That something is <strong>DNS</strong>, the Domain Name System.</p>
+
+      <h2>Like looking someone up before you call them</h2>
+      <p>Think about calling a friend: you don't dial their raw phone number from memory, you look up their name in your contacts app, which hands you the actual number to dial. DNS does exactly that for the internet — you give it a name, and it hands back the address, before your device connects to anything.</p>
+
+      <h2>Your device remembers, so it doesn't have to ask twice</h2>
+      <p>Just like the caches you met in the <a href="../how-computers-work/cpu-cache.html">CPU Cache</a> and <a href="../how-computers-work/databases.html">Databases</a> submodules, DNS answers get <strong>cached</strong>. Once your device has looked up a name, it remembers the answer for a while, so visiting the same site again doesn't mean asking DNS all over — it's instant, straight from memory, exactly the same "check nearby first" idea you've already seen twice in this course.</p>
+
+      <h2>Visual model: look up a name</h2>
+      <p>Pick a domain and look it up. Then look up the same one again, and notice what changes.</p>
+      <div class="viz" id="dns-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="dns-quiz"></div>
+
+      <div class="article-nav">
+        <a href="packets-and-addresses.html">← Packets &amp; IP Addresses</a>
+        <a href="routers.html">Next: Routers →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initDnsViz(document.getElementById("dns-viz"));
+  initQuiz(document.getElementById("dns-quiz"), [
+    {
+      q: "What does DNS actually do?",
+      options: [
+        "It speeds up your internet connection",
+        "It translates a human-friendly name (like example.com) into the real IP address of a server",
+        "It blocks unwanted websites",
+        "It stores your passwords",
+      ],
+      correct: 1,
+      explain: "DNS is a lookup step: you give it a name, it gives back an address — the same way a contacts app turns a name into a phone number.",
+    },
+    {
+      q: "Why does visiting a site you already visited recently often feel instant?",
+      options: [
+        "The website got smaller",
+        "Your device already cached the DNS answer, so it skips asking DNS again",
+        "DNS is disabled after the first visit",
+        "It doesn't — every visit is equally slow",
+      ],
+      correct: 1,
+      explain: "Once looked up, the name-to-address mapping is cached locally for a while — the same 'reuse it if it's already nearby' pattern you saw with the CPU cache and database caches.",
+    },
+    {
+      q: "What would happen if DNS were completely unavailable, but the internet itself still worked?",
+      options: [
+        "Nothing — websites would work exactly the same",
+        "You could still reach a server if you knew its raw IP address, but typing names like example.com would stop working",
+        "The entire internet would shut down",
+        "Only email would stop working",
+      ],
+      correct: 1,
+      explain: "DNS only handles the name-to-address translation step. The underlying network connection still works with a raw address — you'd just lose the convenience of using names.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

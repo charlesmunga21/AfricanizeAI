@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Packets &amp; IP Addresses — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / Packets &amp; IP Addresses</div>
+    <article>
+      <h1>Packets &amp; IP Addresses</h1>
+      <p>When you send something over a network — a message, a photo, a request for a web page — it doesn't travel as one single blob. It gets sliced into small pieces called <strong>packets</strong>, each one sent off on its own, and put back together in the right order once every piece has arrived.</p>
+
+      <h2>Why not just send it as one piece?</h2>
+      <p>Picture mailing a long letter by tearing it into a stack of numbered postcards and dropping them in the mail separately, instead of one big envelope. That sounds strange for a letter — but for data, it's genuinely useful:</p>
+      <ul class="learn-list">
+        <li>If one small packet gets lost or damaged along the way, only that piece needs to be resent — not the entire file.</li>
+        <li>Many different conversations can share the same wires fairly, packet by packet, instead of one huge transfer hogging the connection the whole time.</li>
+        <li>Different packets from the same message can even take slightly different paths and still all arrive — they just get sorted back into order using their sequence number once they land.</li>
+      </ul>
+
+      <h2>Every packet needs an address: the IP address</h2>
+      <p>For a packet to find its way, every device on a network needs a unique address — an <strong>IP address</strong> (like <code>192.168.1.5</code> on a home network, or a public one for a server out on the internet). It works exactly like a street address: it's how a packet knows where it's headed, and it's how the reply knows where to come back to.</p>
+
+      <h2>Visual model: split a message, then reassemble it</h2>
+      <p>Type a short message, send it, and watch it split into packets that arrive out of order — then reassemble them using their sequence numbers.</p>
+      <div class="viz" id="packet-viz"></div>
+
+      <div class="note">This is exactly the same principle you saw with SQLite and Postgres reading fixed-size <em>pages</em> from disk instead of the whole file at once — breaking big things into small, individually-addressable pieces shows up everywhere in computing, not just networks.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="pkt-quiz"></div>
+
+      <div class="article-nav">
+        <a href="what-is-a-network.html">← What Is a Network?</a>
+        <a href="dns.html">Next: DNS →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initPacketViz(document.getElementById("packet-viz"));
+  initQuiz(document.getElementById("pkt-quiz"), [
+    {
+      q: "Why is data broken into packets instead of sent as one single piece?",
+      options: [
+        "It's not — data always travels as one piece",
+        "Smaller pieces are easier to encrypt",
+        "If one packet is lost, only that small piece needs resending, and many conversations can share the connection fairly",
+        "Packets make data travel faster than light",
+      ],
+      correct: 2,
+      explain: "Splitting data into packets limits the damage from a lost piece and lets a shared connection carry many conversations at once, packet by packet.",
+    },
+    {
+      q: "What is an IP address for?",
+      options: [
+        "It identifies a device on a network, the way a street address identifies a building",
+        "It's a password for logging into a website",
+        "It measures how fast a connection is",
+        "It's only used by servers, never by regular devices",
+      ],
+      correct: 0,
+      explain: "Every device that can be reached on a network has one — it's what lets a packet know where to go, and where to send a reply back to.",
+    },
+    {
+      q: "Packets from the same message can arrive out of order. How does the receiving end put them back together correctly?",
+      options: [
+        "It can't — messages sometimes arrive scrambled",
+        "Each packet carries a sequence number, so the receiver can sort them back into order",
+        "It re-sends the whole message from scratch",
+        "It only accepts packets that arrive in the correct order and discards the rest",
+      ],
+      correct: 1,
+      explain: "Every packet knows its position in the original message, so no matter what order they show up in, the receiver can reassemble them correctly.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

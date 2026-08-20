@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latency &amp; Bandwidth — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / Latency &amp; Bandwidth</div>
+    <article>
+      <h1>Latency &amp; Bandwidth</h1>
+      <p>"The internet feels slow" can actually mean two completely different things, and it's worth being able to tell them apart:</p>
+      <ul class="learn-list">
+        <li><strong>Latency</strong> is the delay — how long it takes for the very first bit of a reply to come back after you ask for something.</li>
+        <li><strong>Bandwidth</strong> is the capacity — once data is flowing, how much of it can move per second.</li>
+      </ul>
+
+      <h2>Two everyday analogies</h2>
+      <p>Latency is like calling someone on the phone: the delay before they pick up, no matter how much you plan to say afterward. Bandwidth is like the number of lanes on a highway: more lanes let more cars move per minute, but adding lanes doesn't make any single car arrive faster once it's driving. A connection can have huge bandwidth and still feel laggy for a video call, or modest bandwidth and still feel snappy for simple browsing — they're genuinely separate things.</p>
+
+      <h2>Why distance matters so much</h2>
+      <p>A big part of latency, especially for long distances, is simply physics: nothing — not even a signal down a fiber-optic cable — can travel faster than the speed of light. Round-tripping to a server on the other side of the planet takes real, physical time no amount of clever engineering can fully erase. You already saw this kind of gap once, comparing CPU cache, RAM, and disk. Network distance turns out to belong on that exact same scale.</p>
+
+      <h2>Visual model: the full picture, from CPU cache to another continent</h2>
+      <p>This extends the scaled-latency comparison from the <a href="../how-computers-work/cpu-cache.html">CPU Cache</a> submodule with two more rows — a round trip within the same data center, and a round trip to another continent. Notice where they land.</p>
+      <div class="viz" id="netlat-viz"></div>
+
+      <p>Look closely and something surprising jumps out: a round trip to another machine in the <em>same data center</em> can be faster than a single seek on a spinning hard disk. Distance across a network, when it's short, doesn't have to be the slow part — physical movement inside a mechanical disk can be slower than a trip "outside the box" altogether.</p>
+
+      <div class="note">Source: latency figures for cache/RAM/SSD/disk from Brendan Gregg, <em>Systems Performance</em> (O'Reilly); the data-center and intercontinental network round-trip figures are the same widely-cited numbers popularized by Google's Jeff Dean and referenced throughout that book and its wider tradition.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="latband-quiz"></div>
+
+      <div class="article-nav">
+        <a href="routers.html">← Routers</a>
+        <a href="loading-a-web-page.html">Next: Loading a Web Page, Start to Finish →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initNetworkLatencyViz(document.getElementById("netlat-viz"));
+  initQuiz(document.getElementById("latband-quiz"), [
+    {
+      q: "Your video call keeps stuttering and feeling out of sync, even though a file download on the same connection is fast. What's the more likely culprit?",
+      options: [
+        "Low bandwidth", "High latency", "The device is out of disk space", "The Wi-Fi password is wrong",
+      ],
+      correct: 1,
+      explain: "A video call is very sensitive to delay (latency) — a connection can have plenty of bandwidth for downloads and still feel laggy in real-time conversation if the round-trip delay is high.",
+    },
+    {
+      q: "What does 'bandwidth' actually measure?",
+      options: [
+        "How long the first byte of a response takes to arrive",
+        "How much data can flow per second once a connection is moving",
+        "How many devices can join the same Wi-Fi network",
+        "How secure a connection is",
+      ],
+      correct: 1,
+      explain: "Bandwidth is capacity — like the number of lanes on a highway. It's a separate measurement from latency, which is about delay.",
+    },
+    {
+      q: "In the scaled comparison, why can a round trip within the same data center be faster than a single spinning-disk seek?",
+      options: [
+        "The numbers in the chart are wrong",
+        "Network round trips are always instant",
+        "A short network hop can genuinely be faster than the physical, mechanical movement a spinning disk needs to seek to the right spot",
+        "Data centers don't use disks at all",
+      ],
+      correct: 2,
+      explain: "It's a real, if counterintuitive, fact: physical mechanical movement (a disk seek) can take longer than an electronic round trip across a nearby, well-connected network.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

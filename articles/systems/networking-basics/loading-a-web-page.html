@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading a Web Page, Start to Finish — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / Loading a Web Page, Start to Finish</div>
+    <article>
+      <h1>Loading a Web Page, Start to Finish</h1>
+      <p>You type a web address and hit enter. Less than a second later, a page appears. Here's everything from this module, happening in order, in that one short moment.</p>
+
+      <h2>The five steps</h2>
+      <ol class="learn-list">
+        <li><strong>DNS lookup</strong> — your browser asks "what's the address for this name?" and gets an IP address back, either freshly or from its cache.</li>
+        <li><strong>Routing</strong> — your request is split into packets and hops across a chain of routers toward that address.</li>
+        <li><strong>The server</strong> — a computer on the other end receives the request. To build the actual page, it might even need to ask its own database — like the Postgres server from the Databases submodule — for the content.</li>
+        <li><strong>The response</strong> — the answer travels back the same way, split into packets again.</li>
+        <li><strong>Rendering</strong> — your browser reassembles the packets in order and draws the finished page on your screen.</li>
+      </ol>
+      <p>Every one of those five steps costs a little time — a DNS lookup, several router hops there, server processing, several router hops back. That's the latency you learned about in the last submodule, stacked up step after step. And yet, on a decent connection, this whole chain usually finishes in well under a second.</p>
+
+      <h2>Visual model: watch the whole request happen</h2>
+      <p>Step through it, or hit Auto Play to watch the full round trip happen on its own.</p>
+      <div class="viz" id="webreq-viz"></div>
+
+      <div class="note">This is the payoff of the whole Computer Functions section so far: a web request touches nearly everything you've learned — a CPU running instructions, RAM and cache holding data close by, disk storing it permanently, and now a network carrying it between machines entirely. None of these ideas exist in isolation; every real system leans on all of them at once.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="webreq-quiz"></div>
+
+      <div class="article-nav">
+        <a href="latency-and-bandwidth.html">← Latency &amp; Bandwidth</a>
+        <a href="index.html">Back to Networking Basics overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initWebRequestViz(document.getElementById("webreq-viz"));
+  initQuiz(document.getElementById("webreq-quiz"), [
+    {
+      q: "Put these in the right order for loading a web page: (A) routing across routers, (B) DNS lookup, (C) rendering in the browser, (D) the server responds.",
+      options: [
+        "B, A, D, C",
+        "A, B, C, D",
+        "C, B, A, D",
+        "D, A, B, C",
+      ],
+      correct: 0,
+      explain: "First you need the address (DNS), then the request has to travel there (routing), then the server answers, and finally your browser draws the result (rendering).",
+    },
+    {
+      q: "Why might a server need to talk to a database while handling a single web request?",
+      options: [
+        "It never does — servers only serve static files",
+        "To build the page's actual content — the same client-server pattern from the Databases submodule, just nested inside a bigger request",
+        "Only to log an error",
+        "Databases are unrelated to web servers",
+      ],
+      correct: 1,
+      explain: "A server is often itself a client to a database, fetching the specific content (like a row from Postgres) needed to build the page it sends back.",
+    },
+    {
+      q: "Why does a whole web page load in under a second, even though it involves DNS, multiple router hops, and a server round trip?",
+      options: [
+        "None of those steps actually take any measurable time",
+        "Each individual step is usually quite fast (often milliseconds), so even several of them stacked together stay well under a second",
+        "Browsers skip most of these steps to save time",
+        "It only works that fast on very expensive computers",
+      ],
+      correct: 1,
+      explain: "Each step — a DNS lookup, a router hop, a server's response — is individually fast. Stacked together, the total is still small compared to what a human notices.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

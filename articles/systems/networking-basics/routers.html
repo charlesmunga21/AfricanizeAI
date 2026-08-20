@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routers: The Path Data Takes — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / Routers</div>
+    <article>
+      <h1>Routers: The Path Data Takes</h1>
+      <p>A packet almost never travels straight from your device to its destination in one jump. It passes through a chain of devices called <strong>routers</strong>, each one looking at the packet's address and forwarding it one step closer to where it's going.</p>
+
+      <h2>Like a postal sorting system</h2>
+      <p>Your letter doesn't go directly from your mailbox to the recipient's — it passes through a local sorting office, maybe a regional hub, then a hub closer to the destination, then finally local delivery. Routers do the same job for data: your home router hands the packet to your internet provider's router, which hands it toward the destination's network, which hands it to the right server — often five, ten, or more hops in total.</p>
+
+      <h2>Each router only needs to know "which way is closer"</h2>
+      <p>No single router needs to know the entire path in advance. It just needs to know, for a given address, which direction gets a packet closer to home — the same way a sorting clerk doesn't need to know your exact street, just which regional hub to send it toward next. Each hop narrows things down a little more, until the packet lands at the right doorstep.</p>
+
+      <h2>Visual model: hop by hop</h2>
+      <p>Step through a packet's journey across a chain of routers to reach its destination.</p>
+      <div class="viz" id="hop-viz"></div>
+
+      <div class="note">Curious readers: a real tool called <code>traceroute</code> lets you see the actual chain of routers a packet passes through to reach a given address. You don't need it to understand this module — it's just proof that this "hop by hop" idea is exactly how it really works, not a simplification invented for this page.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="router-quiz"></div>
+
+      <div class="article-nav">
+        <a href="dns.html">← DNS</a>
+        <a href="latency-and-bandwidth.html">Next: Latency &amp; Bandwidth →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initRouterHopViz(document.getElementById("hop-viz"));
+  initQuiz(document.getElementById("router-quiz"), [
+    {
+      q: "What does a router do with a packet?",
+      options: [
+        "Stores it permanently",
+        "Looks at its address and forwards it one step closer to its destination",
+        "Deletes it if it's too big",
+        "Translates it into a different language",
+      ],
+      correct: 1,
+      explain: "A router's whole job is forwarding — looking at where a packet needs to go and passing it along in the right direction, hop by hop.",
+    },
+    {
+      q: "Does a packet usually travel straight from your device to its destination in one jump?",
+      options: [
+        "Yes, always exactly one jump",
+        "No — it typically passes through several routers, each one a step closer to the destination",
+        "No — it has to visit every router on the internet",
+        "It depends only on how big the file is",
+      ],
+      correct: 1,
+      explain: "A packet usually hops through a chain of routers — often five, ten, or more — before reaching its destination.",
+    },
+    {
+      q: "Does any single router need to know the packet's entire path in advance?",
+      options: [
+        "Yes, the very first router plans the whole route",
+        "No — each router only needs to know which direction gets the packet a little closer, like a postal sorting hub",
+        "No — routers guess randomly and hope for the best",
+        "Yes, but only for international traffic",
+      ],
+      correct: 1,
+      explain: "Routing works step by step: each router just picks the next best hop, and the packet gets progressively closer with each one, without any single point needing the full map.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is a Network? — Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / <a href="index.html">Networking Basics</a> / What Is a Network?</div>
+    <article>
+      <h1>What Is a Network?</h1>
+      <p>A <strong>network</strong> is nothing more mysterious than two or more devices that can send messages to each other. Your phone talking to your laptop over Wi-Fi is a network. Your whole house — phone, laptop, smart TV, all sharing one Wi-Fi router — is a network. And <strong>the internet</strong> is the same idea, just enormous: it's what you get when huge numbers of separately-run networks all agree to pass each other's messages along.</p>
+
+      <h2>The internet isn't one thing — it's an agreement</h2>
+      <p>Nobody owns "the internet." Your internet provider runs its own network. A university runs its own network. A company running a big website runs its own network too. What makes it all "the internet" is that these networks agree on common rules for passing messages to each other, so a message from your phone can hop across several different companies' equipment and still arrive at the right place, on the other side of the world, correctly. That's genuinely the whole idea — everything else in this module is detail on how that handoff actually happens.</p>
+
+      <h2>Most of what you do online is "ask, then answer"</h2>
+      <p>Almost everything you do on a network follows the same shape: your device (the <strong>client</strong>) asks a question, and some other computer that's always on and waiting (the <strong>server</strong>) answers it. Loading a web page, opening an app, watching a video — all of it is a client asking a server for something.</p>
+
+      <div class="note">You've actually already met this exact pattern. In the <a href="../how-computers-work/databases.html">Databases</a> submodule, Postgres runs as its own server that a client application connects to. It's the same client-server relationship — the only difference here is that the "connection" is happening across a network instead of on one machine.</div>
+
+      <h2>Visual model: the chain your request travels</h2>
+      <p>Click each part below to see what it actually does when you, say, open a website.</p>
+      <div class="viz" id="overview-viz"></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="wian-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Networking Basics overview</a>
+        <a href="packets-and-addresses.html">Next: Packets &amp; IP Addresses →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/networking-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initNetworkOverviewViz(document.getElementById("overview-viz"));
+  initQuiz(document.getElementById("wian-quiz"), [
+    {
+      q: "What is a network, in the simplest possible terms?",
+      options: [
+        "A single very powerful computer",
+        "Two or more devices that can send messages to each other",
+        "A company that sells internet access",
+        "A type of website",
+      ],
+      correct: 1,
+      explain: "That's it — a network is just devices that can talk to each other. Your home Wi-Fi is a small one; the internet is a giant one.",
+    },
+    {
+      q: "Why is \"the internet\" often described as a network of networks?",
+      options: [
+        "It's a marketing phrase with no real meaning",
+        "It's really thousands of separately-run networks that agree to pass each other's traffic along",
+        "It's a single network owned by one company",
+        "Every device on it is directly connected to every other device",
+      ],
+      correct: 1,
+      explain: "No single organization owns the internet — it's countless independently-run networks (internet providers, companies, universities) agreeing on shared rules for forwarding traffic to each other.",
+    },
+    {
+      q: "What relationship is happening when you load a web page?",
+      options: [
+        "Your device is the server, the website is the client",
+        "There's no real relationship — pages just appear",
+        "Your device (the client) asks, and a server answers",
+        "Two servers talk to each other, with no client involved",
+      ],
+      correct: 2,
+      explain: "Your browser is the client making the request; the website's server is the one waiting to answer it — the same client-server shape you saw with databases.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

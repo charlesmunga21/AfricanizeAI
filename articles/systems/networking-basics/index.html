@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking Basics — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="index.html" class="active">Networking Basics</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / Computer Functions / Networking Basics</div>
+
+    <section class="module-hero">
+      <h1>Networking Basics</h1>
+      <p>Every time you open a website, send a message, or stream a video, your device is having a conversation with another computer somewhere else — sometimes on the other side of the planet — and it usually takes less than a second. This module explains, in the plainest language possible, how that's even possible. No prior knowledge of networks assumed.</p>
+      <p>We'll build it up one small idea at a time — what a network even is, how your data actually travels, how a name like "google.com" becomes a real address, and why some connections feel instant while others feel slow. Every submodule has a small interactive model and a short quiz.</p>
+      <ul class="learn-list">
+        <li>What a network is, and why "the internet" is really a network of networks</li>
+        <li>How your data gets broken into small pieces called packets before it travels</li>
+        <li>How a website name gets turned into a real address (DNS)</li>
+        <li>How a packet actually finds its way, hopping between machines called routers</li>
+        <li>Why some things feel instant and others feel slow — latency vs. bandwidth</li>
+        <li>Watching it all happen at once: what really happens when you load a web page</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="what-is-a-network.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>What Is a Network?</h3>
+        <p>The big picture: what a network is, and why the internet is really thousands of networks agreeing to work together.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="packets-and-addresses.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>Packets &amp; IP Addresses</h3>
+        <p>Why your data travels in small pieces, not all at once — and how each piece knows where it's going.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="dns.html">
+        <span class="submodule-card__step">3 · Core Skill</span>
+        <h3>DNS: The Internet's Phonebook</h3>
+        <p>You never type an IP address — you type a name. Here's what looks that name up for you.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="routers.html">
+        <span class="submodule-card__step">4 · Core Skill</span>
+        <h3>Routers: The Path Data Takes</h3>
+        <p>A packet rarely gets there in one jump — watch it hop machine to machine toward its destination.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="latency-and-bandwidth.html">
+        <span class="submodule-card__step">5 · Core Skill</span>
+        <h3>Latency &amp; Bandwidth</h3>
+        <p>Two different reasons things can feel slow — and a real, surprising comparison of just how different they are.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="loading-a-web-page.html">
+        <span class="submodule-card__step">6 · Applied</span>
+        <h3>Loading a Web Page, Start to Finish</h3>
+        <p>Every idea in this module, in order, in the few hundred milliseconds it takes to open a page.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Term</th><th>Plain-English meaning</th><th>Everyday analogy</th></tr></thead>
+      <tbody>
+        <tr><td>Packet</td><td>A small chunk of your data, sent separately</td><td>One postcard out of many making up a letter</td></tr>
+        <tr><td>IP address</td><td>The unique address of a device on a network</td><td>A street address</td></tr>
+        <tr><td>DNS</td><td>Turns a name like "example.com" into an IP address</td><td>A phone book / contacts app</td></tr>
+        <tr><td>Router</td><td>A device that forwards data one step closer to its destination</td><td>A post office sorting hub</td></tr>
+        <tr><td>Latency</td><td>How long the very first bit of a reply takes to arrive</td><td>How long it takes someone to pick up the phone</td></tr>
+        <tr><td>Bandwidth</td><td>How much data can flow at once, once it's moving</td><td>How many lanes a highway has</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="what-is-a-network.html">Start: What Is a Network? →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
