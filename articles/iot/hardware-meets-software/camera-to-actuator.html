@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Camera, an AI Model, and an Actuator — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / A Camera, an AI Model, and an Actuator</div>
+    <article>
+      <h1>A Camera, an AI Model, and an Actuator</h1>
+      <p>This is your third example from the start of this module — "a camera can be connected to a computer and work" — and there's a genuinely well-documented real system built entirely around it. <strong>Blue River Technology</strong>, a Stanford-founded startup acquired by John Deere in 2017 for $305 million, builds <strong>See &amp; Spray</strong>: a machine that's pulled through a field and decides, plant by plant, whether to spray it.</p>
+
+      <h2>The pipeline, at machine speed</h2>
+      <p>As the machine moves through the field — modern systems run at up to 16 mph — cameras (as many as 36 on the largest systems) continuously capture the crop row passing beneath. Each frame is classified in real time: crop, or weed. There's no time to send that frame to the cloud and wait for an answer — the model runs directly on the machine, an approach called <strong>edge computing</strong>, precisely because the round-trip latency of a network call (remember the <a href="../../systems/networking-basics/latency-and-bandwidth.html">Latency &amp; Bandwidth</a> submodule) would be far too slow for a decision that has to happen dozens of times a second. Deere reports the system performing plant-level classification, decision-making, and actuation in milliseconds, processing images upward of 20 times a second.</p>
+      <p>The last step is exactly the actuator pattern from earlier in this module: the classification decision becomes a GPIO write, and a nozzle actuator fires — or doesn't — on that exact spot. Deere reports growers cutting non-residual herbicide use by nearly half using this system.</p>
+
+      <h2>Every module in this section, in one machine</h2>
+      <ul class="learn-list">
+        <li>A camera and a CPU running a model — <a href="../../cv/fundamentals/index.html">Computer Vision</a> and <a href="../../systems/how-computers-work/index.html">How Computers Work</a>.</li>
+        <li>A decision made on-device instead of over a slow network round trip — <a href="../../systems/networking-basics/index.html">Networking Basics</a>.</li>
+        <li>An embedded control loop reading a classification and writing an actuator — this module's <a href="sensors-and-actuators.html">Sensors &amp; Actuators</a>.</li>
+        <li>A whole computer, running an OS, coordinating cameras, a model, and actuators all at once — <a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a>.</li>
+      </ul>
+
+      <h2>Visual model: capture to spray, in milliseconds</h2>
+      <p>Step through one frame's trip from the camera to the nozzle.</p>
+      <div class="viz" id="ai-viz"></div>
+
+      <div class="note">Sources: <a href="https://www.bluerivertechnology.com/" target="_blank" rel="noopener">Blue River Technology</a>; <a href="https://agfundernews.com/breaking-exclusive-john-deere-acquires-see-spray-robotics-startup-blue-river-technology-305m" target="_blank" rel="noopener">AgFunderNews — "John Deere Acquires 'See &amp; Spray' Robotics Startup Blue River Technology for $305m"</a>; <a href="https://growiwm.org/a-deep-dive-on-the-see-spray-ultimate-system-from-john-deere-blue-river/" target="_blank" rel="noopener">"A Deep Dive on the See &amp; Spray Ultimate System from John Deere &amp; Blue River"</a>.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ai-quiz"></div>
+
+      <div class="article-nav">
+        <a href="precision-irrigation-case-study.html">← Precision Irrigation Pivots</a>
+        <a href="index.html">Back to Hardware Meets Software overview</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initAppliedIotViz(document.getElementById("ai-viz"));
+  initQuiz(document.getElementById("ai-quiz"), [
+    {
+      q: "Why does See & Spray run its AI model directly on the machine instead of sending each frame to the cloud for classification?",
+      options: [
+        "The machine has no internet connection at all",
+        "The round-trip network latency would be far too slow for a decision that has to happen dozens of times a second — so it uses edge computing instead",
+        "Cloud computing is more expensive per frame",
+        "Cameras can't transmit images over a network",
+      ],
+      correct: 1,
+      explain: "This is a direct application of the Latency & Bandwidth submodule — a network round trip, even a fast one, is too slow for a control loop running dozens of times per second.",
+    },
+    {
+      q: "In this system, what plays the role of the 'actuator' from the Sensors & Actuators submodule?",
+      options: [
+        "The camera",
+        "The AI model itself",
+        "The spray nozzle, which fires based on the classification decision",
+        "The cloud dashboard",
+      ],
+      correct: 2,
+      explain: "The nozzle is the output — the physical action taken based on a decision, exactly like the robotic arm in the scan-cycle example.",
+    },
+    {
+      q: "What is Blue River Technology's relationship to John Deere?",
+      options: [
+        "They are unrelated competitors",
+        "Blue River was a Stanford-founded startup that John Deere acquired in 2017 for $305 million",
+        "John Deere is a division of Blue River Technology",
+        "Blue River only makes irrigation equipment",
+      ],
+      correct: 1,
+      explain: "Blue River built See & Spray as an independent startup before being acquired by John Deere, which now sells the technology as part of its equipment line.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

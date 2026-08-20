@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensors &amp; Actuators — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / Sensors &amp; Actuators</div>
+    <article>
+      <h1>Sensors &amp; Actuators</h1>
+      <p>The clearest real-world version of "a button moves a hand in a factory" is a <strong>PLC</strong> — a Programmable Logic Controller, the industrial computer that has run factory floors since the 1960s. A PLC continuously monitors sensors, executes control logic, and operates motors, valves, and other equipment in real time. It's not exotic hardware, and it's not doing anything you haven't already written in software — it's just running that logic against real inputs and outputs instead of an HTTP request.</p>
+
+      <h2>The scan cycle: a while(true) loop for the physical world</h2>
+      <p>A PLC repeats the same three-step cycle continuously, often hundreds or thousands of times per second:</p>
+      <ol class="learn-list">
+        <li><strong>Read Inputs</strong> — check the current state of every connected sensor, switch, or button.</li>
+        <li><strong>Evaluate Logic</strong> — run the stored program against those inputs to decide what should happen.</li>
+        <li><strong>Update Outputs</strong> — change the state of connected actuators: motors, valves, lights, robotic arms.</li>
+      </ol>
+      <p>Then it starts again. If you've ever written a game loop or a polling loop, this will look extremely familiar — it's the same <code>while(true) { read(); update(); render(); }</code> shape, just with sensors and actuators standing in for keyboard input and pixels.</p>
+
+      <h2>Sensors: the inputs</h2>
+      <p>A sensor's whole job is turning a physical quantity — light, temperature, pressure, distance, moisture — into an electrical signal, which gets converted into a number your code can read. Some are simple <strong>digital</strong> sensors (a button: pressed or not, nothing in between). Others are <strong>analog</strong>, reporting a continuous range — a soil moisture probe might report anywhere from "bone dry" to "saturated," not just two states.</p>
+
+      <h2>Actuators: the outputs</h2>
+      <p>An actuator converts an electrical signal from your code back into physical action: a motor spins, a valve opens, an LED lights up, a robotic arm extends. In the classic factory example, that arm doesn't move on its own — a PLC reads a button's state during "Read Inputs," decides to extend the arm during "Evaluate Logic," and only actually moves it during "Update Outputs."</p>
+
+      <h2>Visual model: the scan cycle, live</h2>
+      <p>Hold the virtual button down (or don't), and step through the scan cycle to see exactly when the arm actually moves.</p>
+      <div class="viz" id="sc-viz"></div>
+
+      <div class="note">Notice the arm never moves the instant you press the button — it only updates once the cycle reaches "Update Outputs." That one-cycle delay is real, and it's exactly the kind of timing detail that matters once you're controlling actual machinery.</div>
+
+      <div class="note">Sources: <a href="https://www.st.com/en/applications/factory-automation/programmable-logic-controllers-plc.html" target="_blank" rel="noopener">STMicroelectronics — Programmable Logic Controllers (PLC)</a>; <a href="https://inductiveautomation.com/resources/article/what-is-a-PLC" target="_blank" rel="noopener">Inductive Automation — What Is a PLC?</a></div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="sc-quiz"></div>
+
+      <div class="article-nav">
+        <a href="where-software-meets-hardware.html">← Where Software Meets Hardware</a>
+        <a href="arduino-vs-raspberry-pi.html">Next: Arduino vs. Raspberry Pi →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initScanCycleViz(document.getElementById("sc-viz"));
+  initQuiz(document.getElementById("sc-quiz"), [
+    {
+      q: "What are the three steps of a PLC's scan cycle, in order?",
+      options: [
+        "Update Outputs, Evaluate Logic, Read Inputs",
+        "Read Inputs, Evaluate Logic, Update Outputs",
+        "Evaluate Logic, Read Inputs, Update Outputs",
+        "Boot, Run, Shutdown",
+      ],
+      correct: 1,
+      explain: "It reads every input's current state first, runs its logic against that snapshot, then updates all outputs — then repeats.",
+    },
+    {
+      q: "In the visual model, why doesn't the robotic arm move the instant you press the button?",
+      options: [
+        "It's a bug",
+        "The arm only updates during the 'Update Outputs' step, so there's a delay of up to one full scan cycle",
+        "The arm requires two button presses",
+        "Arms never actually move in real PLC systems",
+      ],
+      correct: 1,
+      explain: "The scan cycle reads the button, evaluates logic, and only then updates outputs — so the arm's motion lags the button press by however long the rest of that cycle takes.",
+    },
+    {
+      q: "What's the key difference between a digital sensor and an analog sensor?",
+      options: [
+        "Digital sensors are always more accurate",
+        "A digital sensor reports one of a small number of discrete states (like pressed/not-pressed); an analog sensor reports a continuous range of values",
+        "Analog sensors can't be read by a microcontroller",
+        "There's no real difference",
+      ],
+      correct: 1,
+      explain: "A button is digital — pressed or not. A soil moisture probe is typically analog — it reports a continuous range, not just two states.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

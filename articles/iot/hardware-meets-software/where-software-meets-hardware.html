@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Software Meets Hardware — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / Where Software Meets Hardware</div>
+    <article>
+      <h1>Where Software Meets Hardware</h1>
+      <p>Strip away the buzzwords, and "IoT" (Internet of Things) is a fairly plain idea: ordinary physical objects — a soil probe, a factory arm, a pivot irrigator — get a small computer, a way to sense or act on the world, and a network connection. A widely-cited 2013 survey by Gubbi, Buyya, Marusic, and Palaniswami frames it simply: sensors and actuators "blend seamlessly with the environment," and the resulting information gets shared across platforms — devices and cloud software cooperating over a network, the same way any client and server do.</p>
+
+      <h2>The part you already know</h2>
+      <p>Almost all of embedded and IoT programming is variations on one loop: read some input, decide something, write some output. That's not a new idea — it's the same shape as a game loop, an event listener, or a request handler. What's different is <em>what</em> the input and output actually are: not a keystroke or an HTTP request, but a real voltage on a physical pin.</p>
+
+      <h2>The bridge: GPIO</h2>
+      <p>A <strong>GPIO</strong> (General-Purpose Input/Output) pin is the bridge. Treat it like a variable that's physically wired to a circuit: read it, and you get a real voltage from the outside world; write to it, and you change a real voltage out there. On an Arduino, <code>digitalRead(pin)</code> and <code>digitalWrite(pin, HIGH)</code> are literally get/set on that variable — the "hardware" part is just that the variable happens to be soldered to something real.</p>
+
+      <h2>Sensors and actuators: two directions of the same idea</h2>
+      <ul class="learn-list">
+        <li>A <strong>sensor</strong> converts something physical — light, moisture, motion, temperature — into a signal your code can read. It's an input, a getter.</li>
+        <li>An <strong>actuator</strong> converts a signal your code writes into physical motion, heat, or light. It's an output, a setter.</li>
+      </ul>
+      <p>Everything else in this module — a button moving a robotic arm, a soil probe reporting to the cloud, a camera triggering a spray nozzle — is this same read/decide/write pattern, just with progressively more interesting things on either end.</p>
+
+      <h2>Visual model: code, GPIO, and the physical world</h2>
+      <p>Click each part to see its role.</p>
+      <div class="viz" id="sh-viz"></div>
+
+      <div class="note">Source: Gubbi, J., Buyya, R., Marusic, S., &amp; Palaniswami, M. (2013). <a href="https://arxiv.org/abs/1207.0203" target="_blank" rel="noopener">"Internet of Things (IoT): A Vision, Architectural Elements, and Future Directions."</a> <em>Future Generation Computer Systems</em>, 29(7), 1645–1660.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="sh-quiz"></div>
+
+      <div class="article-nav">
+        <a href="index.html">← Hardware Meets Software overview</a>
+        <a href="sensors-and-actuators.html">Next: Sensors &amp; Actuators →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initSoftwareHardwareViz(document.getElementById("sh-viz"));
+  initQuiz(document.getElementById("sh-quiz"), [
+    {
+      q: "What's a useful mental model for a GPIO pin, if you already think in software terms?",
+      options: [
+        "A constant that never changes",
+        "A variable that's physically wired to a real circuit — reading or writing it reads or writes a real voltage",
+        "A special kind of database index",
+        "A file on disk",
+      ],
+      correct: 1,
+      explain: "digitalRead()/digitalWrite() are essentially get/set on a variable that happens to be connected to actual hardware.",
+    },
+    {
+      q: "What's the difference between a sensor and an actuator?",
+      options: [
+        "There's no real difference",
+        "A sensor converts a physical quantity into a signal your code reads (an input); an actuator converts your code's output into physical motion or change (an output)",
+        "Sensors are only used indoors, actuators only outdoors",
+        "Actuators are a type of sensor",
+      ],
+      correct: 1,
+      explain: "Sensor = input/getter, from the physical world into your code. Actuator = output/setter, from your code back into the physical world.",
+    },
+    {
+      q: "What's the common shape underlying almost all embedded and IoT programs?",
+      options: [
+        "Read some input, decide something, write some output — repeated",
+        "A one-time setup script that never runs again",
+        "A random number generator",
+        "A spreadsheet formula",
+      ],
+      correct: 0,
+      explain: "That read/decide/write loop — the same shape as a game loop or an event handler — underlies nearly everything in this module.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

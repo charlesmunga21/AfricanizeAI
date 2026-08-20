@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arduino vs. Raspberry Pi — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / Arduino vs. Raspberry Pi</div>
+    <article>
+      <h1>Arduino vs. Raspberry Pi</h1>
+      <p>These two get lumped together constantly, and they solve different problems. An <strong>Arduino</strong> is a <strong>microcontroller</strong> board: it runs one compiled program, has no operating system, and boots in milliseconds. A <strong>Raspberry Pi</strong> is a <strong>single-board computer</strong>: it boots a full Linux operating system — the same kind of system you met in the Operating Systems Basics module, complete with a scheduler juggling many processes — and your program runs as one of them.</p>
+
+      <h2>What that actually buys you</h2>
+      <p>Arduino's lack of an OS is a feature, not a limitation, for a certain kind of job: real-time control where you need a predictable, unwavering response time — reading a sensor and firing an actuator on a strict schedule, with nothing else ever allowed to interrupt that loop. There's no scheduler deciding to give some other process a turn at a bad moment.</p>
+      <p>Raspberry Pi's Linux gets you everything an OS gives you: a file system, real networking, the ability to run Python or Node, drive a display, and run several things "at once." That flexibility costs you the same context-switching overhead and non-determinism you learned about in <a href="../../systems/operating-systems-basics/scheduling.html">Scheduling</a> — fine for most jobs, but not for a control loop that needs to fire an actuator at an exact, guaranteed instant.</p>
+      <p>In practice, real projects often use both together: an Arduino (or similar microcontroller) handling the fast, deterministic hardware interaction, talking to a Raspberry Pi that handles logic, a user interface, networking, and data logging.</p>
+
+      <h2>Visual model: what "power on" actually means</h2>
+      <p>Pick a board and power it on.</p>
+      <div class="viz" id="mv-viz"></div>
+
+      <div class="note">Sources: official documentation at <a href="https://www.arduino.cc" target="_blank" rel="noopener">arduino.cc</a> and <a href="https://www.raspberrypi.com" target="_blank" rel="noopener">raspberrypi.com</a>; comparison details corroborated across <a href="https://www.digikey.co.uk/en/maker/blogs/2024/arduino-vs-raspberry-pi-whats-the-difference" target="_blank" rel="noopener">DigiKey</a> and <a href="https://www.electronicshub.org/raspberry-pi-vs-arduino/" target="_blank" rel="noopener">Electronics Hub</a>.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="mv-quiz"></div>
+
+      <div class="article-nav">
+        <a href="sensors-and-actuators.html">← Sensors &amp; Actuators</a>
+        <a href="sensor-to-cloud.html">Next: From Sensor to Cloud →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initMcuVsSbcViz(document.getElementById("mv-viz"));
+  initQuiz(document.getElementById("mv-quiz"), [
+    {
+      q: "What's the fundamental difference between an Arduino and a Raspberry Pi?",
+      options: [
+        "There's no real difference — they're interchangeable",
+        "Arduino is a microcontroller with no operating system, running one program; Raspberry Pi is a full computer that boots Linux",
+        "Raspberry Pi is always faster at real-time control",
+        "Arduino can run a full desktop environment",
+      ],
+      correct: 1,
+      explain: "One boots almost instantly into a single bare-metal program; the other boots a general-purpose OS, then runs your program as one process among many.",
+    },
+    {
+      q: "Why might a real-time control loop (e.g. firing an actuator on a strict schedule) prefer an Arduino over a Raspberry Pi?",
+      options: [
+        "Arduino is always more powerful",
+        "With no OS and no scheduler, there's nothing else that can interrupt the loop's timing — Linux's scheduler introduces non-determinism",
+        "Raspberry Pi can't connect to sensors",
+        "Arduino has more RAM",
+      ],
+      correct: 1,
+      explain: "The predictability comes from having no other processes competing for CPU time — exactly the tradeoff covered in the Scheduling submodule.",
+    },
+    {
+      q: "Why do many real IoT/robotics projects use an Arduino-like board AND a Raspberry Pi-like board together?",
+      options: [
+        "It's unnecessary redundancy",
+        "The microcontroller handles fast, deterministic hardware interaction while the Linux computer handles logic, UI, networking, and data logging",
+        "Because Arduino can't be programmed",
+        "Because Raspberry Pi has no GPIO pins",
+      ],
+      correct: 1,
+      explain: "Each board is good at what the other isn't — splitting the work plays to both boards' strengths.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

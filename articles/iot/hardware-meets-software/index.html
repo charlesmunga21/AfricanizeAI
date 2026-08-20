@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / Hardware Meets Software</div>
+
+    <section class="module-hero">
+      <h1>Hardware Meets Software</h1>
+      <p>You already know how to write software. This module is for working backwards from there: taking the concepts you already have — loops, event handlers, client-server calls, processes — and showing how they map onto the physical devices that read soil moisture, watch a conveyor belt, or steer a spray nozzle. A microcontroller's main loop is a <code>while(true)</code>. A GPIO pin is a variable wired to a real circuit. An IoT sensor pushing data to a dashboard is just a client and a server, with a radio link in between instead of Wi-Fi.</p>
+      <p>Examples throughout are real, not invented: an industrial PLC moving a robotic arm off a button press, a soil probe reporting to a cloud dashboard through a field datalogger, a center-pivot irrigation system you can watch and control from your phone, and a tractor-mounted camera making a spray decision in milliseconds. Sourced from published research, official Arduino/Raspberry Pi documentation, and the sites of the companies actually running this technology in the field — cited throughout, since there's no single reference book for this one.</p>
+      <ul class="learn-list">
+        <li>Where your code actually stops and the physical world begins — GPIO, sensors, and actuators</li>
+        <li>The "scan cycle" that turns a button press into a moving robotic arm</li>
+        <li>Arduino vs. Raspberry Pi — a microcontroller with no OS, versus a full Linux computer</li>
+        <li>The real pipeline from a field sensor to a cloud dashboard, over LoRaWAN or cellular</li>
+        <li>A working case study: how commercial center-pivot irrigation is monitored and controlled remotely</li>
+        <li>Putting it together: a camera, an edge AI model, and an actuator, acting in milliseconds</li>
+      </ul>
+    </section>
+
+    <div class="submodule-grid">
+      <a class="submodule-card" href="where-software-meets-hardware.html">
+        <span class="submodule-card__step">1 · Foundations</span>
+        <h3>Where Software Meets Hardware</h3>
+        <p>Your code, a GPIO pin, and the physical world — and why a sensor and an actuator are just two directions of the same idea.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="sensors-and-actuators.html">
+        <span class="submodule-card__step">2 · Core Skill</span>
+        <h3>Sensors &amp; Actuators</h3>
+        <p>The scan cycle that runs a factory floor — read inputs, evaluate logic, update outputs, forever.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="arduino-vs-raspberry-pi.html">
+        <span class="submodule-card__step">3 · Core Skill</span>
+        <h3>Arduino vs. Raspberry Pi</h3>
+        <p>A microcontroller with no operating system, versus a full Linux single-board computer — when to reach for which.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="sensor-to-cloud.html">
+        <span class="submodule-card__step">4 · Core Skill</span>
+        <h3>From Sensor to Cloud</h3>
+        <p>A soil probe, a field datalogger, a low-power radio link, and a dashboard — the real IoT data pipeline.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="precision-irrigation-case-study.html">
+        <span class="submodule-card__step">5 · Case Study</span>
+        <h3>Precision Irrigation Pivots</h3>
+        <p>How real commercial systems monitor and control center-pivot irrigation from a phone, anywhere.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+      <a class="submodule-card" href="camera-to-actuator.html">
+        <span class="submodule-card__step">6 · Applied</span>
+        <h3>A Camera, an AI Model, and an Actuator</h3>
+        <p>How a tractor-mounted camera identifies a weed and fires a spray nozzle, all in milliseconds.</p>
+        <span class="submodule-card__badges"><span class="submodule-card__badge">Visual</span><span class="submodule-card__badge">Quiz</span></span>
+      </a>
+    </div>
+
+    <h2 style="font-size:1.1rem; color:#5b5b5b; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border); padding-bottom:.4rem;">Quick reference</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Term</th><th>Plain meaning</th><th>Software analogy</th></tr></thead>
+      <tbody>
+        <tr><td>GPIO pin</td><td>A physical pin that can read or write a voltage</td><td>A variable wired directly to the real world</td></tr>
+        <tr><td>Sensor</td><td>Converts a physical quantity into a digital reading</td><td>An input / a getter</td></tr>
+        <tr><td>Actuator</td><td>Converts a digital command into physical motion or change</td><td>An output / a setter</td></tr>
+        <tr><td>Microcontroller (e.g. Arduino)</td><td>Runs one program with no OS</td><td>A single-threaded, bare-metal <code>while(true)</code></td></tr>
+        <tr><td>Single-board computer (e.g. Raspberry Pi)</td><td>A full computer that boots Linux</td><td>A regular server, just tiny</td></tr>
+        <tr><td>Gateway / meter box</td><td>Collects sensor readings and forwards them onward</td><td>An API gateway between devices and the cloud</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-nav">
+      <span></span>
+      <a href="where-software-meets-hardware.html">Start: Where Software Meets Hardware →</a>
+    </div>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

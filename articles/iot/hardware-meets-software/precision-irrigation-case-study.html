@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Precision Irrigation Pivots — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / Precision Irrigation Pivots</div>
+    <article>
+      <h1>Precision Irrigation Pivots</h1>
+      <p>A center-pivot irrigator — the machine that creates those circular green fields you see from an airplane — is a genuinely good case study, because commercial systems have already built the entire pipeline from the last submodule, at scale, for years.</p>
+
+      <h2>What's actually on the machine</h2>
+      <p>Lindsay Corporation's <strong>FieldNET Pivot Watch</strong> is a real product built around exactly this idea: a solar-powered telemetry unit that mounts onto a center pivot — any pivot, regardless of age or brand — and radios back the machine's own status: whether water is flowing, its current position in the field, and its direction and speed. Valmont's competing <strong>Valley</strong> brand offers a similar system, <strong>AgSense 365</strong>, which extends beyond monitoring into remote control of pivots, pumps, and moisture probes from one app.</p>
+      <p>On the research side, a 2025 study published in a peer-reviewed sensors journal took this a step further: mounting soil moisture sensors ("smart stakes") directly in the field, communicating over Bluetooth Low Energy to a rotating receiver mounted on the pivot boom itself as it sweeps overhead — collecting moisture readings across the whole field, not just at one fixed point.</p>
+
+      <h2>Why remote monitoring matters here specifically</h2>
+      <p>A pivot can be hundreds of meters long, watering a field far from the farmhouse, and a stopped or misaligned pivot wastes water, wastes electricity, and can under- or over-water a section of crop for hours before anyone notices by driving out to look. A telemetry unit turns "drive out and check" into a push notification. That's the entire value proposition of an otherwise fairly ordinary embedded system: a few sensors, a cheap radio, and a scheduled read-and-send loop.</p>
+
+      <h2>Visual model: the pivot's data chain</h2>
+      <p>Click through the pieces of a real commercial system.</p>
+      <div class="viz" id="pivot-viz"></div>
+
+      <div class="note">Sources: <a href="https://www.lindsay.com/lam/en/irrigation/brands/fieldnet/solutions/remote-monitoring/pivot-watch/" target="_blank" rel="noopener">Lindsay Corporation — FieldNET Pivot Watch</a>; Valmont Industries — Valley AgSense 365; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12431093/" target="_blank" rel="noopener">"Smart Bluetooth Stakes: Deployment of Soil Moisture Sensors with Rotating High-Gain Antenna Receiver on Center Pivot Irrigation Boom in a Commercial Wheat Field"</a> (peer-reviewed, 2025).</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="pivot-quiz"></div>
+
+      <div class="article-nav">
+        <a href="sensor-to-cloud.html">← From Sensor to Cloud</a>
+        <a href="camera-to-actuator.html">Next: A Camera, an AI Model, and an Actuator →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initPivotCaseStudyViz(document.getElementById("pivot-viz"));
+  initQuiz(document.getElementById("pivot-quiz"), [
+    {
+      q: "What does a product like FieldNET Pivot Watch actually add to a center-pivot irrigator?",
+      options: [
+        "It replaces the pivot's motor",
+        "A solar-powered telemetry unit that reports the pivot's own status — water flow, position, direction, speed — back to a remote dashboard",
+        "It waters the field faster",
+        "It's a type of soil sensor, not a telemetry device",
+      ],
+      correct: 1,
+      explain: "It's a retrofit telemetry add-on, not a replacement for the pivot itself — it reads the machine's existing status and radios it out.",
+    },
+    {
+      q: "In the 'Smart Bluetooth Stakes' research system, how do soil sensors get their readings back to a receiver?",
+      options: [
+        "Over a wired connection buried in the field",
+        "Via Bluetooth Low Energy, to a rotating receiver mounted on the pivot boom as it sweeps overhead",
+        "By satellite only",
+        "The sensors have no way to communicate — they're read manually",
+      ],
+      correct: 1,
+      explain: "The pivot boom itself becomes the moving receiver, letting stationary ground sensors report to it as it passes overhead.",
+    },
+    {
+      q: "Why does remote monitoring specifically matter for a center-pivot system, more than for, say, a single houseplant sensor?",
+      options: [
+        "It doesn't — the value is identical at any scale",
+        "A pivot covers a large, often distant field, and a stopped or misaligned pivot can waste significant water and under/over-water crops for hours before anyone notices in person",
+        "Pivots can't be checked in person at all",
+        "Remote monitoring is required by law for all irrigation systems",
+      ],
+      correct: 1,
+      explain: "The value scales with the cost of not knowing — a big, remote, expensive-to-run machine benefits far more from an alert than a small local one does.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

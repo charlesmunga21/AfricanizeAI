@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Sensor to Cloud — Hardware Meets Software — AfricanizeAI</title>
+<link rel="stylesheet" href="../../../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Africanize<span class="accent">AI</span></div>
+  <div class="search-box"><input type="text" placeholder="Search tutorials..."></div>
+  <nav>
+    <a href="../../../index.html">Home</a>
+    <a href="../../../index.html#dsa">DSA</a>
+    <a href="../../../index.html#cv">Computer Vision</a>
+    <a href="../../../index.html#ai-usecases">AI Use-Cases</a>
+    <a href="../../../index.html#computer-functions">Computer Functions</a>
+    <a href="../../../index.html#iot-software">IoT + Software</a>
+    <a href="../../../demos/index.html">Demos</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Data Structures &amp; Algorithms</h3>
+    <ul>
+      <li><a href="../../dsa/arrays/index.html">Arrays</a></li>
+      <li><a href="../../dsa/binary-search/index.html">Binary Search</a></li>
+      <li><a href="../../dsa/linked-lists/index.html">Linked Lists</a></li>
+    </ul>
+    <h3>Computer Vision</h3>
+    <ul>
+      <li><a href="../../cv/fundamentals/index.html">Computer Vision Fundamentals</a></li>
+    </ul>
+    <h3>AI Use-Cases</h3>
+    <ul>
+      <li><a href="../../ai/business/index.html">AI for Business</a></li>
+      <li><a href="../../ai/creativity/index.html">AI for Creativity</a></li>
+    </ul>
+    <h3>Computer Functions</h3>
+    <ul>
+      <li><a href="../../systems/how-computers-work/index.html">How Computers Work</a></li>
+      <li><a href="../../systems/networking-basics/index.html">Networking Basics</a></li>
+      <li><a href="../../systems/operating-systems-basics/index.html">Operating Systems Basics</a></li>
+    </ul>
+    <h3>IoT + Software</h3>
+    <ul>
+      <li><a href="index.html" class="active">Hardware Meets Software</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <div class="breadcrumb"><a href="../../../index.html">Home</a> / IoT + Software / <a href="index.html">Hardware Meets Software</a> / From Sensor to Cloud</div>
+    <article>
+      <h1>From Sensor to Cloud</h1>
+      <p>Take the exact scenario you described: a sensor buried in soil, reporting to a box in the field, which somehow ends up as a chart on a dashboard you check from your phone. None of the individual hops are exotic — you've met most of these ideas already, just wearing different clothes.</p>
+
+      <h2>The chain</h2>
+      <ol class="learn-list">
+        <li><strong>Soil sensor</strong> — a probe reads a raw electrical property of the soil (often capacitance or resistance) and converts it into a moisture value.</li>
+        <li><strong>Meter box (datalogger)</strong> — a field enclosure, often solar-powered, that reads one or more sensors on a schedule, timestamps each reading, and holds onto it. Research-grade dataloggers from companies like Campbell Scientific and METER Group are the industrial version of this; it's the same "read and store" loop from the Sensors &amp; Actuators submodule.</li>
+        <li><strong>Low-power radio link</strong> — out in a field, Wi-Fi and cellular towers aren't always reachable. <strong>LoRaWAN</strong> is a low-power, wide-area network protocol purpose-built for exactly this: license-free, long-range (kilometers, not meters), and stingy enough with power that a battery-run sensor can last years — at the cost of sending only small, infrequent messages.</li>
+        <li><strong>Gateway → Internet</strong> — a gateway receives the radio transmission and hands it onto the ordinary internet. From here, it's just packets, hopping across routers exactly like the <a href="../../systems/networking-basics/index.html">Networking Basics</a> module described — the "last mile" was special, nothing after it is.</li>
+        <li><strong>Cloud dashboard</strong> — a server receives the data, stores it, and a dashboard queries it back out — the same client-server relationship as any web app, database included.</li>
+      </ol>
+
+      <h2>Visual model: watch a reading make the trip</h2>
+      <p>Step through one soil reading's full journey.</p>
+      <div class="viz" id="ip-viz"></div>
+
+      <div class="note">Speaking your language: a LoRaWAN gateway is basically a reverse proxy for radio — it terminates a totally different protocol on one side (long-range, low-power radio) and speaks ordinary IP on the other, so everything past it looks like normal internet traffic.</div>
+
+      <div class="note">Sources: <a href="https://www.ndsu.edu/agriculture/extension/publications/basics-lora-technology-crop-and-livestock-management" target="_blank" rel="noopener">NDSU Extension — "Basics of LoRa Technology for Crop and Livestock Management"</a>; <a href="https://www.campbellsci.com/environmental-research" target="_blank" rel="noopener">Campbell Scientific — Environmental Research dataloggers</a>; <a href="https://en.wikipedia.org/wiki/METER_Group" target="_blank" rel="noopener">METER Group</a>, maker of agricultural soil sensors and dataloggers.</div>
+
+      <h2>Test your understanding</h2>
+      <div class="quiz" id="ip-quiz"></div>
+
+      <div class="article-nav">
+        <a href="arduino-vs-raspberry-pi.html">← Arduino vs. Raspberry Pi</a>
+        <a href="precision-irrigation-case-study.html">Next: Precision Irrigation Pivots →</a>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer>© AfricanizeAI 2026. All rights reserved. AfricanizeAI — original tutorials on programming, DSA, and applied AI.</footer>
+<script src="../../../js/script.js"></script>
+<script src="../../../js/iot-viz.js"></script>
+<script src="../../../js/quiz.js"></script>
+<script>
+  initIotPipelineViz(document.getElementById("ip-viz"));
+  initQuiz(document.getElementById("ip-quiz"), [
+    {
+      q: "Why is a low-power, long-range protocol like LoRaWAN often used instead of Wi-Fi for a field sensor?",
+      options: [
+        "LoRaWAN transmits more data per second than Wi-Fi",
+        "Fields often have no Wi-Fi coverage, and LoRaWAN trades bandwidth for kilometers of range on a battery that lasts years",
+        "It's a legal requirement for agriculture",
+        "There's no real advantage — it's just a brand name",
+      ],
+      correct: 1,
+      explain: "LoRaWAN is purpose-built for exactly this tradeoff: small, infrequent messages over long distances, sipping so little power that a battery-run sensor can last years in the field.",
+    },
+    {
+      q: "What is a 'meter box' (field datalogger) actually doing?",
+      options: [
+        "Nothing — it's just a physical enclosure",
+        "Reading one or more sensors on a schedule, timestamping the readings, and holding onto them before they're sent onward",
+        "Running the cloud dashboard directly",
+        "Generating the sensor's readings itself, without a real sensor",
+      ],
+      correct: 1,
+      explain: "It's the same 'read and store' embedded pattern from the Sensors & Actuators submodule, just packaged for the field.",
+    },
+    {
+      q: "Once a sensor reading reaches the internet through a gateway, how does it get to the cloud dashboard?",
+      options: [
+        "It requires a brand-new kind of network invented specifically for IoT",
+        "The same way any internet traffic does — routed hop by hop as ordinary packets, exactly as described in Networking Basics",
+        "It's transmitted directly, without any routing",
+        "It has to be manually re-typed by a technician",
+      ],
+      correct: 1,
+      explain: "Only the 'last mile' (sensor to gateway) is IoT-specific. Once it's on the internet, it's ordinary packet routing.",
+    },
+  ]);
+</script>
+<script data-goatcounter="https://africanizeai.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
